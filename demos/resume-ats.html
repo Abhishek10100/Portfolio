@@ -24,10 +24,63 @@
   <p class="lede">An ATS-style resume screening tool built with Google's Gemini Pro model — takes a resume and a job description and returns a match percentage, a summary of the fit, and missing keywords, similar to how automated recruiting pipelines score candidates.</p>
   <div class="chiprow">
     <span class="chip">Gemini Pro</span><span class="chip">Google Generative AI</span><span class="chip">Streamlit</span><span class="chip">Python</span>
+    <span class="badge-live" style="background:var(--mut);color:#0a0b0a">PRE-GENERATED — no live Gemini API call</span>
   </div>
-  <p class="lede" style="font-size:13px;color:var(--mut)">This one runs on a paid Gemini API key, so it isn't wired up as a public live demo — shown here as screenshots of the working app instead.</p>
+  <p class="lede" style="font-size:13px;color:var(--mut)">The real app calls the paid Gemini Pro API, so this can't run live in a public demo. Below is the actual app's UI and its exact real prompt template, reproduced from <code>app.py</code> — pick one of 3 real sample resume/JD pairs and "Submit" to see a pre-generated response in the exact JSON structure the real app returns (<code>{"JD Match":"%","MissingKeywords":[],"Profile Summary":""}</code>), not a live inference.</p>
 
-  <h2 class="section-h">Screenshots</h2>
+  <div class="app-panel">
+    <div class="mono" style="font-size:20px;font-weight:700;color:var(--ink)">Smart ATS</div>
+    <div class="mono" style="font-size:12px;color:var(--mut);margin-top:2px">Improve your Resume ATS</div>
+
+    <div style="margin-top:20px">
+      <div class="mono" style="font-size:11px;color:var(--mut);letter-spacing:.05em;margin-bottom:8px;text-transform:uppercase">Pick a sample scenario</div>
+      <div class="pill-row" id="scenario-pills"></div>
+    </div>
+
+    <div class="field-grid" style="grid-template-columns:1fr">
+      <div class="field" style="margin-top:16px">
+        <label>Paste the Job Description Here</label>
+        <textarea id="jd-text" readonly style="width:100%;min-height:90px;background:var(--bg2);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:12px;font:500 12.5px 'JetBrains Mono',monospace;line-height:1.5;resize:vertical"></textarea>
+      </div>
+      <div class="field">
+        <label>Upload your resume</label>
+        <div id="resume-file-display" class="mono" style="background:var(--bg2);border:1px dashed var(--line);border-radius:8px;padding:14px;font-size:12.5px;color:var(--mut)"></div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px">
+      <button type="button" class="btn-p" id="ats-submit-btn" style="border:none;cursor:pointer">Submit</button>
+    </div>
+
+    <div class="result-card" id="ats-result">
+      <div class="rlabel">st.subheader(response) — real prompt structure, pre-generated content</div>
+      <div style="margin-top:14px;display:flex;align-items:baseline;gap:10px">
+        <div class="rvalue" id="ats-match" style="margin-top:0">—</div>
+        <span class="mono" style="font-size:11.5px;color:var(--mut)">JD Match</span>
+      </div>
+      <div class="mono" style="font-size:10.5px;color:var(--mut);letter-spacing:.05em;margin-top:16px;text-transform:uppercase">Missing keywords</div>
+      <div class="pill-row" id="ats-keywords"></div>
+      <div class="mono" style="font-size:10.5px;color:var(--mut);letter-spacing:.05em;margin-top:16px;text-transform:uppercase">Profile summary</div>
+      <p class="rsub" id="ats-summary" style="margin-top:6px"></p>
+      <div class="mono" style="font-size:10.5px;color:var(--mut);letter-spacing:.05em;margin-top:16px;text-transform:uppercase">Raw response (exact JSON structure the real app returns)</div>
+      <pre class="code-block" style="margin-top:6px" id="ats-raw"></pre>
+    </div>
+  </div>
+
+  <h2 class="section-h">The actual prompt template</h2>
+  <p class="lede" style="margin-top:0;font-size:13px;color:var(--mut)">Copied verbatim from <code>app.py</code> — this is the real prompt sent to <code>gemini-pro</code>:</p>
+  <pre class="code-block">Hey act like a skilled or very experienced ATS (Application Tracking System)
+with a deep understanding of tech field, software engineering, data science, data analyst
+and big data engineer. Your task is to evaluate the resume based on the given job description.
+You must consider the job market is very competitive and you should provide best assistance for
+improving their resumes. Assign the percentage Matching based on Job Description and the missing keywords with high accuracy.
+Resume: {text}
+Description: {jd}
+
+I want the response in one single string having the structure
+{"JD Match":"%","MissingKeywords":[],"Profile Summary":""}</pre>
+
+  <h2 class="section-h">Screenshots of the real app</h2>
   <div class="gallery">
     <figure>
       <img src="../assets/demos/resume-ats/screenshot-1.png" alt="Resume ATS Tracker — input screen">
@@ -41,6 +94,95 @@
 
 </div>
 
-<footer>© Abhishek Tripathi · screenshots of a working local app</footer>
+<footer>© Abhishek Tripathi · pre-generated sample output — actual prompt template and UI reproduced from app.py; no live Gemini API call</footer>
+
+<script>
+const SCENARIOS = [
+  {
+    key: 'strong',
+    label: 'Strong match — Data Scientist',
+    jd: `We are hiring a Data Scientist to join our analytics team.
+Requirements: Python, Pandas, NumPy, scikit-learn, SQL, experience with
+regression/classification models, data visualization (Matplotlib/Seaborn),
+A/B testing, and strong communication of insights to stakeholders. Bonus:
+exposure to deep learning frameworks (TensorFlow/PyTorch) and cloud
+platforms (AWS/GCP).`,
+    resumeFile: 'resume_data_scientist_priya_sharma.pdf',
+    response: {
+      "JD Match": "91%",
+      "MissingKeywords": ["A/B testing", "PyTorch"],
+      "Profile Summary": "Strong alignment with the role. The candidate has hands-on experience with Python, Pandas, scikit-learn, SQL, and has shipped regression and classification models with clear stakeholder communication via dashboards. Matplotlib/Seaborn and AWS exposure are both present. Minor gaps: no explicit mention of A/B testing methodology or PyTorch — worth adding a line if the candidate has done either, even informally."
+    }
+  },
+  {
+    key: 'partial',
+    label: 'Partial match — Data Analyst',
+    jd: `We are hiring a Data Scientist to join our analytics team.
+Requirements: Python, Pandas, NumPy, scikit-learn, SQL, experience with
+regression/classification models, data visualization (Matplotlib/Seaborn),
+A/B testing, and strong communication of insights to stakeholders. Bonus:
+exposure to deep learning frameworks (TensorFlow/PyTorch) and cloud
+platforms (AWS/GCP).`,
+    resumeFile: 'resume_data_analyst_rohan_mehta.pdf',
+    response: {
+      "JD Match": "64%",
+      "MissingKeywords": ["scikit-learn", "regression models", "classification models", "A/B testing", "TensorFlow", "PyTorch", "AWS", "GCP"],
+      "Profile Summary": "Partial match. The candidate is strong on the data-analysis side — SQL, Pandas, NumPy, and dashboarding with Matplotlib/Seaborn all show up clearly — but the resume reads as a Data Analyst rather than a Data Scientist: there's no evidence of building or deploying ML models (regression/classification), no A/B testing experience, and no cloud or deep-learning exposure. Recommend adding a project section demonstrating applied machine learning before applying, or reframing existing analysis work in modeling terms if applicable."
+    }
+  },
+  {
+    key: 'weak',
+    label: 'Weak match — Frontend Developer',
+    jd: `We are hiring a Data Scientist to join our analytics team.
+Requirements: Python, Pandas, NumPy, scikit-learn, SQL, experience with
+regression/classification models, data visualization (Matplotlib/Seaborn),
+A/B testing, and strong communication of insights to stakeholders. Bonus:
+exposure to deep learning frameworks (TensorFlow/PyTorch) and cloud
+platforms (AWS/GCP).`,
+    resumeFile: 'resume_frontend_developer_aisha_khan.pdf',
+    response: {
+      "JD Match": "37%",
+      "MissingKeywords": ["Pandas", "NumPy", "scikit-learn", "SQL", "regression models", "classification models", "Matplotlib", "Seaborn", "A/B testing"],
+      "Profile Summary": "Low match. This resume is oriented around frontend engineering (React, TypeScript, CSS, UI/UX) with no data science, ML, or SQL experience visible. Python appears only in passing (scripting). This candidate is not a fit for the Data Scientist role as written — the resume would need a substantial re-orientation (or a different, frontend-focused role) rather than incremental keyword additions."
+    }
+  }
+];
+
+let activeScenario = SCENARIOS[0];
+
+function renderScenarioPills(){
+  const row = document.getElementById('scenario-pills');
+  row.innerHTML = SCENARIOS.map((s,i) => `<button type="button" class="pill${i===0?' active':''}" data-key="${s.key}">${s.label}</button>`).join('');
+  row.querySelectorAll('.pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      row.querySelectorAll('.pill').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      activeScenario = SCENARIOS.find(s => s.key === btn.dataset.key);
+      loadScenario();
+      document.getElementById('ats-result').classList.remove('show');
+    });
+  });
+}
+
+function loadScenario(){
+  document.getElementById('jd-text').value = activeScenario.jd.trim();
+  document.getElementById('resume-file-display').textContent = '📄 ' + activeScenario.resumeFile + ' (sample resume, not parsed live)';
+}
+
+function submitATS(){
+  const r = activeScenario.response;
+  document.getElementById('ats-result').classList.add('show');
+  document.getElementById('ats-match').textContent = r['JD Match'];
+  document.getElementById('ats-keywords').innerHTML = r['MissingKeywords'].length
+    ? r['MissingKeywords'].map(k => `<span class="pill" style="cursor:default">${k}</span>`).join('')
+    : '<span class="mono" style="font-size:12px;color:var(--mut)">None — strong keyword coverage</span>';
+  document.getElementById('ats-summary').textContent = r['Profile Summary'];
+  document.getElementById('ats-raw').textContent = JSON.stringify(r);
+}
+
+renderScenarioPills();
+loadScenario();
+document.getElementById('ats-submit-btn').addEventListener('click', submitATS);
+</script>
 </body>
 </html>

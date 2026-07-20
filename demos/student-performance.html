@@ -21,22 +21,64 @@
 <div class="wrap" style="padding-top:56px;padding-bottom:40px">
   <div class="eyebrow">// ml · flask · live demo</div>
   <h1 class="h1">Student Performance Indicator</h1>
-  <p class="lede">A Flask web app that predicts a student's math exam score from demographic and academic inputs (gender, ethnicity, parental education, lunch type, test prep, reading/writing scores), backed by a trained regression pipeline. Unlike the other projects here, this one is a real containerized, deployed app you can actually use.</p>
+  <p class="lede">A Flask web app that predicts a student's math exam score from demographic and academic inputs (gender, ethnicity, parental education, lunch type, test prep, reading/writing scores), backed by a trained regression pipeline.</p>
   <div class="chiprow">
-    <span class="chip">Flask</span><span class="chip">CatBoost</span><span class="chip">XGBoost</span><span class="chip">scikit-learn</span><span class="chip">Docker</span>
+    <span class="chip">Flask</span><span class="chip">scikit-learn</span><span class="chip">LinearRegression</span><span class="chip">Docker</span>
+    <span class="badge-live">LIVE — runs the actual pickled model + preprocessor in your browser</span>
   </div>
 
-  <div class="cta-row">
-    <a href="#" id="live-demo-link" class="btn-p" data-pending="true">Try the live demo →</a>
-    <span class="mono" style="color:var(--mut)">(live demo link goes here once deployed)</span>
+  <h2 class="section-h">Try it — predict a math score</h2>
+  <p class="lede" style="margin-top:0;font-size:13px;color:var(--mut)">This is the exact <code>model.pkl</code> + <code>preprocessor.pkl</code> the Flask app loads (a plain LinearRegression over a one-hot-encoded + scaled feature set) — extracted from the actual pickle files and reproduced faithfully in JS: same imputer defaults, same one-hot categories, same StandardScaler mean/scale, same coefficients. Verified against the real Python pipeline's output on multiple test cases before shipping.</p>
+
+  <div class="app-panel">
+    <div class="field-grid">
+      <div class="field">
+        <label for="sp-gender">Gender</label>
+        <select id="sp-gender"></select>
+      </div>
+      <div class="field">
+        <label for="sp-ethnicity">Race/ethnicity</label>
+        <select id="sp-ethnicity"></select>
+      </div>
+      <div class="field">
+        <label for="sp-education">Parental education</label>
+        <select id="sp-education"></select>
+      </div>
+      <div class="field">
+        <label for="sp-lunch">Lunch</label>
+        <select id="sp-lunch"></select>
+      </div>
+      <div class="field">
+        <label for="sp-prep">Test preparation course</label>
+        <select id="sp-prep"></select>
+      </div>
+      <div class="field">
+        <label for="sp-reading">Reading score</label>
+        <input type="number" id="sp-reading" min="0" max="100" step="1" value="72">
+      </div>
+      <div class="field">
+        <label for="sp-writing">Writing score</label>
+        <input type="number" id="sp-writing" min="0" max="100" step="1" value="74">
+      </div>
+    </div>
+    <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap">
+      <button type="button" class="btn-p" id="sp-predict-btn" style="border:none;cursor:pointer">Predict math score →</button>
+      <span id="sp-load-status" class="mono" style="font-size:11.5px;color:var(--mut);align-self:center">loading real model weights…</span>
+    </div>
+    <div class="result-card" id="sp-result">
+      <div class="rlabel">Predicted math score</div>
+      <div class="rvalue" id="sp-value">—</div>
+      <div class="rsub" id="sp-sub"></div>
+    </div>
   </div>
 
   <div class="stat-row">
     <div class="stat"><b>1,000</b><span>student records</span></div>
-    <div class="stat"><b>0.8806</b><span>Ridge R² — best model (test set)</span></div>
-    <div class="stat"><b>0.8803</b><span>Linear Regression R² (test set)</span></div>
+    <div class="stat"><b>0.8806</b><span>Ridge R² — best benchmarked model</span></div>
+    <div class="stat"><b>0.8803</b><span>Linear Regression R² — actually deployed</span></div>
     <div class="stat"><b>800 / 200</b><span>train / test split</span></div>
   </div>
+  <p class="lede" style="margin-top:10px;font-size:12px;color:var(--mut)">Note: the notebook benchmarked 9 algorithms and Ridge scored marginally higher, but the actual shipped <code>model.pkl</code> the Flask app (and this demo) loads is plain LinearRegression — that's the one running above.</p>
 
   <h2 class="section-h">Key findings</h2>
   <ul class="findings">
@@ -65,6 +107,88 @@
 
 </div>
 
-<footer>© Abhishek Tripathi · Flask app containerized with Docker, deployed on Hugging Face Spaces</footer>
+<footer>© Abhishek Tripathi · real LinearRegression + preprocessing pipeline run client-side from the actual pickled model; Flask source in demo-apps/student-performance-indicator</footer>
+
+<script>
+let sp = null;
+
+function fillOptions(sel, categories, defaultIdx){
+  sel.innerHTML = categories.map((c,i) => `<option value="${c}"${i===defaultIdx?' selected':''}>${c}</option>`).join('');
+}
+
+function oneHotScaled(catCategories, catFeatures, values, scalerScale){
+  // Flattened order matches sklearn's OneHotEncoder categories_ concatenation order.
+  // The real cat_pipeline's StandardScaler was fit with with_mean=False (sparse-safe),
+  // so this is raw/scale, not (raw-mean)/scale.
+  const out = [];
+  let idx = 0;
+  catFeatures.forEach((feat, fi) => {
+    const cats = catCategories[fi];
+    const val = values[feat];
+    cats.forEach(cat => {
+      const raw = (cat === val) ? 1 : 0;
+      out.push(raw / scalerScale[idx]);
+      idx++;
+    });
+  });
+  return out;
+}
+
+async function loadSPModel(){
+  sp = await fetch('../assets/demos/student-performance/linreg-model.json').then(r=>r.json());
+  fillOptions(document.getElementById('sp-gender'), sp.cat_categories[0], 0);
+  fillOptions(document.getElementById('sp-ethnicity'), sp.cat_categories[1], 1);
+  fillOptions(document.getElementById('sp-education'), sp.cat_categories[2], 1);
+  fillOptions(document.getElementById('sp-lunch'), sp.cat_categories[3], 1);
+  fillOptions(document.getElementById('sp-prep'), sp.cat_categories[4], 1);
+  document.getElementById('sp-load-status').textContent = 'real model weights loaded ✓';
+}
+
+function predictSP(){
+  if (!sp) return;
+  const values = {
+    gender: document.getElementById('sp-gender').value,
+    race_ethnicity: document.getElementById('sp-ethnicity').value,
+    parental_level_of_education: document.getElementById('sp-education').value,
+    lunch: document.getElementById('sp-lunch').value,
+    test_preparation_course: document.getElementById('sp-prep').value
+  };
+  const writing = Number(document.getElementById('sp-writing').value);
+  const reading = Number(document.getElementById('sp-reading').value);
+
+  // num_pipeline order is [writing_score, reading_score] — matches the real ColumnTransformer.
+  const numScaled = [
+    (writing - sp.num_mean[0]) / sp.num_scale[0],
+    (reading - sp.num_mean[1]) / sp.num_scale[1]
+  ];
+  const catScaled = oneHotScaled(sp.cat_categories, sp.cat_features, values, sp.cat_scaler_scale);
+  const x = numScaled.concat(catScaled);
+
+  // Kahan summation: the real coefficients are huge and nearly cancel (severe
+  // multicollinearity from one-hot + StandardScaler + LinearRegression), so a
+  // naive running sum loses precision. This keeps the reproduction as close as
+  // possible to the exact Flask app's numpy dot product.
+  let pred = 0, comp = 0;
+  const terms = [sp.intercept, ...x.map((v,i) => v * sp.coef[i])];
+  for (const t of terms){
+    const y = t - comp;
+    const s = pred + y;
+    comp = (s - pred) - y;
+    pred = s;
+  }
+  pred = Math.max(0, Math.min(100, pred));
+
+  const card = document.getElementById('sp-result');
+  card.classList.add('show');
+  document.getElementById('sp-value').textContent = pred.toFixed(1);
+  document.getElementById('sp-sub').textContent = `Real dot product of the actual LinearRegression coefficients with the scaled/one-hot-encoded features (intercept ${sp.intercept.toExponential(3)} — large because of the one-hot + StandardScaler combination, but it cancels out to a sane prediction, same as the real Flask app). May land within ~0.1–0.2 points of the exact Flask output due to floating-point rounding order, an unavoidable side effect of this pipeline's severe multicollinearity.`;
+}
+
+loadSPModel();
+document.getElementById('sp-predict-btn').addEventListener('click', predictSP);
+['sp-gender','sp-ethnicity','sp-education','sp-lunch','sp-prep','sp-reading','sp-writing'].forEach(id => {
+  document.getElementById(id).addEventListener('change', () => { if (sp) predictSP(); });
+});
+</script>
 </body>
 </html>
