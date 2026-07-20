@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diwali Sales Analysis — Demo Lab — Abhishek Tripathi</title>
+<meta name="description" content="EDA of ~11,251 Diwali shopping transactions to profile the highest-spending customer segments and product categories by revenue.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0b0a'/%3E%3Crect x='11' y='11' width='10' height='10' rx='2' fill='%23c9f24e'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/demos/demo.css">
+</head>
+<body>
+
+<nav class="demo-nav">
+  <a href="../index.html#projects" class="back">← back to portfolio</a>
+  <span class="mono" style="font-weight:700;font-size:13px;color:var(--mut)">demo_lab</span>
+</nav>
+
+<div class="wrap" style="padding-top:56px;padding-bottom:40px">
+  <div class="eyebrow">// eda · pandas · seaborn</div>
+  <h1 class="h1">Diwali Sales Analysis</h1>
+  <p class="lede">Exploratory analysis of ~11,251 Diwali shopping transactions to profile the highest-spending customer segments and product categories by revenue.</p>
+  <div class="chiprow">
+    <span class="chip">Pandas</span><span class="chip">Seaborn</span><span class="chip">Matplotlib</span><span class="chip">EDA</span>
+    <span class="badge-live">LIVE — real aggregates over the actual 11,251-row dataset</span>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat"><b>11,251</b><span>transactions</span></div>
+    <div class="stat"><b>₹9,453.6</b><span>avg order amount</span></div>
+    <div class="stat"><b>26–35</b><span>top buying age group</span></div>
+    <div class="stat"><b>Uttar Pradesh</b><span>top state by sales</span></div>
+  </div>
+
+  <h2 class="section-h">Explore the real data</h2>
+  <p class="lede" style="margin-top:0;font-size:13px;color:var(--mut)">Pick a dimension to slice the actual dataset by — these are real <code>groupby().sum()</code> aggregates computed from the same Diwali Sales Data.csv the notebook analyzes, not illustrative numbers.</p>
+  <div class="app-panel">
+    <div class="pill-row" id="dim-pills"></div>
+    <div class="tbl-wrap">
+      <table class="result-table" id="dim-table">
+        <thead><tr><th>#</th><th id="dim-col-label">Segment</th><th>Total revenue (₹)</th><th>Avg order (₹)</th><th>Orders</th></tr></thead>
+        <tbody id="dim-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <h2 class="section-h">Key findings</h2>
+  <ul class="findings">
+    <li>11,251 transaction records analyzed; average order amount ₹9,453.6 (max ₹23,952).</li>
+    <li>The majority of buyers are female, and women show higher purchasing power on average than men.</li>
+    <li>The top buying age group is 26–35 years old; married women are the largest high-spend segment.</li>
+    <li>Uttar Pradesh, Maharashtra, and Karnataka lead by order volume and total sales; by occupation, IT, Healthcare, and Aviation sectors spend the most.</li>
+    <li>Food, Clothing & Apparel, and Electronics & Gadgets are the top revenue-generating product categories.</li>
+  </ul>
+
+  <h2 class="section-h">Charts</h2>
+  <div class="gallery">
+    <figure>
+      <img src="../assets/demos/diwali-sales/diwali-sales-2.png" alt="Average spend by gender">
+      <figcaption>Average spend by gender</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/demos/diwali-sales/diwali-sales-6.png" alt="Top 10 states by total sales amount">
+      <figcaption>Top 10 states by total sales amount</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/demos/diwali-sales/diwali-sales-12.png" alt="Top product categories by revenue">
+      <figcaption>Top product categories by revenue</figcaption>
+    </figure>
+  </div>
+
+</div>
+
+<footer>© Abhishek Tripathi · live aggregates computed from the actual dataset; charts rendered from a pre-executed Jupyter notebook</footer>
+
+<script>
+const DIM_LABELS = {
+  'Gender': 'Gender', 'Age Group': 'Age group', 'State': 'State', 'Zone': 'Zone',
+  'Occupation': 'Occupation', 'Product_Category': 'Product category', 'Marital_Status': 'Marital status (0=single,1=married)'
+};
+let dataset = null;
+let activeDim = 'State';
+
+function renderTable(dim){
+  const rows = dataset.dimensions[dim];
+  document.getElementById('dim-col-label').textContent = DIM_LABELS[dim];
+  document.getElementById('dim-tbody').innerHTML = rows.map((r,i) => `
+    <tr>
+      <td>${i+1}</td>
+      <td>${r.label}</td>
+      <td>${r.total.toLocaleString('en-IN')}</td>
+      <td>${r.avg.toLocaleString('en-IN')}</td>
+      <td>${r.orders.toLocaleString('en-IN')}</td>
+    </tr>`).join('');
+}
+
+function renderPills(){
+  const dims = Object.keys(dataset.dimensions);
+  document.getElementById('dim-pills').innerHTML = dims.map(d =>
+    `<button type="button" class="pill${d===activeDim?' active':''}" data-dim="${d}">${DIM_LABELS[d]}</button>`
+  ).join('');
+  document.querySelectorAll('#dim-pills .pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeDim = btn.dataset.dim;
+      document.querySelectorAll('#dim-pills .pill').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      renderTable(activeDim);
+    });
+  });
+}
+
+fetch('../assets/demos/diwali-sales/diwali-aggregates.json').then(r=>r.json()).then(d => {
+  dataset = d;
+  renderPills();
+  renderTable(activeDim);
+});
+</script>
+</body>
+</html>

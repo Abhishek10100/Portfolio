@@ -1,0 +1,50 @@
+[
+  {
+    "file": "samples/crop-1.jpg",
+    "true_label": "Crop"
+  },
+  {
+    "file": "samples/crop-2.jpg",
+    "true_label": "Crop"
+  },
+  {
+    "file": "samples/crop-3.jpg",
+    "true_label": "Crop"
+  },
+  {
+    "file": "samples/crop-4.jpg",
+    "true_label": "Crop"
+  },
+  {
+    "file": "samples/crop-5.jpg",
+    "true_label": "Crop"
+  },
+  {
+    "file": "samples/crop-6.jpg",
+    "true_label": "Crop"
+  },
+  {
+    "file": "samples/weed-1.jpg",
+    "true_label": "Weed"
+  },
+  {
+    "file": "samples/weed-2.jpg",
+    "true_label": "Weed"
+  },
+  {
+    "file": "samples/weed-3.jpg",
+    "true_label": "Weed"
+  },
+  {
+    "file": "samples/weed-4.jpg",
+    "true_label": "Weed"
+  },
+  {
+    "file": "samples/weed-5.jpg",
+    "true_label": "Weed"
+  },
+  {
+    "file": "samples/weed-6.jpg",
+    "true_label": "Weed"
+  }
+]

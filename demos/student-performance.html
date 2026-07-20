@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student Performance Indicator — Demo Lab — Abhishek Tripathi</title>
+<meta name="description" content="A Flask web app that predicts a student's math exam score from demographic and academic inputs, backed by a trained regression pipeline.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0b0a'/%3E%3Crect x='11' y='11' width='10' height='10' rx='2' fill='%23c9f24e'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/demos/demo.css">
+</head>
+<body>
+
+<nav class="demo-nav">
+  <a href="../index.html#projects" class="back">← back to portfolio</a>
+  <span class="mono" style="font-weight:700;font-size:13px;color:var(--mut)">demo_lab</span>
+</nav>
+
+<div class="wrap" style="padding-top:56px;padding-bottom:40px">
+  <div class="eyebrow">// ml · flask · live demo</div>
+  <h1 class="h1">Student Performance Indicator</h1>
+  <p class="lede">A Flask web app that predicts a student's math exam score from demographic and academic inputs (gender, ethnicity, parental education, lunch type, test prep, reading/writing scores), backed by a trained regression pipeline. Unlike the other projects here, this one is a real containerized, deployed app you can actually use.</p>
+  <div class="chiprow">
+    <span class="chip">Flask</span><span class="chip">CatBoost</span><span class="chip">XGBoost</span><span class="chip">scikit-learn</span><span class="chip">Docker</span>
+  </div>
+
+  <div class="cta-row">
+    <a href="#" id="live-demo-link" class="btn-p" data-pending="true">Try the live demo →</a>
+    <span class="mono" style="color:var(--mut)">(live demo link goes here once deployed)</span>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat"><b>1,000</b><span>student records</span></div>
+    <div class="stat"><b>0.8806</b><span>Ridge R² — best model (test set)</span></div>
+    <div class="stat"><b>0.8803</b><span>Linear Regression R² (test set)</span></div>
+    <div class="stat"><b>800 / 200</b><span>train / test split</span></div>
+  </div>
+
+  <h2 class="section-h">Key findings</h2>
+  <ul class="findings">
+    <li>1,000 student records, 19 features after encoding demographic/categorical fields; 800/200 train/test split.</li>
+    <li>Benchmarked 9 regression algorithms; Ridge Regression was the best performer at R² 0.8806 on the test set, with plain Linear Regression close behind at 0.8803.</li>
+    <li>Weakest performer was a single Decision Tree at R² 0.7474 on test despite a near-perfect R² 0.9997 on training — a clear overfitting case that the ensemble/regularized models avoided.</li>
+    <li>Other results for reference: Random Forest 0.851, CatBoost 0.852, AdaBoost 0.848, XGBoost 0.828, Lasso 0.825, KNN 0.784.</li>
+    <li>EDA on the same data: average scores were math 66.09, reading 69.17, writing 68.05 — students in this dataset consistently performed worst in Math; students with a completed test-prep course and standard (vs free/reduced) lunch scored higher on average.</li>
+  </ul>
+
+  <h2 class="section-h">Charts</h2>
+  <div class="gallery">
+    <figure>
+      <img src="../assets/demos/student-performance/student-eda-1.png" alt="Score distributions across math/reading/writing">
+      <figcaption>Score distributions across math/reading/writing</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/demos/student-performance/student-eda-9.png" alt="Average scores: male vs female">
+      <figcaption>Average scores: male vs female</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/demos/student-performance/student-model-2.png" alt="Best model — actual vs predicted math score">
+      <figcaption>Best model — actual vs predicted math score</figcaption>
+    </figure>
+  </div>
+
+</div>
+
+<footer>© Abhishek Tripathi · Flask app containerized with Docker, deployed on Hugging Face Spaces</footer>
+</body>
+</html>

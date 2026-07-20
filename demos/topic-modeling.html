@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Topic Modeling: Comparing Two Political Speeches — Demo Lab — Abhishek Tripathi</title>
+<meta name="description" content="LDA, LSA, and BERTopic topic modeling applied to two political speeches given nine years apart.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0b0a'/%3E%3Crect x='11' y='11' width='10' height='10' rx='2' fill='%23c9f24e'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/demos/demo.css">
+</head>
+<body>
+
+<nav class="demo-nav">
+  <a href="../index.html#projects" class="back">← back to portfolio</a>
+  <span class="mono" style="font-weight:700;font-size:13px;color:var(--mut)">demo_lab</span>
+</nav>
+
+<div class="wrap" style="padding-top:56px;padding-bottom:40px">
+  <div class="eyebrow">// nlp · lda · bertopic</div>
+  <h1 class="h1">Topic Modeling: Comparing Two Political Speeches</h1>
+  <p class="lede">Applied LDA, LSA, and BERTopic topic modeling to two transcripts of speeches given nine years apart, to compare how NLP surfaces different themes and how much of that reflects genuine topic diversity vs sample size.</p>
+  <div class="chiprow">
+    <span class="chip">LDA</span><span class="chip">LSA</span><span class="chip">BERTopic</span><span class="chip">NLP</span><span class="chip">Gensim</span>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat"><b>352 vs 231</b><span>sentences, 2014 vs 2023</span></div>
+    <div class="stat"><b>0.605 vs 0.616</b><span>LDA coherence, 2014 vs 2023</span></div>
+  </div>
+
+  <h2 class="section-h">2014 US Speech</h2>
+  <ul class="findings">
+    <li>Corpus of 352 sentences.</li>
+    <li>LDA (5 topics) achieved a coherence score of 0.605 (perplexity -7.80); dominant themes: cleanliness/land, indian people/jobs, gratitude, country/service, visa/dreams.</li>
+    <li>LSA scored a coherence of 0.408 — lower than LDA on this run.</li>
+    <li>BERTopic found only 2 meaningful topics (330 vs 22 documents) — too few sentences for it to separate more themes.</li>
+    <li>Conclusion in the notebook: LDA gave the most interpretable topics for this smaller corpus.</li>
+  </ul>
+
+  <div class="gallery">
+    <figure>
+      <img src="../assets/demos/topic-modeling/topic-2014-1.png" alt="Word cloud of dominant topics from the 2014 speech">
+      <figcaption>Word cloud — 2014 speech</figcaption>
+    </figure>
+  </div>
+
+  <h2 class="section-h">2023 US Congress Address</h2>
+  <ul class="findings">
+    <li>Corpus of 231 sentences.</li>
+    <li>LDA coherence score 0.616 (perplexity -7.61); topics centered on partnership, democracy, world, and nation.</li>
+    <li>LSA scored a coherence of 0.547.</li>
+    <li>BERTopic identified 5 distinct topics plus outliers this time — richer separation than the 2014 run, including democracy, history/scripture, and technology/payments themes.</li>
+  </ul>
+
+  <div class="gallery">
+    <figure>
+      <img src="../assets/demos/topic-modeling/topic-2023-1.png" alt="Word cloud of dominant topics from the 2023 speech">
+      <figcaption>Word cloud — 2023 speech</figcaption>
+    </figure>
+  </div>
+
+</div>
+
+<footer>© Abhishek Tripathi · static demo rendered from a pre-executed Jupyter notebook</footer>
+</body>
+</html>

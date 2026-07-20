@@ -42,7 +42,7 @@ a:hover{color:#dbff6b}
   .section{padding:0 20px}
   #home h1{font-size:clamp(38px,12vw,64px) !important}
   #education .section, #clients .section > div:last-child{grid-template-columns:1fr !important}
-  #projects .section > div, #skills .section > div{grid-template-columns:1fr !important}
+  #projects .section > div, #skills .section > div, #demo-lab .section > div:nth-of-type(2){grid-template-columns:1fr !important}
   #stats .section{grid-template-columns:repeat(3,1fr) !important}
 }
 </style>
@@ -60,6 +60,7 @@ a:hover{color:#dbff6b}
     <div style="display:flex;gap:28px;align-items:center">
       <a class="navlink" href="#experience">experience</a>
       <a class="navlink" href="#projects">projects</a>
+      <a class="navlink" href="#demo-lab">demo lab</a>
       <a class="navlink" href="#skills">skills</a>
       <a class="navlink" href="#publication">research</a>
       <a class="navlink" href="#contact">contact</a>
@@ -284,6 +285,96 @@ a:hover{color:#dbff6b}
             <span class="chip">PaddleOCR</span><span class="chip">GPT-4o</span><span class="chip">FastAPI</span><span class="chip">AWS App Runner</span>
           </div>
         </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO LAB -->
+  <section id="demo-lab" style="padding:56px 0 40px">
+    <div class="section">
+      <div class="eyebrow reveal">// side_projects</div>
+      <h2 class="h2 reveal">Demo lab</h2>
+      <p class="mono reveal" style="margin:14px 0 0;font-size:13px;line-height:1.7;color:#c3c8ba;max-width:66ch">A set of smaller EDA/ML projects. Six run for real in your browser — actual trained models, actual datasets, actual SQL — and the rest are pre-rendered from a real, executed notebook (no server required).</p>
+      <div style="margin-top:36px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
+
+        <a class="pcard reveal" href="demos/student-performance.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div class="mono" style="font-size:10px;color:var(--acc);letter-spacing:.06em">ML · FLASK</div>
+            <span class="mono" style="font-size:9.5px;color:#0a0b0a;background:var(--acc);padding:2px 8px;border-radius:999px;font-weight:700">LIVE</span>
+          </div>
+          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">Student Performance Indicator</h3>
+          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">Predicts a student's math score from demographic &amp; academic inputs — Ridge regression, R² 0.88. Dockerized Flask app.</p>
+        </a>
+
+        <a class="pcard reveal" href="demos/retirement-age.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
+          <div class="mono" style="font-size:10px;color:var(--mut);letter-spacing:.06em">EDA · PANDAS</div>
+          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">Retirement Age Analysis</h3>
+          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">Effective retirement age across 53 countries and six decades, by gender.</p>
+        </a>
+
+        <a class="pcard reveal" href="demos/breast-cancer-svm.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div class="mono" style="font-size:10px;color:var(--acc);letter-spacing:.06em">CLASSIFICATION · SVM</div>
+            <span class="mono" style="font-size:9.5px;color:#0a0b0a;background:var(--acc);padding:2px 8px;border-radius:999px;font-weight:700">LIVE</span>
+          </div>
+          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">Breast Cancer: SVM vs KNN</h3>
+          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">Classify a tumor live — real KNN vote &amp; real RBF-SVM decision function, running in your browser.</p>
+        </a>
+
+        <a class="pcard reveal" href="demos/diwali-sales.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div class="mono" style="font-size:10px;color:var(--acc);letter-spacing:.06em">EDA · SEABORN</div>
+            <span class="mono" style="font-size:9.5px;color:#0a0b0a;background:var(--acc);padding:2px 8px;border-radius:999px;font-weight:700">LIVE</span>
+          </div>
+          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">Diwali Sales Analysis</h3>
+          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">Slice the real 11,251-transaction dataset live by gender, state, occupation &amp; more.</p>
+        </a>
+
+        <a class="pcard reveal" href="demos/ipl-score-prediction.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div class="mono" style="font-size:10px;color:var(--acc);letter-spacing:.06em">REGRESSION · SPORTS</div>
+            <span class="mono" style="font-size:9.5px;color:#0a0b0a;background:var(--acc);padding:2px 8px;border-radius:999px;font-weight:700">LIVE</span>
+          </div>
+          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">IPL Score Prediction</h3>
+          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">Pick two teams &amp; a match state — the real trained Ridge model predicts the score live.</p>
+        </a>
+
+        <a class="pcard reveal" href="demos/rice-grain-classification.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
+          <div class="mono" style="font-size:10px;color:var(--mut);letter-spacing:.06em">COMPUTER VISION · CNN</div>
+          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">Rice Grain Classification</h3>
+          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">7 CNN backbones benchmarked; MobileNet hits 99.97% on 5 rice varieties.</p>
+        </a>
+
+        <a class="pcard reveal" href="demos/topic-modeling.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
+          <div class="mono" style="font-size:10px;color:var(--mut);letter-spacing:.06em">NLP · LDA / BERTOPIC</div>
+          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">Topic Modeling</h3>
+          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">LDA, LSA &amp; BERTopic compared across two speeches nine years apart.</p>
+        </a>
+
+        <a class="pcard reveal" href="demos/weed-crop-classification.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div class="mono" style="font-size:10px;color:var(--acc);letter-spacing:.06em">COMPUTER VISION · AGRITECH</div>
+            <span class="mono" style="font-size:9.5px;color:#0a0b0a;background:var(--acc);padding:2px 8px;border-radius:999px;font-weight:700">LIVE</span>
+          </div>
+          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">Weed vs Crop Classification</h3>
+          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">Pick a real test image &amp; see each model's real per-class accuracy on it.</p>
+        </a>
+
+        <a class="pcard reveal" href="demos/product-data-sql.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div class="mono" style="font-size:10px;color:var(--acc);letter-spacing:.06em">SQL · RELATIONAL</div>
+            <span class="mono" style="font-size:9.5px;color:#0a0b0a;background:var(--acc);padding:2px 8px;border-radius:999px;font-weight:700">LIVE</span>
+          </div>
+          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">Product Data Analysis (SQL)</h3>
+          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">Run the actual 20 queries against a real in-browser SQLite database.</p>
+        </a>
+
+        <a class="pcard reveal" href="demos/resume-ats.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
+          <div class="mono" style="font-size:10px;color:var(--mut);letter-spacing:.06em">GENAI · GEMINI PRO</div>
+          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">Resume ATS Tracker</h3>
+          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">Gemini-powered resume/JD match scoring — shown as screenshots (no public API key).</p>
+        </a>
 
       </div>
     </div>

@@ -1,0 +1,109 @@
+{
+  "markdown": [
+    "## First Innings Score Prediction",
+    "## Ridge Regression",
+    "## Lasso Regression"
+  ],
+  "outputs": [
+    {
+      "type": "stream",
+      "text": "Mounted at /content/drive\n",
+      "code": "from google.colab import drive\ndrive.mount('/content/drive')"
+    },
+    {
+      "type": "text",
+      "text": "   mid        date                  venue               bat_team  \\\n0    1  2008-04-18  M Chinnaswamy Stadium  Kolkata Knight Riders   \n1    1  2008-04-18  M Chinnaswamy Stadium  Kolkata Knight Riders   \n2    1  2008-04-18  M Chinnaswamy Stadium  Kolkata Knight Riders   \n3    1  2008-04-18  M Chinnaswamy Stadium  Kolkata Knight Riders   \n4    1  2008-04-18  M Chinnaswamy Stadium  Kolkata Knight Riders   \n\n                     bowl_team      batsman   bowler  runs  wickets  overs  \\\n0  Royal Challengers Bangalore   SC Ganguly  P Kumar     1        0    0.1   \n1  Royal Challengers Bangalore  BB McCullum  P Kumar     1        0    0.2   \n2  Royal Challengers Bangalore  BB McCullum  P Kumar     2        0    0.2   \n3  Royal Challengers Bangalore  BB McCullum  P Kumar     2        0    0.3   \n4  Royal Challengers Bangalore  BB McCullum  P Kumar     2        0    0.4   \n\n   runs_last_5  wickets_last_5  striker  non-striker  total  \n0            1               0        0            0    222  \n1            1               0        0            0    222  \n2            2               0        0            0    222  \n3            2               0        0            0    222  \n4            2               0        0            0    222  ",
+      "code": "df.head()"
+    },
+    {
+      "type": "text",
+      "text": "         date               bat_team                    bowl_team  runs  \\\n0  2008-04-18  Kolkata Knight Riders  Royal Challengers Bangalore     1   \n1  2008-04-18  Kolkata Knight Riders  Royal Challengers Bangalore     1   \n2  2008-04-18  Kolkata Knight Riders  Royal Challengers Bangalore     2   \n3  2008-04-18  Kolkata Knight Riders  Royal Challengers Bangalore     2   \n4  2008-04-18  Kolkata Knight Riders  Royal Challengers Bangalore     2   \n\n   wickets  overs  runs_last_5  wickets_last_5  total  \n0        0    0.1            1               0    222  \n1        0    0.2            1               0    222  \n2        0    0.2            2               0    222  \n3        0    0.3            2               0    222  \n4        0    0.4            2               0    222  ",
+      "code": "df.head()"
+    },
+    {
+      "type": "text",
+      "text": "array(['Kolkata Knight Riders', 'Chennai Super Kings', 'Rajasthan Royals',\n       'Mumbai Indians', 'Deccan Chargers', 'Kings XI Punjab',\n       'Royal Challengers Bangalore', 'Delhi Daredevils',\n       'Kochi Tuskers Kerala', 'Pune Warriors', 'Sunrisers Hyderabad',\n       'Rising Pune Supergiants', 'Gujarat Lions',\n       'Rising Pune Supergiant'], dtype=object)",
+      "code": "df['bat_team'].unique()"
+    },
+    {
+      "type": "text",
+      "text": "          date               bat_team                    bowl_team  runs  \\\n32  2008-04-18  Kolkata Knight Riders  Royal Challengers Bangalore    61   \n33  2008-04-18  Kolkata Knight Riders  Royal Challengers Bangalore    61   \n34  2008-04-18  Kolkata Knight Riders  Royal Challengers Bangalore    61   \n35  2008-04-18  Kolkata Knight Riders  Royal Challengers Bangalore    61   \n36  2008-04-18  Kolkata Knight Riders  Royal Challengers Bangalore    61   \n\n    wickets  overs  runs_last_5  wickets_last_5  total  \n32        0    5.1           59               0    222  \n33        1    5.2           59               1    222  \n34        1    5.3           59               1    222  \n35        1    5.4           59               1    222  \n36        1    5.5           58               1    222  ",
+      "code": "df.head()"
+    },
+    {
+      "type": "stream",
+      "text": "['Kolkata Knight Riders' 'Chennai Super Kings' 'Rajasthan Royals'\n 'Mumbai Indians' 'Kings XI Punjab' 'Royal Challengers Bangalore'\n 'Delhi Daredevils' 'Sunrisers Hyderabad']\n['Royal Challengers Bangalore' 'Kings XI Punjab' 'Delhi Daredevils'\n 'Rajasthan Royals' 'Mumbai Indians' 'Chennai Super Kings'\n 'Kolkata Knight Riders' 'Sunrisers Hyderabad']\n",
+      "code": "print(df['bat_team'].unique())\nprint(df['bowl_team'].unique())"
+    },
+    {
+      "type": "text",
+      "text": "Index(['date', 'bat_team_Chennai Super Kings', 'bat_team_Delhi Daredevils',\n       'bat_team_Kings XI Punjab', 'bat_team_Kolkata Knight Riders',\n       'bat_team_Mumbai Indians', 'bat_team_Rajasthan Royals',\n       'bat_team_Royal Challengers Bangalore', 'bat_team_Sunrisers Hyderabad',\n       'bowl_team_Chennai Super Kings', 'bowl_team_Delhi Daredevils',\n       'bowl_team_Kings XI Punjab', 'bowl_team_Kolkata Knight Riders',\n       'bowl_team_Mumbai Indians', 'bowl_team_Rajasthan Royals',\n       'bowl_team_Royal Challengers Bangalore',\n       'bowl_team_Sunrisers Hyderabad', 'overs', 'runs', 'wickets',\n       'runs_last_5', 'wickets_last_5', 'total'],\n      dtype='object')",
+      "code": "encoded_df.columns"
+    },
+    {
+      "type": "text",
+      "text": "LinearRegression()",
+      "code": "# --- Model Building ---\n# Linear Regression Model\nfrom sklearn.linear_model import LinearRegression\nregressor = LinearRegression()\nregressor.fit(X_train,y_train)"
+    },
+    {
+      "type": "text",
+      "text": "GridSearchCV(cv=5, estimator=Ridge(),\n             param_grid={'alpha': [1e-15, 1e-10, 1e-08, 0.001, 0.01, 1, 5, 10,\n                                   20, 30, 35, 40]},\n             scoring='neg_mean_squared_error')",
+      "code": "ridge=Ridge()\nparameters={'alpha':[1e-15,1e-10,1e-8,1e-3,1e-2,1,5,10,20,30,35,40]}\nridge_regressor=GridSearchCV(ridge,parameters,scoring='neg_mean_squared_error',cv=5)\nridge_regressor.fit(X_train,y_train)"
+    },
+    {
+      "type": "stream",
+      "text": "/usr/local/lib/python3.10/dist-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=5.69497e-20): result may not be accurate.\n  return linalg.solve(A, Xy, assume_a=\"pos\", overwrite_a=True).T\n/usr/local/lib/python3.10/dist-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=1.41776e-18): result may not be accurate.\n  return linalg.solve(A, Xy, assume_a=\"pos\", overwrite_a=True).T\n/usr/local/lib/python3.10/dist-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=1.45454e-18): result may not be accurate.\n  return linalg.solve(A, Xy, assume_a=\"pos\", overwrite_a=True).T\n/usr/local/lib/python3.10/dist-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=1.40274e-18): result may not be accurate.\n  return linalg.solve(A, Xy, assume_a=\"pos\", overwrite_a=True).T\n/usr/local/lib/python3.10/dist-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=1.62206e-18): result may not be accurate.\n  return linalg.solve(A, Xy, assume_a=\"pos\", overwrite_a=True).T\n/usr/local/lib/python3.10/dist-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=1.57219e-18): result may not be accurate.\n  return linalg.solve(A, Xy, assume_a=\"pos\", overwrite_a=True).T\n",
+      "code": "ridge=Ridge()\nparameters={'alpha':[1e-15,1e-10,1e-8,1e-3,1e-2,1,5,10,20,30,35,40]}\nridge_regressor=GridSearchCV(ridge,parameters,scoring='neg_mean_squared_error',cv=5)\nridge_regressor.fit(X_train,y_train)"
+    },
+    {
+      "type": "stream",
+      "text": "{'alpha': 40}\n-328.41527924879233\n",
+      "code": "print(ridge_regressor.best_params_)\nprint(ridge_regressor.best_score_)"
+    },
+    {
+      "type": "text",
+      "text": "<Axes: ylabel='Density'>",
+      "code": "import seaborn as sns\nsns.distplot(y_test-prediction)"
+    },
+    {
+      "type": "image",
+      "file": "ipl-score-prediction-1.png",
+      "code": "import seaborn as sns\nsns.distplot(y_test-prediction)"
+    },
+    {
+      "type": "stream",
+      "text": "<ipython-input-29-9a474987c9bf>:2: UserWarning: \n\n`distplot` is a deprecated function and will be removed in seaborn v0.14.0.\n\nPlease adapt your code to use either `displot` (a figure-level function with\nsimilar flexibility) or `histplot` (an axes-level function for histograms).\n\nFor a guide to updating your code to use the new functions, please see\nhttps://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751\n\n  sns.distplot(y_test-prediction)\n",
+      "code": "import seaborn as sns\nsns.distplot(y_test-prediction)"
+    },
+    {
+      "type": "stream",
+      "text": "MAE: 12.117294527005022\nMSE: 251.03172964112716\nRMSE: 15.843980864704651\n",
+      "code": "from sklearn import metrics\nimport numpy as np\nprint('MAE:', metrics.mean_absolute_error(y_test, prediction))\nprint('MSE:', metrics.mean_squared_error(y_test, prediction))\nprint('RMSE:', np.sqrt(metrics.mean_squared_error(y_test, prediction)))"
+    },
+    {
+      "type": "stream",
+      "text": "{'alpha': 1}\n-320.8263789858526\n",
+      "code": "lasso=Lasso()\nparameters={'alpha':[1e-15,1e-10,1e-8,1e-3,1e-2,1,5,10,20,30,35,40]}\nlasso_regressor=GridSearchCV(lasso,parameters,scoring='neg_mean_squared_error',cv=5)\n\nlasso_regressor.fit(X_train,y_train)\nprint(lasso_regressor.best_params_)\nprint(lasso_regressor.best_score_)"
+    },
+    {
+      "type": "text",
+      "text": "<Axes: ylabel='Density'>",
+      "code": "import seaborn as sns\nsns.distplot(y_test-prediction)"
+    },
+    {
+      "type": "image",
+      "file": "ipl-score-prediction-2.png",
+      "code": "import seaborn as sns\nsns.distplot(y_test-prediction)"
+    },
+    {
+      "type": "stream",
+      "text": "<ipython-input-34-9a474987c9bf>:2: UserWarning: \n\n`distplot` is a deprecated function and will be removed in seaborn v0.14.0.\n\nPlease adapt your code to use either `displot` (a figure-level function with\nsimilar flexibility) or `histplot` (an axes-level function for histograms).\n\nFor a guide to updating your code to use the new functions, please see\nhttps://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751\n\n  sns.distplot(y_test-prediction)\n",
+      "code": "import seaborn as sns\nsns.distplot(y_test-prediction)"
+    },
+    {
+      "type": "stream",
+      "text": "MAE: 12.214053814850246\nMSE: 262.3797366400716\nRMSE: 16.198139912967527\n",
+      "code": "from sklearn import metrics\nimport numpy as np\nprint('MAE:', metrics.mean_absolute_error(y_test, prediction))\nprint('MSE:', metrics.mean_squared_error(y_test, prediction))\nprint('RMSE:', np.sqrt(metrics.mean_squared_error(y_test, prediction)))"
+    }
+  ]
+}

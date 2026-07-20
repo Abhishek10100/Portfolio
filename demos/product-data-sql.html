@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product Data Analysis using SQL — Demo Lab — Abhishek Tripathi</title>
+<meta name="description" content="Relational analysis of a manufacturers/products schema using SQL joins, filtering, and aggregate queries.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0b0a'/%3E%3Crect x='11' y='11' width='10' height='10' rx='2' fill='%23c9f24e'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/demos/demo.css">
+</head>
+<body>
+
+<nav class="demo-nav">
+  <a href="../index.html#projects" class="back">← back to portfolio</a>
+  <span class="mono" style="font-weight:700;font-size:13px;color:var(--mut)">demo_lab</span>
+</nav>
+
+<div class="wrap" style="padding-top:56px;padding-bottom:40px">
+  <div class="eyebrow">// sql · relational data analysis</div>
+  <h1 class="h1">Product Data Analysis using SQL</h1>
+  <p class="lede">A small manufacturers/products schema analyzed with a progression of SQL queries — filtering, sorting, joins across the two tables, and grouped aggregate queries (AVG, COUNT) with HAVING — to answer business questions like which manufacturer has the priciest lineup or the cheapest single product.</p>
+  <div class="chiprow">
+    <span class="chip">SQL</span><span class="chip">Joins</span><span class="chip">Aggregation</span>
+    <span class="badge-live">LIVE — real SQLite engine (sql.js/WASM) running the actual schema in your browser</span>
+  </div>
+
+  <h2 class="section-h">Charts</h2>
+  <div class="gallery">
+    <figure>
+      <img src="../assets/demos/product-data-sql/schema_figure.png" alt="Manufacturers and Products database schema ER diagram">
+      <figcaption>Database schema (ER diagram)</figcaption>
+    </figure>
+  </div>
+
+  <h2 class="section-h">Run the actual queries</h2>
+  <p class="lede" style="margin-top:0;font-size:13px;color:var(--mut)">This loads the exact CREATE TABLE / INSERT statements from the original SQL script into a real SQLite database (via sql.js, SQLite compiled to WebAssembly) running entirely in your browser. Pick any of the 20 real queries from the script below, or write your own — it executes for real against the real data.</p>
+
+  <div class="app-panel">
+    <div style="display:grid;grid-template-columns:280px 1fr;gap:22px" id="sql-layout">
+      <div>
+        <div class="mono" style="font-size:10.5px;color:var(--mut);letter-spacing:.05em;margin-bottom:8px;text-transform:uppercase">The 20 real queries from the script</div>
+        <div class="query-list" id="query-list"></div>
+      </div>
+      <div>
+        <div class="mono" style="font-size:10.5px;color:var(--mut);letter-spacing:.05em;margin-bottom:8px;text-transform:uppercase">SQL (editable)</div>
+        <textarea id="sql-editor" class="mono" style="width:100%;min-height:110px;background:var(--bg2);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:12px;font-size:12.5px;line-height:1.5;resize:vertical"></textarea>
+        <div style="margin-top:12px;display:flex;gap:12px;align-items:center">
+          <button type="button" class="btn-p" id="run-sql-btn" style="border:none;cursor:pointer">Run query →</button>
+          <span id="sql-status" class="mono" style="font-size:11.5px;color:var(--mut)">loading real SQLite engine…</span>
+        </div>
+        <div class="tbl-wrap" id="sql-result-wrap" style="display:none">
+          <table class="result-table" id="sql-result-table"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>© Abhishek Tripathi · real SQLite (sql.js/WASM) executing the actual schema and queries in your browser</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/sql.js@1.10.2/dist/sql-wasm.js"></script>
+<script>
+const SCHEMA_SQL = `
+CREATE TABLE Manufacturers (
+  Code INTEGER,
+  Name VARCHAR(255) NOT NULL,
+  PRIMARY KEY (Code)
+);
+
+CREATE TABLE Products (
+  Code INTEGER,
+  Name VARCHAR(255) NOT NULL,
+  Price DECIMAL NOT NULL,
+  Manufacturer INTEGER NOT NULL,
+  PRIMARY KEY (Code),
+  FOREIGN KEY (Manufacturer) REFERENCES Manufacturers(Code)
+);
+
+INSERT INTO Manufacturers(Code,Name) VALUES(1,'Sony');
+INSERT INTO Manufacturers(Code,Name) VALUES(2,'Creative Labs');
+INSERT INTO Manufacturers(Code,Name) VALUES(3,'Hewlett-Packard');
+INSERT INTO Manufacturers(Code,Name) VALUES(4,'Iomega');
+INSERT INTO Manufacturers(Code,Name) VALUES(5,'Fujitsu');
+INSERT INTO Manufacturers(Code,Name) VALUES(6,'Winchester');
+
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(1,'Hard drive',240,5);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(2,'Memory',120,6);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(3,'ZIP drive',150,4);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(4,'Floppy disk',5,6);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(5,'Monitor',240,1);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(6,'DVD drive',180,2);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(7,'CD drive',90,2);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(8,'Printer',270,3);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(9,'Toner cartridge',66,3);
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(10,'DVD burner',180,2);
+`;
+
+// The exact 20 queries from SQL_data_analysis.sql (1.17/1.18 adapted to single-quoted
+// string literals for SQLite; logic and target rows are identical to the original).
+const QUERIES = [
+  {n:'1.1', label:'Names of all products', sql:'SELECT Name FROM Products;'},
+  {n:'1.2', label:'Names and prices of all products', sql:'SELECT Name, Price FROM Products;'},
+  {n:'1.3', label:'Products priced <= $200', sql:'SELECT Name, Price\nFROM Products\nWHERE Price <= 200;'},
+  {n:'1.4', label:'Products priced between $60 and $120', sql:'SELECT * FROM Products WHERE Price BETWEEN 60 AND 120;'},
+  {n:'1.5', label:'Name and price in cents', sql:'SELECT Name, (Price * 100) as Price FROM Products;'},
+  {n:'1.6', label:'Average price of all products', sql:'SELECT AVG(Price) as Averageprice FROM Products;'},
+  {n:'1.7', label:'Average price for manufacturer 2', sql:'SELECT AVG(Price) AS AveragePrice FROM Products WHERE Manufacturer = 2;'},
+  {n:'1.8', label:'Count of products >= $180', sql:'SELECT Count(*) AS ProductsCount FROM Products WHERE Price >= 180;'},
+  {n:'1.9', label:'Products >= $180, sorted by price desc, name asc', sql:'SELECT Name, Price\nFROM Products\nWHERE Price >= 180\nORDER BY Price DESC, Name ASC;'},
+  {n:'1.10', label:'All product data joined with manufacturer', sql:'SELECT * FROM Products JOIN Manufacturers ON Products.Manufacturer = Manufacturers.Code;'},
+  {n:'1.11', label:'Product name, price and manufacturer name', sql:'SELECT P.name as Product_Name, P.price, M.name as Manufacturer_name FROM Products P JOIN Manufacturers M on P.Manufacturer = M.code;'},
+  {n:'1.12', label:'Avg price per manufacturer (by code)', sql:'SELECT M.code as Manufacturer_Code , AVG(P.price) AS Average_price\nFROM Products P JOIN Manufacturers M\non P.Manufacturer = M.code\nGROUP BY Manufacturer_Code;'},
+  {n:'1.13', label:'Avg price per manufacturer (by name)', sql:'SELECT M.Name as Manufacturer_Name , AVG(P.price) AS Average_price\nFROM Products P JOIN Manufacturers M\non P.Manufacturer = M.code\nGROUP BY Manufacturer_Name;'},
+  {n:'1.14', label:'Manufacturers with avg price >= $150', sql:'SELECT M.Name as Manufacturer_Name , AVG(P.price) AS Average_price\nFROM Products P JOIN Manufacturers M\non P.Manufacturer = M.code\nGROUP BY M.Name\nHAVING AVG(P.price) >= 150;'},
+  {n:'1.15', label:'Name and price of the cheapest product', sql:'SELECT Name, price\nFROM Products\nORDER BY price ASC\nLIMIT 1;'},
+  {n:'1.16', label:'Manufacturer plus its priciest product', sql:'SELECT M.Name as Manufacturer_Name , P.name as Product_name, P.price AS Product_price\nFROM Products P JOIN Manufacturers M\non P.Manufacturer = M.code\nORDER BY Product_price DESC\nLIMIT 1;'},
+  {n:'1.17', label:'Add product: Loudspeakers, $70, mfr 2', sql:"INSERT INTO Products VALUES (11, 'Loudspeakers', 70, 2);\nSELECT * FROM Products WHERE Code = 11;"},
+  {n:'1.18', label:'Rename product 8 to Laser Printer', sql:"UPDATE Products\nSET name = 'Laser Printer'\nWHERE Code = 8;\nSELECT * FROM Products WHERE Code = 8;"},
+  {n:'1.19', label:'Apply a 10% discount to all products', sql:'UPDATE Products\nSET price = price*0.9;\nSELECT * FROM Products;'},
+  {n:'1.20', label:'10% discount on products >= $120', sql:'UPDATE Products\nSET price = price*0.9\nWHERE price >= 120;\nSELECT * FROM Products;'}
+];
+
+let db = null;
+
+function renderQueryList(){
+  const list = document.getElementById('query-list');
+  list.innerHTML = QUERIES.map((q,i) => `<button type="button" class="query-item" data-idx="${i}">${q.n} — ${q.label}</button>`).join('');
+  list.querySelectorAll('.query-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      list.querySelectorAll('.query-item').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('sql-editor').value = QUERIES[Number(btn.dataset.idx)].sql;
+      runQuery();
+    });
+  });
+}
+
+function runQuery(){
+  const sql = document.getElementById('sql-editor').value;
+  const wrap = document.getElementById('sql-result-wrap');
+  const table = document.getElementById('sql-result-table');
+  try {
+    const results = db.exec(sql);
+    if (!results.length){
+      wrap.style.display = 'block';
+      table.innerHTML = '<tr><td class="mono" style="padding:12px;color:var(--mut)">Query executed — no rows returned (e.g. an INSERT/UPDATE with no trailing SELECT).</td></tr>';
+      return;
+    }
+    const {columns, values} = results[results.length - 1];
+    wrap.style.display = 'block';
+    table.innerHTML = `<thead><tr>${columns.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+      <tbody>${values.map(row => `<tr>${row.map(v=>`<td>${v===null?'NULL':v}</td>`).join('')}</tr>`).join('')}</tbody>`;
+  } catch(e){
+    wrap.style.display = 'block';
+    table.innerHTML = `<tr><td class="mono" style="padding:12px;color:#ff8080">SQL error: ${e.message}</td></tr>`;
+  }
+}
+
+initSqlJs({ locateFile: file => `https://cdn.jsdelivr.net/npm/sql.js@1.10.2/dist/${file}` }).then(SQL => {
+  db = new SQL.Database();
+  db.run(SCHEMA_SQL);
+  document.getElementById('sql-status').textContent = 'real SQLite engine loaded ✓ — schema and data seeded';
+  renderQueryList();
+  document.getElementById('sql-editor').value = QUERIES[0].sql;
+  document.querySelector('.query-item').classList.add('active');
+  runQuery();
+});
+
+document.getElementById('run-sql-btn').addEventListener('click', runQuery);
+</script>
+</body>
+</html>

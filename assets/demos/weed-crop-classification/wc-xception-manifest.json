@@ -1,0 +1,45 @@
+{
+  "markdown": [],
+  "outputs": [
+    {
+      "type": "stream",
+      "text": "/opt/conda/lib/python3.10/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.16.5 and <1.23.0 is required for this version of SciPy (detected version 1.24.3\n  warnings.warn(f\"A NumPy version >={np_minversion} and <{np_maxversion}\"\n",
+      "code": "# Importing Required Libraries\nimport os\nimport numpy as np\nfrom sklearn.model_selection import train_test_split\nfrom keras.preprocessing.image import load_img, img_to_array\nfrom keras.utils import to_categorical\nfrom sklearn.model_selection import train_test_split\nfrom keras.preprocessing.image import ImageDataGenerator\nfrom keras.applications import Xception\nfrom keras.models import Sequential\nf"
+    },
+    {
+      "type": "stream",
+      "text": "X_train shape: (4200, 299, 299, 3), y_train shape: (4200, 2)\nX_val shape: (900, 299, 299, 3), y_val shape: (900, 2)\nX_test shape: (900, 299, 299, 3), y_test shape: (900, 2)\n",
+      "code": "# Split the dataset into training, validation, and test sets\nX_train, X_temp, y_train, y_temp = train_test_split(data, labels, test_size=0.3, random_state=42)\nX_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)\n\n# Convert labels to one-hot encoding\ny_train = to_categorical(y_train, num_classes=2)\ny_val = to_categorical(y_val, num_classes=2)\ny_test = to_c"
+    },
+    {
+      "type": "stream",
+      "text": "Downloading data from https://storage.googleapis.com/tensorflow/keras-applications/xception/xception_weights_tf_dim_ordering_tf_kernels_notop.h5\n83683744/83683744 [==============================] - 0s 0us/step\n",
+      "code": "# Define class weights to handle imbalance\nclass_labels = np.unique(labels)\nclass_weights = compute_class_weight(class_weight='balanced', classes=class_labels, y=labels)\nclass_weight_dict = dict(zip(class_labels, class_weights))\n\n# Step 5: Model Selection - Xception\ndef create_xception_model(input_shape=(299, 299, 3), num_classes=2):\n    base_model = Xception(weights='imagenet', include_top=False,"
+    },
+    {
+      "type": "stream",
+      "text": "Model: \"sequential\"\n_________________________________________________________________\n Layer (type)                Output Shape              Param #   \n=================================================================\n xception (Functional)       (None, 10, 10, 2048)      20861480  \n                                                                 \n global_average_pooling2d (  (None, 2048)              0         \n GlobalAveragePooling2D)                                         \n                                                                 \n dense (Dense)               (None, 1024)              2098176   \n                                                                 \n dense_1 (Dense)             (None, 2)                 2050      \n                                                                 \n=================================================================\nTotal params: 22961706 (87.59 MB)\nTrainable params: 2100226 (8.01 MB)\nNon-trainable params: 20861480 (79.58 MB)\n_________________________________________________________________\n",
+      "code": "# Compile the model with class weights\nmodel.compile(optimizer=Adam(learning_rate=0.001),\n              loss='binary_crossentropy',\n              metrics=['accuracy'])\n\n# Display the model summary\nmodel.summary()"
+    },
+    {
+      "type": "stream",
+      "text": "900/900 [==============================] - 10s 10ms/step\n              precision    recall  f1-score   support\n\n        Crop       1.00      0.99      0.99       440\n        Weed       0.99      1.00      0.99       460\n\n    accuracy                           0.99       900\n   macro avg       0.99      0.99      0.99       900\nweighted avg       0.99      0.99      0.99       900\n\n",
+      "code": "# Create a data generator for the test set\ntest_generator = ImageDataGenerator(rescale=1./255).flow(X_test, y_test, batch_size=1, shuffle=False)\n\n# Get predictions from the model\ny_pred = model.predict(test_generator)\ny_pred_classes = np.argmax(y_pred, axis=1)\ny_true = np.argmax(y_test, axis=1)\n\n# Compute the classification report\nreport = classification_report(y_true, y_pred_classes, target_names"
+    },
+    {
+      "type": "image",
+      "file": "wc-xception-1.png",
+      "code": "#Visualize Training and Validation Curves\n# Extract training history from the history object\ntraining_loss = history.history['loss']\ntraining_accuracy = history.history['accuracy']\nvalidation_loss = history.history['val_loss']\nvalidation_accuracy = history.history['val_accuracy']\n\n# Plot training and validation loss\nplt.figure(figsize=(12, 4))\nplt.subplot(1, 2, 1)\nplt.plot(training_loss, label='Tr"
+    },
+    {
+      "type": "image",
+      "file": "wc-xception-2.png",
+      "code": "#Analyze Misclassified Images\nimport random\n\nmisclassified_images = []\n\nfor i in range(len(y_true)):\n    if y_pred_classes[i] != y_true[i]:\n        misclassified_images.append((X_test[i], y_pred_classes[i], y_true[i]))\n\n# Randomly select and display some misclassified images\nplt.figure(figsize=(12, 6))\nnum_displayed = min(6, len(misclassified_images))\nfor i in range(num_displayed):\n    index = ran"
+    },
+    {
+      "type": "image",
+      "file": "wc-xception-3.png",
+      "code": "# Compute the confusion matrix\nconfusion = confusion_matrix(y_true, y_pred_classes)\n\n# Plot the confusion matrix\nlabels = ['Crop', 'Weed']\nplt.figure(figsize=(6, 4))\nsns.heatmap(confusion, annot=True, fmt=\"d\", cmap=\"Blues\", xticklabels=labels, yticklabels=labels)\nplt.xlabel('Predicted')\nplt.ylabel('True')\nplt.title('Confusion Matrix')\nplt.show()"
+    }
+  ]
+}

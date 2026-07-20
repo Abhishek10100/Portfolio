@@ -1,0 +1,50 @@
+{
+  "markdown": [],
+  "outputs": [
+    {
+      "type": "stream",
+      "text": "[RangeIndex(start=0, stop=699, step=1), Index(['id', 'clump_thickness', 'uniform_cell_size', 'uniform_cell_shape',\n       'marginal_adhesion', 'single_epithelial_size', 'bare_nuclei',\n       'bland_chromatin', 'normal_nucleoli', 'mitoses', 'class'],\n      dtype='object')]\n",
+      "code": "# Preprocess the data\ndf.replace('?',-99999, inplace=True)\nprint(df.axes)\n\ndf.drop(['id'], axis=1, inplace=True)"
+    },
+    {
+      "type": "stream",
+      "text": "clump_thickness           1\nuniform_cell_size         1\nuniform_cell_shape        1\nmarginal_adhesion         1\nsingle_epithelial_size    1\nbare_nuclei               1\nbland_chromatin           3\nnormal_nucleoli           1\nmitoses                   1\nclass                     2\nName: 10, dtype: object\n(699, 10)\n",
+      "code": "# Let explore the dataset and do a few visualizations\nprint(df.loc[10])\n\n# Print the shape of the dataset\nprint(df.shape)"
+    },
+    {
+      "type": "stream",
+      "text": "       clump_thickness  uniform_cell_size  uniform_cell_shape  \\\ncount       699.000000         699.000000          699.000000   \nmean          4.417740           3.134478            3.207439   \nstd           2.815741           3.051459            2.971913   \nmin           1.000000           1.000000            1.000000   \n25%           2.000000           1.000000            1.000000   \n50%           4.000000           1.000000            1.000000   \n75%           6.000000           5.000000            5.000000   \nmax          10.000000          10.000000           10.000000   \n\n       marginal_adhesion  single_epithelial_size  bland_chromatin  \\\ncount         699.000000              699.000000       699.000000   \nmean            2.806867                3.216023         3.437768   \nstd             2.855379                2.214300         2.438364   \nmin             1.000000                1.000000         1.000000   \n25%             1.000000                2.000000         2.000000   \n50%             1.000000                2.000000         3.000000   \n75%             4.000000                4.000000         5.000000   \nmax            10.000000               10.000000        10.000000   \n\n       normal_nucleoli     mitoses       class  \ncount       699.000000  699.000000  699.000000  \nmean          2.866953    1.589413    2.689557  \nstd           3.053634    1.715078    0.951273  \nmin           1.000000    1.000000    2.000000  \n25%           1.000000    1.000000    2.000000  \n50%           1.000000    1.000000    2.000000  \n75%           4.000000    1.000000    4.000000  \nmax          10.000000   10.000000    4.000000  \n",
+      "code": "# Describe the dataset\nprint(df.describe())"
+    },
+    {
+      "type": "image",
+      "file": "breast-cancer-svm-1.png",
+      "code": "# Plot histograms for each variable\ndf.hist(figsize = (10, 10))\nplt.show()"
+    },
+    {
+      "type": "image",
+      "file": "breast-cancer-svm-2.png",
+      "code": "# Create scatter plot matrix\nscatter_matrix(df, figsize = (18,18))\nplt.show()"
+    },
+    {
+      "type": "stream",
+      "text": "KNN: 0.967727 (0.023908)\nSVM: 0.638734 (0.027495)\n",
+      "code": "# Define models to train\nmodels = []\nmodels.append(('KNN', KNeighborsClassifier(n_neighbors = 5)))\nmodels.append(('SVM', SVC()))\n\n# evaluate each model in turn\nresults = []\nnames = []\n\nfor name, model in models:\n    kfold = model_selection.KFold(n_splits=10, shuffle = True)\n    cv_results = model_selection.cross_val_score(model, X_train, y_train, cv=kfold, scoring=scoring)\n    results.append(cv_re"
+    },
+    {
+      "type": "stream",
+      "text": "KNN\n0.9785714285714285\n              precision    recall  f1-score   support\n\n           2       0.99      0.98      0.99       101\n           4       0.95      0.97      0.96        39\n\n    accuracy                           0.98       140\n   macro avg       0.97      0.98      0.97       140\nweighted avg       0.98      0.98      0.98       140\n\nSVM\n0.7214285714285714\n              precision    recall  f1-score   support\n\n           2       0.72      1.00      0.84       101\n           4       0.00      0.00      0.00        39\n\n    accuracy                           0.72       140\n   macro avg       0.36      0.50      0.42       140\nweighted avg       0.52      0.72      0.60       140\n\n",
+      "code": "# Make predictions on validation dataset\n\nfor name, model in models:\n    model.fit(X_train, y_train)\n    predictions = model.predict(X_test)\n    print(name)\n    print(accuracy_score(y_test, predictions))\n    print(classification_report(y_test, predictions))\n\n# Accuracy - ratio of correctly predicted observation to the total observations.\n# Precision - (false positives) ratio of correctly predicted"
+    },
+    {
+      "type": "stream",
+      "text": "/usr/local/lib/python3.10/dist-packages/sklearn/metrics/_classification.py:1344: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.\n  _warn_prf(average, modifier, msg_start, len(result))\n/usr/local/lib/python3.10/dist-packages/sklearn/metrics/_classification.py:1344: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.\n  _warn_prf(average, modifier, msg_start, len(result))\n/usr/local/lib/python3.10/dist-packages/sklearn/metrics/_classification.py:1344: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.\n  _warn_prf(average, modifier, msg_start, len(result))\n",
+      "code": "# Make predictions on validation dataset\n\nfor name, model in models:\n    model.fit(X_train, y_train)\n    predictions = model.predict(X_test)\n    print(name)\n    print(accuracy_score(y_test, predictions))\n    print(classification_report(y_test, predictions))\n\n# Accuracy - ratio of correctly predicted observation to the total observations.\n# Precision - (false positives) ratio of correctly predicted"
+    },
+    {
+      "type": "stream",
+      "text": "0.7214285714285714\n[2]\n",
+      "code": "clf = SVC()\n\nclf.fit(X_train, y_train)\naccuracy = clf.score(X_test, y_test)\nprint(accuracy)\n\nexample_measures = np.array([[4,2,1,1,1,2,3,2,1]])\nexample_measures = example_measures.reshape(len(example_measures), -1)\nprediction = clf.predict(example_measures)\nprint(prediction)"
+    }
+  ]
+}

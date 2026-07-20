@@ -1,0 +1,200 @@
+{
+  "markdown": [
+    "# Topic Modeling on our Hon.PM Shri Narendra Modi's Speech (Recorded Session Transcript)\n\n![Topic Modeling PM US Speech](https://cdn.zeebiz.com/sites/default/files/2023/06/23/248256-india-us-joint-statement-2023-full-text-details-of-president-joe-biden-and-pm-narendra-modi.jpg)\n\nAfter converting the speech-to-text recorded session of our Hon.PM Shri Narendra Modi during his America Visit in 2014, now it is time to preprocess the text and implement various topic modeling algorithms, namely, **Latent Dirichlet Allocation (LDA)**, **Latent Semantic Analysis (LSA)**, and **BERTopic**.\n\nSo, without further ado, Let\u2019s begin.\n",
+    "### Downloading required packages",
+    "### Importing the Relevant Libraries",
+    "### Preparing Stopwords",
+    "### Importing our Corpus Document",
+    "There are only 352 sentences in my corpus from the recoded session of our Hon.PM Narendra Modi's Speech. This is a very small dataset, but to test our hypostasis of how well different types of topic models cope with this type of small dataset we will have to implement this corpus and reach the relevant conclusions based on the results.\n\nSo, let's continue",
+    "### Removing Emails and Newline Characters",
+    "### Tokenizing Words and Clean-Up Text",
+    "### Creating Bigram and Trigram Models",
+    "### Removing Stopwords and Making Bigrams and Lemmatization",
+    "### Creating the Dictionary and Corpus needed for Topic Modeling",
+    "### Building the LDA Topic Model\n\n**Latent Dirichlet Allocation (LDA)** is a generative statistical model that explains a set of observations through unobserved groups, and each group explains why some parts of the data are similar. In this, observations (e.g., words) are collected into documents, and each word's presence is attributable to one of the document's topics. Each document will contain a small number of topics.\nLDA is one of the most popular topic modeling methods.",
+    "### Viewing the Topics in The LDA Model",
+    "### Computing Model Perplexity and Coherence Score",
+    "### Visualizing the Topics-Keywords",
+    "# Latent Semantic Analysis (LSA) Topic Modeling\nLatent Semantic Analysis (LSA) also known as Latent Semantic Index (LSI) is a natural language processing method that analyzes relationships between a set of documents and the terms contained within. It uses singular value decomposition, a mathematical technique, to scan unstructured data to find hidden relationships between terms and concepts.\n\n\n\n\n\n  \n",
+    "\n\n\n\n\nAgain, We can obtain the coherence score with the Gensim module. Let\u2019s see how the coherence score is for the LSA model for a total of 5 topics (The same number of topics as We initially chose for the LDA model. For comparison purposes).  \n**Note** - LsiModel does not function with the log_preplexity for the calculation of the perplexity score the same as LDA does. So, I will drop the perplexity score and focus my attention only to the coherence score.",
+    "We get a better Coherence Score this time by using LsiModel",
+    "### Performing SVD",
+    "##\n\n# BERTopic\n\n**BERTopic** is a topic modeling technique that leverages \ud83e\udd17 transformers and c-TF-IDF to create dense clusters allowing for easily interpretable topics whilst keeping important words in the topic descriptions.\n",
+    "\n\n\n\nAfter preprocessing the dataset early in my project and reaching to a final lemmatized dataset (named: **data_lemmatized**) containing the final product words that We have been working with. Now, We want to add those words to my dataframe as a set of rows and their corresponding words. After doing that, We would like to convert does words back to sentences for the purpose of using the sentence transformer model from BERTopic.",
+    "### Importing a Pre-Trained Model from SentenceTransformer",
+    "### Encodinng The Preprocessed Text Data",
+    "### Getting Topics Using BERTopic and SentenceTransformer Embeddings",
+    "The topic name -1 refers to all documents that did not have any topics assigned.\nNot all documents are forced towards a certain cluster. If no cluster could be found, then it is simply an outlier.",
+    "After generating topics and their probabilities, I can access the frequent topics that were generated.",
+    "I can view all the topics discussed in all of the documents.",
+    "There is some favorable advantage for the LDA model over the other two models with regards to the interpretation and insights regarding the theme discussed in the recorded session. Explaining the results and reaching the relevant conclusions will take part in the paper that will be submitted along side this code implementation.",
+    "\n\n ### THANK YOU\n\n      \n        \n          \n          \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n![Thank You NLP](https://miro.medium.com/max/960/0*xLRsbQ02J7sQpNNy)\n\n\n"
+  ],
+  "outputs": [
+    {
+      "type": "stream",
+      "text": "Mounted at /content/drive\n",
+      "code": "from google.colab import drive\ndrive.mount('/content/drive')"
+    },
+    {
+      "type": "stream",
+      "text": "Collecting lexrank\n  Downloading lexrank-0.1.0-py3-none-any.whl (69 kB)\n\u001b[2K     \u001b[90m\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u001b[0m \u001b[32m69.8/69.8 kB\u001b[0m \u001b[31m1.3 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n\u001b[?25hRequirement already satisfied: numpy>=1.13.3 in /usr/local/lib/python3.10/dist-packages (from lexrank) (1.25.2)\nCollecting path.py>=10.5 (from lexrank)\n  Downloading path.py-12.5.0-py3-none-any.whl (2.3 kB)\nCollecting pyrsistent>=0.14.0 (from lexrank)\n  Downloading pyrsistent-0.20.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (117 kB)\n\u001b[2K     \u001b[90m\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u001b[0m \u001b[32m117.7/117.7 kB\u001b[0m \u001b[31m2.5 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n\u001b[?25hRequirement already satisfied: regex>=2017.11.9 in /usr/local/lib/python3.10/dist-packages (from lexrank) (2023.12.25)\nRequirement already satisfied: scipy>=0.19.0 in /usr/local/lib/python3.10/dist-packages (from lexrank) (1.11.4)\nCollecting urlextract>=0.7 (from lexrank)\n  Downloading urlextract-1.9.0-py3-none-any.whl (21 kB)\nCollecting path (from path.py>=10.5->lexrank)\n  Downloading path-16.14.0-py3-none-any.whl (25 kB)\nRequirement already satisfied: idna in /usr/local/lib/python3.10/dist-packages (from urlextract>=0.7->lexrank) (3.6)\nCollecting uritools (from urlextract>=0.7->lexrank)\n  Downloading uritools-4.0.2-py3-none-any.whl (10 kB)\nRequirement already satisfied: platformdirs in /usr/local/lib/python3.10/dist-packages (from urlextract>=0.7->lexrank) (4.2.0)\nRequirement already satisfied: filelock in /usr/local/lib/python3.10/dist-packages (from urlextract>=0.7->lexrank) (3.13.3)\nInstalling collected packages: uritools, pyrsistent, path, urlextract, path.py, lexrank\nSuccessfully installed lexrank-0.1.0 path-16.14.0 path.py-12.5.0 pyrsistent-0.20.0 uritools-4.0.2 urlextract-1.9.0\n",
+      "code": "pip install lexrank"
+    },
+    {
+      "type": "stream",
+      "text": "Collecting pyLDAvis\n  Downloading pyLDAvis-3.4.1-py3-none-any.whl (2.6 MB)\n\u001b[2K     \u001b[90m\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u001b[0m \u001b[32m2.6/2.6 MB\u001b[0m \u001b[31m11.4 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n\u001b[?25hRequirement already satisfied: numpy>=1.24.2 in /usr/local/lib/python3.10/dist-packages (from pyLDAvis) (1.25.2)\nRequirement already satisfied: scipy in /usr/local/lib/python3.10/dist-packages (from pyLDAvis) (1.11.4)\nRequirement already satisfied: pandas>=2.0.0 in /usr/local/lib/python3.10/dist-packages (from pyLDAvis) (2.0.3)\nRequirement already satisfied: joblib>=1.2.0 in /usr/local/lib/python3.10/dist-packages (from pyLDAvis) (1.3.2)\nRequirement already satisfied: jinja2 in /usr/local/lib/python3.10/dist-packages (from pyLDAvis) (3.1.3)\nRequirement already satisfied: numexpr in /usr/local/lib/python3.10/dist-packages (from pyLDAvis) (2.10.0)\nCollecting funcy (from pyLDAvis)\n  Downloading funcy-2.0-py2.py3-none-any.whl (30 kB)\nRequirement already satisfied: scikit-learn>=1.0.0 in /usr/local/lib/python3.10/dist-packages (from pyLDAvis) (1.2.2)\nRequirement already satisfied: gensim in /usr/local/lib/python3.10/dist-packages (from pyLDAvis) (4.3.2)\nRequirement already satisfied: setuptools in /usr/local/lib/python3.10/dist-packages (from pyLDAvis) (67.7.2)\nRequirement already satisfied: python-dateutil>=2.8.2 in /usr/local/lib/python3.10/dist-packages (from pandas>=2.0.0->pyLDAvis) (2.8.2)\nRequirement already satisfied: pytz>=2020.1 in /usr/local/lib/python3.10/dist-packages (from pandas>=2.0.0->pyLDAvis) (2023.4)\nRequirement already satisfied: tzdata>=2022.1 in /usr/local/lib/python3.10/dist-packages (from pandas>=2.0.0->pyLDAvis) (2024.1)\nRequirement already satisfied: threadpoolctl>=2.0.0 in /usr/local/lib/python3.10/dist-packages (from scikit-learn>=1.0.0->pyLDAvis) (3.4.0)\nRequirement already satisfied: smart-open>=1.8.1 in /usr/local/lib/python3.10/dist-packages (from gensim->pyLDAvis) (6.4.0)\nRequirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.10/dist-packages (from jinja2->pyLDAvis) (2.1.5)\nRequirement already satisfied: six>=1.5 in /usr/local/lib/python3.10/dist-packages (from python-dateutil>=2.8.2->pandas>=2.0.0->pyLDAvis) (1.16.0)\nInstalling collected packages: funcy, pyLDAvis\nSuccessfully installed funcy-2.0 pyLDAvis-3.4.1\n",
+      "code": "pip install pyLDAvis"
+    },
+    {
+      "type": "stream",
+      "text": "Collecting pdfplumber\n  Downloading pdfplumber-0.11.0-py3-none-any.whl (56 kB)\n\u001b[2K     \u001b[90m\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u001b[0m \u001b[32m56.4/56.4 kB\u001b[0m \u001b[31m740.4 kB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n\u001b[?25hCollecting pdfminer.six==20231228 (from pdfplumber)\n  Downloading pdfminer.six-20231228-py3-none-any.whl (5.6 MB)\n\u001b[2K     \u001b[90m\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u001b[0m \u001b[32m5.6/5.6 MB\u001b[0m \u001b[31m16.5 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n\u001b[?25hRequirement already satisfied: Pillow>=9.1 in /usr/local/lib/python3.10/dist-packages (from pdfplumber) (9.4.0)\nCollecting pypdfium2>=4.18.0 (from pdfplumber)\n  Downloading pypdfium2-4.29.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.8 MB)\n\u001b[2K     \u001b[90m\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u001b[0m \u001b[32m2.8/2.8 MB\u001b[0m \u001b[31m53.3 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n\u001b[?25hRequirement already satisfied: charset-normalizer>=2.0.0 in /usr/local/lib/python3.10/dist-packages (from pdfminer.six==20231228->pdfplumber) (3.3.2)\nRequirement already satisfied: cryptography>=36.0.0 in /usr/local/lib/python3.10/dist-packages (from pdfminer.six==20231228->pdfplumber) (42.0.5)\nRequirement already satisfied: cffi>=1.12 in /usr/local/lib/python3.10/dist-packages (from cryptography>=36.0.0->pdfminer.six==20231228->pdfplumber) (1.16.0)\nRequirement already satisfied: pycparser in /usr/local/lib/python3.10/dist-packages (from cffi>=1.12->cryptography>=36.0.0->pdfminer.six==20231228->pdfplumber) (2.22)\nInstalling collected packages: pypdfium2, pdfminer.six, pdfplumber\nSuccessfully installed pdfminer.six-20231228 pdfplumber-0.11.0 pypdfium2-4.29.0\n",
+      "code": "pip install pdfplumber"
+    },
+    {
+      "type": "stream",
+      "text": "[nltk_data] Downloading package stopwords to /root/nltk_data...\n[nltk_data]   Unzipping corpora/stopwords.zip.\n[nltk_data] Downloading package punkt to /root/nltk_data...\n[nltk_data]   Unzipping tokenizers/punkt.zip.\n",
+      "code": "# Importing general libraries\nimport re\nimport numpy as np\nimport pandas as pd\nfrom pprint import pprint\nimport pdfplumber\n\n# Importing the Gensim library\nimport gensim\nimport gensim.corpora as corpora\nfrom gensim.utils import simple_preprocess\nfrom gensim.models import CoherenceModel\n\n# I will use this library for implementing the truncated singular value decomposition for the LSA model\nfrom gens"
+    },
+    {
+      "type": "stream",
+      "text": "                                            sentence\n0                                 Hail Mother India!\n1           My dear brothers and sisters in America!\n2  All the respectable dignitaries of American po...\n3  My greetings as well to the people who could n...\n4             Wishing you all a Very Happy Navratri!\n5  The festival of Navratri is meant to worship p...\n6                  It is a festival of purification.\n7   It is an occasion to\\nstrengthen our dedication.\n8  I have the good fortune of meeting you on such...\n9  I am\\nproud that my fellow countrymen who desp...\n",
+      "code": "# Open the PDF file\nwith pdfplumber.open('/content/drive/MyDrive/Topic Modeling/USA2014.pdf') as pdf:\n    # Extract text from all pages\n    text = ''\n    for page in pdf.pages:\n        text += page.extract_text()\n\n# Tokenize the text into sentences\nsentences = nltk.sent_tokenize(text)\n\n# Create a DataFrame from the sentences\ndf = pd.DataFrame(sentences, columns=['sentence'])\n\n# Display the first 1"
+    },
+    {
+      "type": "text",
+      "text": "(-0.5, 399.5, 199.5, -0.5)",
+      "code": "plt.subplot(1, 2, 1)\nplt.imshow(wordcloud1, interpolation='bilinear')\nplt.title('Word Cloud for 2014 Speech')\nplt.axis('off')"
+    },
+    {
+      "type": "image",
+      "file": "topic-2014-1.png",
+      "code": "plt.subplot(1, 2, 1)\nplt.imshow(wordcloud1, interpolation='bilinear')\nplt.title('Word Cloud for 2014 Speech')\nplt.axis('off')"
+    },
+    {
+      "type": "text",
+      "text": "(352,)",
+      "code": "df['sentence'].shape"
+    },
+    {
+      "type": "text",
+      "text": "352",
+      "code": "len(data_lemmatized)"
+    },
+    {
+      "type": "stream",
+      "text": "[(0,\n  '0.036*\"problem\" + 0.029*\"take\" + 0.025*\"time\" + 0.022*\"land\" + 0.020*\"bear\" '\n  '+ 0.019*\"motherland\" + 0.016*\"create\" + 0.012*\"migrant\" + 0.012*\"school\" + '\n  '0.011*\"cleanliness\"'),\n (1,\n  '0.042*\"people\" + 0.037*\"want\" + 0.036*\"indian\" + 0.028*\"give\" + '\n  '0.026*\"thing\" + 0.025*\"make\" + 0.019*\"get\" + 0.017*\"love\" + 0.016*\"think\" + '\n  '0.015*\"job\"'),\n (2,\n  '0.076*\"thank\" + 0.066*\"much\" + 0.055*\"come\" + 0.026*\"go\" + 0.018*\"heart\" + '\n  '0.016*\"single\" + 0.016*\"start\" + 0.015*\"study\" + 0.013*\"believe\" + '\n  '0.011*\"even\"'),\n (3,\n  '0.051*\"year\" + 0.039*\"country\" + 0.027*\"tell\" + 0.022*\"choose\" + '\n  '0.019*\"service\" + 0.018*\"news\" + 0.018*\"man\" + 0.017*\"let\" + 0.016*\"great\" '\n  '+ 0.014*\"expectation\"'),\n (4,\n  '0.028*\"visit\" + 0.026*\"issue\" + 0.024*\"small\" + 0.023*\"visa\" + '\n  '0.021*\"clean\" + 0.020*\"dream\" + 0.020*\"repay\" + 0.017*\"gange\" + '\n  '0.017*\"long\" + 0.016*\"look\"')]\n",
+      "code": "# Printing the Keyword in the 5 topics\npprint(lda_model.print_topics())\ndoc_lda = lda_model[corpus]"
+    },
+    {
+      "type": "stream",
+      "text": "\nPerplexity Score:  -7.803490569851006\n\nCoherence Score:  0.6052783727470896\n",
+      "code": "# Computing Perplexity\nprint('\\nPerplexity Score: ', lda_model.log_perplexity(corpus))  # a measure of how good the model is. lower the better.\n\n# Computing Coherence Score\ncoherence_model_lda = CoherenceModel(model=lda_model, texts=data_lemmatized, dictionary=id2word, coherence='c_v')\ncoherence_lda = coherence_model_lda.get_coherence()\nprint('\\nCoherence Score: ', coherence_lda)"
+    },
+    {
+      "type": "text",
+      "text": "PreparedData(topic_coordinates=              x         y  topics  cluster       Freq\ntopic                                                \n1     -0.150545  0.146711       1        1  25.057290\n3     -0.012752 -0.090420       2        1  22.545328\n2      0.204296  0.087917       3        1  18.010168\n0     -0.026053 -0.073578       4        1  17.533329\n4     -0.014945 -0.070631       5        1  16.853887, topic_info=         Term       Freq      Total Category  logprob  loglift\n131     thank  24.000000  24.000000  Default  30.0000  30.0000\n123      much  21.000000  21.000000  Default  29.0000  29.0000\n126      come  17.000000  17.000000  Default  28.0000  28.0000\n61       year  20.000000  20.000000  Default  27.0000  27.0000\n20     people  18.000000  18.000000  Default  26.0000  26.0000\n..        ...        ...        ...      ...      ...      ...\n671      visa   6.565898  13.643222   Topic5  -3.7812   1.0492\n602     gange   4.950542  10.012118   Topic5  -4.0636   1.0763\n669      card   2.190945   5.288824   Topic5  -4.8787   0.8993\n670    holder   2.190945   5.288824   Topic5  -4.8787   0.8993\n692  national   1.883282   3.404402   Topic5  -5.0301   1.1885\n\n[204 rows x 6 columns], token_table=      Topic      Freq         Term\nterm                              \n445       5  0.792356   accomplish\n659       4  0.758714    ahmedabad\n3         4  0.603296     american\n628       3  0.637478  anniversary\n69        2  0.935432          ask\n...     ...       ...          ...\n508       5  0.919294        visit\n186       1  0.962419         want\n15        3  0.868930        watch\n91        5  0.736305        world\n61        2  0.982006         year\n\n[201 rows x 3 columns], R=30, lambda_step=0.01, plot_opts={'xlab': 'PC1', 'ylab': 'PC2'}, topic_order=[2, 4, 3, 1, 5])",
+      "code": "# Visualizing the topics using pyLDAvis package's interactive chart\npyLDAvis.enable_notebook()\nvis = pyLDAvis.gensim_models.prepare(lda_model, corpus, id2word)\nvis"
+    },
+    {
+      "type": "stream",
+      "text": "/usr/local/lib/python3.10/dist-packages/joblib/externals/loky/backend/fork_exec.py:38: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.\n  pid = os.fork()\n",
+      "code": "# Visualizing the topics using pyLDAvis package's interactive chart\npyLDAvis.enable_notebook()\nvis = pyLDAvis.gensim_models.prepare(lda_model, corpus, id2word)\nvis"
+    },
+    {
+      "type": "stream",
+      "text": "\nCoherence Score:  0.4077889778595365\n",
+      "code": "lsi = LsiModel(corpus, num_topics=5, id2word=id2word, chunksize=10)\n\n# Computing Coherence Score\ncoherence_model_lsi = CoherenceModel(model=lsi, texts=data_lemmatized, dictionary=id2word, coherence='c_v')\ncoherence_lsi = coherence_model_lsi.get_coherence()\nprint('\\nCoherence Score: ', coherence_lsi)"
+    },
+    {
+      "type": "stream",
+      "text": "Words in 0: 0.539*\"people\" + 0.402*\"nation\" + 0.335*\"country\" + 0.287*\"world\" + 0.230*\"want\" + 0.128*\"come\" + 0.118*\"make\" + 0.107*\"youth\" + 0.106*\"old\" + 0.106*\"development\".\nWords in 1: 0.650*\"nation\" + -0.443*\"people\" + -0.206*\"country\" + 0.203*\"world\" + 0.190*\"youth\" + 0.138*\"year\" + -0.132*\"want\" + -0.118*\"make\" + 0.106*\"population\" + 0.106*\"create\".\nWords in 2: 0.627*\"country\" + 0.300*\"world\" + -0.254*\"development\" + -0.206*\"people\" + -0.203*\"movement\" + -0.174*\"make\" + -0.158*\"government\" + -0.132*\"nation\" + -0.131*\"become\" + -0.129*\"freedom\".\nWords in 3: -0.684*\"world\" + 0.331*\"country\" + 0.254*\"nation\" + -0.250*\"come\" + -0.131*\"settle\" + -0.118*\"part\" + 0.110*\"make\" + 0.105*\"want\" + -0.088*\"believe\" + -0.087*\"faith\".\nWords in 4: 0.454*\"make\" + -0.321*\"come\" + -0.311*\"people\" + 0.293*\"want\" + 0.272*\"world\" + 0.223*\"development\" + 0.164*\"movement\" + -0.125*\"say\" + 0.119*\"brother\" + 0.119*\"sister\".\n",
+      "code": "# finding the 10 words with the srongest association to the derived topics\nfor topic_num, words in lsi.print_topics(num_words=10):\n    print('Words in {}: {}.'.format(topic_num, words))"
+    },
+    {
+      "type": "text",
+      "text": "                                            sentence  \\\n0                                 Hail Mother India!   \n1           My dear brothers and sisters in America!   \n2  All the respectable dignitaries of American po...   \n3  My greetings as well to the people who could n...   \n4             Wishing you all a Very Happy Navratri!   \n\n                                        text_cleaned  \n0                                                     \n1                               dear brother sister   \n2  respectable dignitary american politic especia...  \n3  greeting well people make auditorium stand out...  \n4                               wish happy navratri   ",
+      "code": "df.head()"
+    },
+    {
+      "type": "text",
+      "text": "modules.json:   0%|          | 0.00/349 [00:00<?, ?B/s]",
+      "code": "# Getting a model\nmodel=SentenceTransformer('all-MiniLM-L12-v2')"
+    },
+    {
+      "type": "text",
+      "text": "config_sentence_transformers.json:   0%|          | 0.00/116 [00:00<?, ?B/s]",
+      "code": "# Getting a model\nmodel=SentenceTransformer('all-MiniLM-L12-v2')"
+    },
+    {
+      "type": "text",
+      "text": "README.md:   0%|          | 0.00/10.7k [00:00<?, ?B/s]",
+      "code": "# Getting a model\nmodel=SentenceTransformer('all-MiniLM-L12-v2')"
+    },
+    {
+      "type": "text",
+      "text": "sentence_bert_config.json:   0%|          | 0.00/53.0 [00:00<?, ?B/s]",
+      "code": "# Getting a model\nmodel=SentenceTransformer('all-MiniLM-L12-v2')"
+    },
+    {
+      "type": "text",
+      "text": "config.json:   0%|          | 0.00/615 [00:00<?, ?B/s]",
+      "code": "# Getting a model\nmodel=SentenceTransformer('all-MiniLM-L12-v2')"
+    },
+    {
+      "type": "text",
+      "text": "model.safetensors:   0%|          | 0.00/133M [00:00<?, ?B/s]",
+      "code": "# Getting a model\nmodel=SentenceTransformer('all-MiniLM-L12-v2')"
+    },
+    {
+      "type": "text",
+      "text": "tokenizer_config.json:   0%|          | 0.00/352 [00:00<?, ?B/s]",
+      "code": "# Getting a model\nmodel=SentenceTransformer('all-MiniLM-L12-v2')"
+    },
+    {
+      "type": "text",
+      "text": "vocab.txt:   0%|          | 0.00/232k [00:00<?, ?B/s]",
+      "code": "# Getting a model\nmodel=SentenceTransformer('all-MiniLM-L12-v2')"
+    },
+    {
+      "type": "text",
+      "text": "tokenizer.json:   0%|          | 0.00/466k [00:00<?, ?B/s]",
+      "code": "# Getting a model\nmodel=SentenceTransformer('all-MiniLM-L12-v2')"
+    },
+    {
+      "type": "text",
+      "text": "special_tokens_map.json:   0%|          | 0.00/112 [00:00<?, ?B/s]",
+      "code": "# Getting a model\nmodel=SentenceTransformer('all-MiniLM-L12-v2')"
+    },
+    {
+      "type": "text",
+      "text": "1_Pooling/config.json:   0%|          | 0.00/190 [00:00<?, ?B/s]",
+      "code": "# Getting a model\nmodel=SentenceTransformer('all-MiniLM-L12-v2')"
+    },
+    {
+      "type": "text",
+      "text": "   Topic  Count\n1      0    330\n0      1     22",
+      "code": "# viewing how frequent certain topics are\nmodel2.get_topic_freq().head()"
+    },
+    {
+      "type": "text",
+      "text": "[('people', 0.07182939556183957),\n ('world', 0.058273442204651235),\n ('nation', 0.05386321153277649),\n ('country', 0.050817780187583594),\n ('want', 0.04443938943648876),\n ('make', 0.04443938943648876),\n ('come', 0.03936428632796287),\n ('take', 0.03760851284149504),\n ('government', 0.03581729050732219),\n ('year', 0.03581729050732219)]",
+      "code": "model2.get_topic(0)"
+    },
+    {
+      "type": "text",
+      "text": "[('news', 1.1436291132333678),\n ('pain', 0.7501223854374177),\n ('rich', 0.7501223854374177),\n ('definitely', 0.7501223854374177),\n ('commonality', 0.7501223854374177),\n ('return', 0.6732359106201996),\n ('hope', 0.6732359106201996),\n ('different', 0.5964788598186745),\n ('', 1e-05),\n ('', 1e-05)]",
+      "code": "model2.get_topic(1)"
+    },
+    {
+      "type": "text",
+      "text": "False",
+      "code": "model2.get_topic(2)"
+    },
+    {
+      "type": "text",
+      "text": "{0: [('people', 0.07182939556183957),\n  ('world', 0.058273442204651235),\n  ('nation', 0.05386321153277649),\n  ('country', 0.050817780187583594),\n  ('want', 0.04443938943648876),\n  ('make', 0.04443938943648876),\n  ('come', 0.03936428632796287),\n  ('take', 0.03760851284149504),\n  ('government', 0.03581729050732219),\n  ('year', 0.03581729050732219)],\n 1: [('news', 1.1436291132333678),\n  ('pain', 0.7501223854374177),\n  ('rich', 0.7501223854374177),\n  ('definitely', 0.7501223854374177),\n  ('commonality', 0.7501223854374177),\n  ('return', 0.6732359106201996),\n  ('hope', 0.6732359106201996),\n  ('different', 0.5964788598186745),\n  ('', 1e-05),\n  ('', 1e-05)]}",
+      "code": "model2.get_topics()"
+    }
+  ]
+}

@@ -1,0 +1,226 @@
+{
+  "markdown": [
+    "# **Student Performance Indicator**",
+    "### **Life cycle of Machine learning Project**\n* Understanding the Problem Statement\n* Data Collection\n* Data Checks to perform\n* Exploratory data analysis\n* Data Pre-Processing\n* Model Training\n* Choose best model",
+    "1) Problem statement\n* This project understands how the student's performance (test scores) is affected by other variables such as Gender, Ethnicity, Parental level of education, Lunch and Test preparation course.\n2) Data Collection\n* Dataset Source - https://www.kaggle.com/datasets/spscientist/students-performance-in-exams?datasetId=74977\n* The data consists of 8 column and 1000 rows.",
+    "### **2.1 Import Data and Required Packages**",
+    "**Importing Pandas, Numpy, Matplotlib, Seaborn and Warings Library.**",
+    "**Importing the CSV Data as Pandas framework**",
+    "## **2.2 Dataset information**\n* gender : sex of students -> (Male/female)\n* race/ethnicity : ethnicity of students -> (Group A, B,C, D,E)\n* parental level of education : parents' final education ->(bachelor's degree,some college,master's degree,associate's degree,high school)\n* lunch : having lunch before test (standard or free/reduced)\n* test preparation course : complete or not complete before test\n* math score\n* reading score\n* writing score",
+    "**3. Data Checks to perform**\n* Check Missing values\n* Check Duplicates\n* Check data type\n* Check the number of unique values of each column\n* Check statistics of data set\n* Check various categories present in the different categorical column",
+    "**3.1 Checking missing values**",
+    "There is no missing values in the dataset",
+    "**3.2 Checking Duplicate values**",
+    "There are no duplicate values in the data set",
+    "**3.3 Check data types**",
+    "**Checking the number od unique values of each column** ",
+    "**Insights**\n\n* From above description of Numerical data in dataset, all means are very close to each other between 66 and 68.\n* All standard deviation are also close between 14.6 and 15.19\n* While there is a minmum score of 0 for math, for writing minimum is higher i.e. 10, and for reading it is higher = 17.",
+    "## **Exploring Data**",
+    "## **3.8 Adding columns for \"total score\" and \"average\"**",
+    "**Insights**\n\n* From above values we get students have performed the worst in Maths\n* Best performance is in reading section",
+    "## **4. Exploring Data (Visualization)**",
+    "4.1 Visualize average score distribution to make some conclusions.\n* Histogram\n* Kernel Distribution Function (KDE)",
+    "Insights\n* Female students tend to perform well than male students.",
+    "Insights\n- Standard lunch helps perform well in exams.\n- Standard lunch helps perform well in exams be it a male or a female.",
+    "Insights\n- In general parent's education don't help student perform well in exam.\n- 2nd plot shows that parent's whose education is of associate's degree or master's degree their male child tend to perform well in exam\n- 3rd plot we can see there is no effect of parent's education on female students.",
+    "Insights\n- Students of group A and group B tends to perform poorly in exam.\n- Students of group A and group B tends to perform poorly in exam irrespective of whether they are male or female",
+    "#### 4.2 Maximum score of students in all three subjects",
+    "Insights\n- From the above three plots its clearly visible that most of the students score in between 60-80 in Maths whereas in reading and writing most of them score from 50-80",
+    "#### 4.3 Multivariate analysis using pieplot",
+    "#####  Insights\n- Number of Male and Female students is almost equal\n- Number students are greatest in Group C\n- Number of students who have standard lunch are greater\n- Number of students who have not enrolled in any test preparation course is greater\n- Number of students whose parental education is \"Some College\" is greater followed closely by \"Associate's Degree\"",
+    "#### 4.4 Feature Wise Visualization\n\n#### 4.4.1 Gender Column\n- How is distribution of Gender ?\n- Is gender has any impact on student's performance ?",
+    "#### Univariate Analysis ( How is distribution of Gender ? )",
+    "#### Insights \n- Gender has balanced data with female students are 518 (48%) and male students are 482 (52%) ",
+    "#### Bivariate Analysis ( Is gender has any impact on student's performance ? ) ",
+    "#### Insights \n- On an average females have a better overall score than men.\n- whereas males have scored higher in Maths.",
+    "#### 4.4.2 RACE / EHNICITY COLUMN\n- How is Group wise distribution ?\n- Is Race/Ehnicity has any impact on student's performance ?",
+    "#### Univariate Analysis ( How is Group wise distribution ?)",
+    "#### Insights \n- Most of the student belonging from group C /group D.\n- Lowest number of students belong to groupA.",
+    "#### Bivariate Analysis ( Is Race / Ethinicity has any impact on student's performance ? ) ",
+    "#### Insights \n- Group E students have scored the highest marks. \n- Group A students have scored the lowest marks. \n- Students from a lower Socioeconomic status have a lower avg in all course subjects",
+    "#### 4.4.3 PARENTAL LEVEL OF EDUCATION COLUMN\n- What is educational background of student's parent ?\n- Is parental education has any impact on student's performance ?",
+    "#### Univariate Analysis ( What is educational background of student's parent ? )",
+    "#### Insights \n- Largest number of parents are from some college.",
+    "#### Bivariate Analysis ( Is parental education has any impact on student's performance ? )",
+    "#### Insights \n- The score of student whose parents possess master and bachelor level education are higher than others.",
+    "#### 4.4.4 Lunch Column \n- Which type of lunch is most common amoung students ?\n- What is the effect of lunch type on test results?\n",
+    "#### Univariate Analysis ( Which type of lunch is most common amoung students ? )",
+    "#### Insights \n- Students being served Standard lunch was more than free lunch",
+    "#### Bivariate Analysis (  Is lunch type intake has any impact on student's performance ? )",
+    "#### Insights \n- Students who get Standard Lunch tend to perform better than students who got free/reduced lunch",
+    "#### 4.4.5 TEST PREPARATION COURSE COLUMN \n- Which type of lunch is most common amoung students ?\n- Is Test prepration course has any impact on student's performance ?",
+    "#### Bivariate Analysis ( Is Test prepration course has any impact on student's performance ? )",
+    "#### Insights  \n- Students who have completed the Test Prepration Course have scores higher in all three categories than those who haven't taken the course",
+    "#### 4.4.6 CHECKING OUTLIERS",
+    "#### 4.4.7 MUTIVARIATE ANALYSIS USING PAIRPLOT",
+    "#### Insights\n- From the above plot it is clear that all the scores increase linearly with each other.",
+    "### 5. Conclusions\n- Student's Performance is related with lunch, race, parental level education\n- Females lead in pass percentage and also are top-scorers\n- Student's Performance is not much related with test preparation course\n- Finishing preparation course is benefitial."
+  ],
+  "outputs": [
+    {
+      "type": "text",
+      "text": "   gender race_ethnicity parental_level_of_education         lunch  \\\n0  female        group B           bachelor's degree      standard   \n1  female        group C                some college      standard   \n2  female        group B             master's degree      standard   \n3    male        group A          associate's degree  free/reduced   \n4    male        group C                some college      standard   \n\n  test_preparation_course  math_score  reading_score  writing_score  \n0                    none          72             72             74  \n1               completed          69             90             88  \n2                    none          90             95             93  \n3                    none          47             57             44  \n4                    none          76             78             75  ",
+      "code": "# Top 5 records from dataset\ndf.head()"
+    },
+    {
+      "type": "text",
+      "text": "(1000, 8)",
+      "code": "# Shape of the dataset\ndf.shape"
+    },
+    {
+      "type": "text",
+      "text": "gender                         0\nrace_ethnicity                 0\nparental_level_of_education    0\nlunch                          0\ntest_preparation_course        0\nmath_score                     0\nreading_score                  0\nwriting_score                  0\ndtype: int64",
+      "code": "df.isna().sum()"
+    },
+    {
+      "type": "text",
+      "text": "0",
+      "code": "# Checking duplicate values\ndf.duplicated().sum()"
+    },
+    {
+      "type": "stream",
+      "text": "<class 'pandas.core.frame.DataFrame'>\nRangeIndex: 1000 entries, 0 to 999\nData columns (total 8 columns):\n #   Column                       Non-Null Count  Dtype \n---  ------                       --------------  ----- \n 0   gender                       1000 non-null   object\n 1   race_ethnicity               1000 non-null   object\n 2   parental_level_of_education  1000 non-null   object\n 3   lunch                        1000 non-null   object\n 4   test_preparation_course      1000 non-null   object\n 5   math_score                   1000 non-null   int64 \n 6   reading_score                1000 non-null   int64 \n 7   writing_score                1000 non-null   int64 \ndtypes: int64(3), object(5)\nmemory usage: 62.6+ KB\n",
+      "code": "# Check null and Dtypes\ndf.info()"
+    },
+    {
+      "type": "text",
+      "text": "gender                          2\nrace_ethnicity                  5\nparental_level_of_education     6\nlunch                           2\ntest_preparation_course         2\nmath_score                     81\nreading_score                  72\nwriting_score                  77\ndtype: int64",
+      "code": "df.nunique()"
+    },
+    {
+      "type": "text",
+      "text": "       math_score  reading_score  writing_score\ncount  1000.00000    1000.000000    1000.000000\nmean     66.08900      69.169000      68.054000\nstd      15.16308      14.600192      15.195657\nmin       0.00000      17.000000      10.000000\n25%      57.00000      59.000000      57.750000\n50%      66.00000      70.000000      69.000000\n75%      77.00000      79.000000      79.000000\nmax     100.00000     100.000000     100.000000",
+      "code": "# Statistics of dataset\ndf.describe()"
+    },
+    {
+      "type": "stream",
+      "text": "gender column has: ['female', 'male'] classes\nrace_ethnicity column has: ['group C', 'group D', 'group B', 'group E', 'group A'] classes\nparental_level_of_education column has: ['some college', \"associate's degree\", 'high school', 'some high school', \"bachelor's degree\", \"master's degree\"] classes\nlunch column has: ['standard', 'free/reduced'] classes\ntest_preparation_course column has: ['none', 'completed'] classes\n",
+      "code": "for col in df.columns:\n    if df[col].dtype == \"object\":\n        classes = df[col].value_counts().index\n        print(f\"{col} column has: {list(classes)} classes\")"
+    },
+    {
+      "type": "stream",
+      "text": "Numerical features: ['math_score', 'reading_score', 'writing_score']\nCategorical features: ['gender', 'race_ethnicity', 'parental_level_of_education', 'lunch', 'test_preparation_course']\n",
+      "code": "# Defining categorical and numerical features\nnumerical_features = [col for col in df.columns if df[col].dtype != \"O\"]\ncategorical_features = [col for col in df.columns if df[col].dtype == \"O\"]\n\nprint(\"Numerical features:\", numerical_features)\nprint(\"Categorical features:\", categorical_features)"
+    },
+    {
+      "type": "text",
+      "text": "   gender race_ethnicity parental_level_of_education         lunch  \\\n0  female        group B           bachelor's degree      standard   \n1  female        group C                some college      standard   \n2  female        group B             master's degree      standard   \n3    male        group A          associate's degree  free/reduced   \n4    male        group C                some college      standard   \n\n  test_preparation_course  math_score  reading_score  writing_score  \\\n0                    none          72             72             74   \n1               completed          69             90             88   \n2                    none          90             95             93   \n3                    none          47             57             44   \n4                    none          76             78             75   \n\n   total score    average  \n0          218  72.666667  \n1          247  82.333333  \n2          278  92.666667  \n3          148  49.333333  \n4          229  76.333333  ",
+      "code": "df['total score'] = df['reading_score'] + df['math_score'] + df['writing_score']\n\ndf['average'] = df['total score']/3\n\ndf.head()"
+    },
+    {
+      "type": "stream",
+      "text": "Number of students with full marks in Maths: 7\nNumber of students with full marks in Writing: 14\nNumber of students with full marks in Reading: 17\n",
+      "code": "reading_full = df[df['reading_score'] == 100]['average'].count()\nmath_full = df[df['math_score'] == 100]['average'].count()\nwriting_full = df[df['writing_score'] == 100]['average'].count()\n\nprint(\"Number of students with full marks in Maths:\",math_full)\nprint(\"Number of students with full marks in Writing:\",writing_full)\nprint(\"Number of students with full marks in Reading:\",reading_full)"
+    },
+    {
+      "type": "stream",
+      "text": "Number of students with less than 20 marks in Maths: 4\nNumber of students with less than 20 marks in Writing: 3\nNumber of students with less than 20 marks in Reading: 1\n",
+      "code": "reading_less_20 = df[df['reading_score'] <=20]['average'].count()\nmath_less_20 = df[df['math_score'] <=20]['average'].count()\nwriting_less_20 = df[df['writing_score'] <=20]['average'].count()\n\nprint(\"Number of students with less than 20 marks in Maths:\",math_less_20)\nprint(\"Number of students with less than 20 marks in Writing:\",writing_less_20)\nprint(\"Number of students with less than 20 marks in"
+    },
+    {
+      "type": "image",
+      "file": "student-eda-1.png",
+      "code": "fig, axi = plt.subplots(1, 2, figsize = (15, 7))\nplt.subplot(121)\nsns.histplot(data = df, x = 'average', bins=30, kde = True, color = 'g')\nplt.subplot(122)\nsns.histplot(data=df, x='average', kde=True, hue = 'gender')\nplt.show()"
+    },
+    {
+      "type": "image",
+      "file": "student-eda-2.png",
+      "code": "fig, axs = plt.subplots(1, 2, figsize = (15, 7))\nplt.subplot(121)\nsns.histplot(data = df, x = 'total score', bins=30, kde = True, color = 'g')\nplt.subplot(122)\nsns.histplot(data=df, x='total score', kde=True, hue = 'gender')\nplt.show()"
+    },
+    {
+      "type": "image",
+      "file": "student-eda-3.png",
+      "code": "plt.subplots(1,3,figsize=(25,6))\nplt.subplot(141)\nsns.histplot(data=df,x='average',kde=True,hue='lunch')\nplt.subplot(142)\nsns.histplot(data=df[df.gender=='female'],x='average',kde=True,hue='lunch')\nplt.subplot(143)\nsns.histplot(data=df[df.gender=='male'],x='average',kde=True,hue='lunch')\nplt.show()"
+    },
+    {
+      "type": "image",
+      "file": "student-eda-4.png",
+      "code": "plt.subplots(1,3,figsize=(25,6))\nplt.subplot(141)\nax =sns.histplot(data=df,x='average',kde=True,hue='parental_level_of_education')\nplt.subplot(142)\nax =sns.histplot(data=df[df.gender=='male'],x='average',kde=True,hue='parental_level_of_education')\nplt.subplot(143)\nax =sns.histplot(data=df[df.gender=='female'],x='average',kde=True,hue='parental_level_of_education')\nplt.show()"
+    },
+    {
+      "type": "image",
+      "file": "student-eda-5.png",
+      "code": "plt.subplots(1,3,figsize=(25,6))\nplt.subplot(141)\nax =sns.histplot(data=df,x='average',kde=True,hue='race_ethnicity')\nplt.subplot(142)\nax =sns.histplot(data=df[df.gender=='female'],x='average',kde=True,hue='race_ethnicity')\nplt.subplot(143)\nax =sns.histplot(data=df[df.gender=='male'],x='average',kde=True,hue='race_ethnicity')\nplt.show()"
+    },
+    {
+      "type": "image",
+      "file": "student-eda-6.png",
+      "code": "plt.figure(figsize=(18,8))\nplt.subplot(1, 4, 1)\nplt.title('MATH SCORES')\nsns.violinplot(y='math_score',data=df,color='red',linewidth=3)\nplt.subplot(1, 4, 2)\nplt.title('READING SCORES')\nsns.violinplot(y='reading_score',data=df,color='green',linewidth=3)\nplt.subplot(1, 4, 3)\nplt.title('WRITING SCORES')\nsns.violinplot(y='writing_score',data=df,color='blue',linewidth=3)\nplt.show()"
+    },
+    {
+      "type": "text",
+      "text": "Index(['gender', 'race_ethnicity', 'parental_level_of_education', 'lunch',\n       'test_preparation_course', 'math_score', 'reading_score',\n       'writing_score', 'total score', 'average'],\n      dtype='object')",
+      "code": "df.columns"
+    },
+    {
+      "type": "image",
+      "file": "student-eda-7.png",
+      "code": "plt.rcParams['figure.figsize'] = (30, 12)\n\nplt.subplot(1, 5, 1)\nsize = df['gender'].value_counts()\nlabels = 'Female', 'Male'\ncolor = ['red','green']\n\n\nplt.pie(size, colors = color, labels = labels,autopct = '.%2f%%')\nplt.title('Gender', fontsize = 20)\nplt.axis('off')\n\n\n\nplt.subplot(1, 5, 2)\nsize = df['race_ethnicity'].value_counts()\nlabels = 'Group C', 'Group D','Group B','Group E','Group A'\ncolor"
+    },
+    {
+      "type": "image",
+      "file": "student-eda-8.png",
+      "code": "f,ax=plt.subplots(1,2,figsize=(20,10))\nsns.countplot(x=df['gender'],data=df,palette ='bright',ax=ax[0],saturation=0.95)\nfor container in ax[0].containers:\n    ax[0].bar_label(container,color='black',size=20)\n    \nplt.pie(x=df['gender'].value_counts(),labels=['Male','Female'],explode=[0,0.1],autopct='%1.1f%%',shadow=True,colors=['#ff4d4d','#ff8000'])\nplt.show()"
+    },
+    {
+      "type": "text",
+      "text": "        race_ethnicity  parental_level_of_education  lunch  \\\ngender                                                       \nfemale             518                          518    518   \nmale               482                          482    482   \n\n        test_preparation_course  math_score  reading_score  writing_score  \\\ngender                                                                      \nfemale                      518         518            518            518   \nmale                        482         482            482            482   \n\n        total score  average  \ngender                        \nfemale          518      518  \nmale            482      482  ",
+      "code": "gender_group = df.groupby(by=['gender']).count()\ngender_group"
+    },
+    {
+      "type": "image",
+      "file": "student-eda-9.png",
+      "code": "plt.figure(figsize=(10, 8))\n\nX = ['Total Average','Math Average']\n\n\nfemale_scores = [gender_group['average'][0], gender_group['math_score'][0]]\nmale_scores = [gender_group['average'][1], gender_group['math_score'][1]]\n\nX_axis = np.arange(len(X))\n  \nplt.bar(X_axis - 0.2, male_scores, 0.4, label = 'Male')\nplt.bar(X_axis + 0.2, female_scores, 0.4, label = 'Female')\n  \nplt.xticks(X_axis, X)\nplt.ylabel"
+    },
+    {
+      "type": "image",
+      "file": "student-eda-10.png",
+      "code": "f,ax=plt.subplots(1,2,figsize=(20,10))\nsns.countplot(x=df['race_ethnicity'],data=df,palette = 'bright',ax=ax[0],saturation=0.95)\nfor container in ax[0].containers:\n    ax[0].bar_label(container,color='black',size=20)\n    \nplt.pie(x = df['race_ethnicity'].value_counts(),labels=df['race_ethnicity'].value_counts().index,explode=[0.1,0,0,0,0],autopct='%1.1f%%',shadow=True)\nplt.show()   "
+    },
+    {
+      "type": "image",
+      "file": "student-eda-11.png",
+      "code": "Group_data2=df.groupby('race_ethnicity')\nf,ax=plt.subplots(1,3,figsize=(20,8))\nsns.barplot(x=Group_data2['math_score'].mean().index,y=Group_data2['math_score'].mean().values,palette = 'mako',ax=ax[0])\nax[0].set_title('Math score',color='#005ce6',size=20)\n\nfor container in ax[0].containers:\n    ax[0].bar_label(container,color='black',size=15)\n\nsns.barplot(x=Group_data2['reading_score'].mean().index"
+    },
+    {
+      "type": "image",
+      "file": "student-eda-12.png",
+      "code": "plt.rcParams['figure.figsize'] = (15, 9)\nplt.style.use('fivethirtyeight')\nsns.countplot(df['parental_level_of_education'], palette = 'Blues')\nplt.title('Comparison of Parental Education', fontweight = 30, fontsize = 20)\nplt.xlabel('Degree')\nplt.ylabel('count')\nplt.show()"
+    },
+    {
+      "type": "image",
+      "file": "student-eda-13.png",
+      "code": "parents_education = df.groupby(by=['parental_level_of_education'])['average'].agg('mean').index\nstudent_perf = df.groupby(by=['parental_level_of_education'])['average'].agg('mean').values\n\nsns.scatterplot(x = parents_education, y = student_perf)\nplt.title(\"Students performance based on parental education\")\nplt.show()"
+    },
+    {
+      "type": "image",
+      "file": "student-eda-14.png",
+      "code": "plt.rcParams['figure.figsize'] = (15, 9)\nsns.countplot(x = df['lunch'], palette = 'PuBu')\nplt.title('Comparison of different types of lunch', fontweight = 30, fontsize = 20)\nplt.xlabel('types of lunch')\nplt.ylabel('count')\nplt.show()"
+    },
+    {
+      "type": "image",
+      "file": "student-eda-15.png",
+      "code": "plt.figure(figsize=(10,8))\nsns.countplot(x=df['parental_level_of_education'],data=df,palette = 'bright',hue='lunch',saturation=0.95)\nplt.xticks(rotation=45)\nfor container in plt.gca().containers:\n    plt.gca().bar_label(container, color='black', size=20)\nplt.show()"
+    },
+    {
+      "type": "text",
+      "text": "Index(['gender', 'race_ethnicity', 'parental_level_of_education', 'lunch',\n       'test_preparation_course', 'math_score', 'reading_score',\n       'writing_score', 'total score', 'average'],\n      dtype='object')",
+      "code": "df.columns"
+    },
+    {
+      "type": "image",
+      "file": "student-eda-16.png",
+      "code": "plt.figure(figsize=(20,15))\nplt.subplot(2,2,1)\nsns.barplot (x=df['lunch'], y=df['math_score'], hue=df['test_preparation_course'])\nplt.subplot(2,2,2)\nsns.barplot (x=df['lunch'], y=df['reading_score'], hue=df['test_preparation_course'])\nplt.subplot(2,2,3)\nsns.barplot (x=df['lunch'], y=df['writing_score'], hue=df['test_preparation_course'])\nplt.show()"
+    },
+    {
+      "type": "image",
+      "file": "student-eda-17.png",
+      "code": "plt.subplots(1,4,figsize=(16,16))\nplt.subplot(141)\nsns.boxplot(df['math_score'],color='skyblue')\nplt.subplot(142)\nsns.boxplot(df['reading_score'],color='hotpink')\nplt.subplot(143)\nsns.boxplot(df['writing_score'],color='yellow')\nplt.subplot(144)\nsns.boxplot(df['average'],color='lightgreen')\n\nplt.show()"
+    },
+    {
+      "type": "image",
+      "file": "student-eda-18.png",
+      "code": "sns.pairplot(df,hue = 'gender')\nplt.show()"
+    }
+  ]
+}

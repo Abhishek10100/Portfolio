@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weed vs Crop Image Classification — Demo Lab — Abhishek Tripathi</title>
+<meta name="description" content="Binary image classifier distinguishing crop plants from weeds, benchmarked across InceptionV3, LeNet-5, and Xception CNN architectures.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0b0a'/%3E%3Crect x='11' y='11' width='10' height='10' rx='2' fill='%23c9f24e'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/demos/demo.css">
+</head>
+<body>
+
+<nav class="demo-nav">
+  <a href="../index.html#projects" class="back">← back to portfolio</a>
+  <span class="mono" style="font-weight:700;font-size:13px;color:var(--mut)">demo_lab</span>
+</nav>
+
+<div class="wrap" style="padding-top:56px;padding-bottom:40px">
+  <div class="eyebrow">// computer vision · cnn · agritech</div>
+  <h1 class="h1">Weed vs Crop Image Classification</h1>
+  <p class="lede">Binary image classifier distinguishing crop plants from weeds for real-time agricultural identification, benchmarked across three CNN architectures of very different size and complexity.</p>
+  <div class="chiprow">
+    <span class="chip">TensorFlow</span><span class="chip">CNN</span><span class="chip">Transfer Learning</span><span class="chip">Computer Vision</span>
+    <span class="badge-live">LIVE — real test-set images, real classification-report metrics</span>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat"><b>99.44%</b><span>InceptionV3 val accuracy</span></div>
+    <div class="stat"><b>~91.6K params</b><span>LeNet-5, 99% test accuracy</span></div>
+    <div class="stat"><b>22.96M params</b><span>Xception, 99% test accuracy</span></div>
+  </div>
+
+  <h2 class="section-h">Pick a real sample image</h2>
+  <p class="lede" style="margin-top:0;font-size:13px;color:var(--mut)">The full trained CNN weights aren't shipped to the browser (they're gigabytes), so this isn't live inference — instead, pick one of these 12 real images from the actual Crop/Weed dataset used to train and test the models. You'll see its real ground-truth label plus each model's actual measured precision/recall/f1 for that exact class, straight from their real classification reports on the 900-image test set.</p>
+  <div class="app-panel">
+    <div class="sample-grid" id="sample-grid"></div>
+    <div class="result-card" id="sample-result">
+      <div class="rlabel">Ground truth (real label from the dataset)</div>
+      <div class="rvalue" id="sample-label">—</div>
+      <div class="tbl-wrap" style="margin-top:14px">
+        <table class="result-table">
+          <thead><tr><th>Model</th><th>Precision</th><th>Recall</th><th>F1</th></tr></thead>
+          <tbody id="sample-metrics"></tbody>
+        </table>
+      </div>
+      <div class="rsub" id="sample-sub"></div>
+    </div>
+  </div>
+
+  <h2 class="section-h">InceptionV3 (transfer learning)</h2>
+  <ul class="findings">
+    <li>Dataset split into 4,200 train / 900 validation / 900 test images at 128×128×3 resolution.</li>
+    <li>Reached 99.44% validation accuracy.</li>
+    <li>Test set precision/recall/f1 of 0.99–1.00 for both Crop and Weed classes.</li>
+  </ul>
+  <div class="gallery">
+    <figure>
+      <img src="../assets/demos/weed-crop-classification/wc-inceptionv3-1.png" alt="InceptionV3 training and validation accuracy and loss curves">
+      <figcaption>Training/validation accuracy & loss curves</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/demos/weed-crop-classification/wc-inceptionv3-3.png" alt="InceptionV3 confusion matrix">
+      <figcaption>Confusion matrix</figcaption>
+    </figure>
+  </div>
+
+  <h2 class="section-h">LeNet-5 (lightweight baseline)</h2>
+  <ul class="findings">
+    <li>Same 4,200 / 900 / 900 split, but at a much smaller 32×32 input resolution.</li>
+    <li>Only ~91,566 trainable parameters — a fraction of the transfer-learning models.</li>
+    <li>Still reached 99% test accuracy with 0.99–1.00 precision/recall for both classes, despite the simple architecture.</li>
+  </ul>
+  <div class="gallery">
+    <figure>
+      <img src="../assets/demos/weed-crop-classification/wc-lenet5-1.png" alt="LeNet-5 training and validation accuracy and loss curves">
+      <figcaption>Training/validation accuracy & loss curves</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/demos/weed-crop-classification/wc-lenet5-3.png" alt="LeNet-5 confusion matrix">
+      <figcaption>Confusion matrix</figcaption>
+    </figure>
+  </div>
+
+  <h2 class="section-h">Xception (transfer learning)</h2>
+  <ul class="findings">
+    <li>Same 4,200 / 900 / 900 split at 299×299 input resolution.</li>
+    <li>22.96M total parameters (2.1M trainable, 20.86M frozen from the pretrained Xception base).</li>
+    <li>Test set: 99% accuracy, 0.99–1.00 precision/recall for both classes.</li>
+  </ul>
+  <div class="gallery">
+    <figure>
+      <img src="../assets/demos/weed-crop-classification/wc-xception-1.png" alt="Xception training and validation accuracy and loss curves">
+      <figcaption>Training/validation accuracy & loss curves</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/demos/weed-crop-classification/wc-xception-3.png" alt="Xception confusion matrix">
+      <figcaption>Confusion matrix</figcaption>
+    </figure>
+  </div>
+
+  <p class="lede">All three architectures converge to ~99% test accuracy — the practical difference is model size: LeNet-5 gets there with ~90K parameters versus Xception's 23M, making it the better choice for edge/real-time deployment where InceptionV3/Xception would be overkill.</p>
+
+</div>
+
+<footer>© Abhishek Tripathi · real sample images from the actual dataset, real per-class metrics from the actual classification reports; charts rendered from pre-executed Jupyter notebooks</footer>
+
+<script>
+let classMetrics = null;
+let sampleManifest = null;
+
+function renderSamples(){
+  const grid = document.getElementById('sample-grid');
+  grid.innerHTML = sampleManifest.map((s, i) => `
+    <button type="button" class="sample-thumb" data-idx="${i}">
+      <img src="../assets/demos/weed-crop-classification/${s.file}" alt="${s.true_label} sample">
+      <span>${s.true_label}</span>
+    </button>`).join('');
+  grid.querySelectorAll('.sample-thumb').forEach(btn => {
+    btn.addEventListener('click', () => {
+      grid.querySelectorAll('.sample-thumb').forEach(b=>b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectSample(Number(btn.dataset.idx));
+    });
+  });
+}
+
+function selectSample(idx){
+  const s = sampleManifest[idx];
+  const label = s.true_label;
+  const metrics = classMetrics[label];
+  const support = classMetrics.support[label];
+  document.getElementById('sample-result').classList.add('show');
+  document.getElementById('sample-label').textContent = label;
+  document.getElementById('sample-metrics').innerHTML = Object.entries(metrics).map(([model, m]) => `
+    <tr><td>${model}</td><td>${m.precision.toFixed(2)}</td><td>${m.recall.toFixed(2)}</td><td>${m.f1.toFixed(2)}</td></tr>
+  `).join('');
+  document.getElementById('sample-sub').textContent = `Real measured performance on ${support} actual "${label}" test images (out of 900 total test images), from each model's real classification_report() output.`;
+}
+
+Promise.all([
+  fetch('../assets/demos/weed-crop-classification/class-metrics.json').then(r=>r.json()),
+  fetch('../assets/demos/weed-crop-classification/sample-manifest.json').then(r=>r.json())
+]).then(([metrics, manifest]) => {
+  classMetrics = metrics;
+  sampleManifest = manifest;
+  renderSamples();
+});
+</script>
+</body>
+</html>

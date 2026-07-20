@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retirement Age Analysis — Demo Lab — Abhishek Tripathi</title>
+<meta name="description" content="EDA of global effective retirement ages across 53 countries and six decades.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0b0a'/%3E%3Crect x='11' y='11' width='10' height='10' rx='2' fill='%23c9f24e'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/demos/demo.css">
+</head>
+<body>
+
+<nav class="demo-nav">
+  <a href="../index.html#projects" class="back">← back to portfolio</a>
+  <span class="mono" style="font-weight:700;font-size:13px;color:var(--mut)">demo_lab</span>
+</nav>
+
+<div class="wrap" style="padding-top:56px;padding-bottom:40px">
+  <div class="eyebrow">// eda · pandas · matplotlib</div>
+  <h1 class="h1">Retirement Age Analysis</h1>
+  <p class="lede">Exploratory analysis of effective labor-market exit ages across 53 countries and both genders, spanning six decades (1970s–2020s), to see how retirement norms diverge by geography and gender.</p>
+  <div class="chiprow">
+    <span class="chip">Pandas</span><span class="chip">Matplotlib</span><span class="chip">Seaborn</span><span class="chip">EDA</span>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat"><b>1,175</b><span>records, zero missing values</span></div>
+    <div class="stat"><b>62.6 yrs</b><span>global average exit age</span></div>
+    <div class="stat"><b>63.5 / 61.8</b><span>men vs women, avg (yrs)</span></div>
+    <div class="stat"><b>68.9 / 58.2</b><span>Indonesia (highest) vs Saudi Arabia (lowest)</span></div>
+  </div>
+
+  <h2 class="section-h">Key findings</h2>
+  <ul class="findings">
+    <li>The global average effective retirement age across the dataset is 62.6 years, with men exiting later (63.5 yrs avg) than women (61.8 yrs avg).</li>
+    <li>Retirement ages have been trending down: the 1970 average was 66.2 (men) / 64.8 (women), several years above today's figures.</li>
+    <li>Indonesia has the highest national average at 68.9 years (range 63.9–71.3), while Saudi Arabia has the lowest at 58.2 years (low of 51.1).</li>
+    <li>The spread between countries is wide enough that region/policy (state pension age, informal-sector participation) likely dominates over any single global trend.</li>
+  </ul>
+
+  <h2 class="section-h">Charts</h2>
+  <div class="gallery">
+    <figure>
+      <img src="../assets/demos/retirement-age/retirement-age-1.png" alt="Global average retirement exit age trend over time">
+      <figcaption>Average effective exit age by decade, men vs women</figcaption>
+    </figure>
+  </div>
+
+</div>
+
+<footer>© Abhishek Tripathi · static demo rendered from a pre-executed Jupyter notebook</footer>
+</body>
+</html>

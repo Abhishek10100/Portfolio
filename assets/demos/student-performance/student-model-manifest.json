@@ -1,0 +1,80 @@
+{
+  "markdown": [
+    "## **Importing Libraries**",
+    "### **Import the CSV Data and Pandas DataFrame**",
+    "### **Show Top 5 Records**",
+    "### **Preparing X and Y variavbles**",
+    "#### Create an Evaluate Function to give all metrics after model Training",
+    "### Results",
+    "## Linear Regression",
+    "## Plot y_pred and y_test",
+    "#### Difference between Actual and Predicted Values"
+  ],
+  "outputs": [
+    {
+      "type": "text",
+      "text": "   gender race_ethnicity parental_level_of_education         lunch  \\\n0  female        group B           bachelor's degree      standard   \n1  female        group C                some college      standard   \n2  female        group B             master's degree      standard   \n3    male        group A          associate's degree  free/reduced   \n4    male        group C                some college      standard   \n\n  test_preparation_course  math_score  reading_score  writing_score  \n0                    none          72             72             74  \n1               completed          69             90             88  \n2                    none          90             95             93  \n3                    none          47             57             44  \n4                    none          76             78             75  ",
+      "code": "df.head()"
+    },
+    {
+      "type": "text",
+      "text": "   gender race_ethnicity parental_level_of_education         lunch  \\\n0  female        group B           bachelor's degree      standard   \n1  female        group C                some college      standard   \n2  female        group B             master's degree      standard   \n3    male        group A          associate's degree  free/reduced   \n4    male        group C                some college      standard   \n\n  test_preparation_course  reading_score  writing_score  \n0                    none             72             74  \n1               completed             90             88  \n2                    none             95             93  \n3                    none             57             44  \n4                    none             78             75  ",
+      "code": "X.head()"
+    },
+    {
+      "type": "stream",
+      "text": "Categories in 'gender' variable:  ['female' 'male']\nCategories in 'race enthnicity' variable:  ['group B' 'group C' 'group A' 'group D' 'group E']\nCategories in 'parental level of education' variable:  [\"bachelor's degree\" 'some college' \"master's degree\" \"associate's degree\"\n 'high school' 'some high school']\nCategories in 'lunch' variable:  ['standard' 'free/reduced']\nCategories in 'test preparation course' variable:  ['none' 'completed']\n",
+      "code": "print(\"Categories in 'gender' variable: \", end=\" \")\nprint(df['gender'].unique())\n\nprint(\"Categories in 'race enthnicity' variable: \", end=\" \")\nprint(df[\"race_ethnicity\"].unique())\n\nprint(\"Categories in 'parental level of education' variable: \", end=\" \")\nprint(df['parental_level_of_education'].unique())\n\nprint(\"Categories in 'lunch' variable: \", end=\" \")\nprint(df['lunch'].unique())\n\nprint(\"Categori"
+    },
+    {
+      "type": "text",
+      "text": "0      72\n1      69\n2      90\n3      47\n4      76\n       ..\n995    88\n996    62\n997    59\n998    68\n999    77\nName: math_score, Length: 1000, dtype: int64",
+      "code": "y = df['math_score']\ny"
+    },
+    {
+      "type": "text",
+      "text": "(1000, 19)",
+      "code": "X.shape"
+    },
+    {
+      "type": "text",
+      "text": "((800, 19), (200, 19), (800,), (200,))",
+      "code": "# Separating dataset into train and test\n\nfrom sklearn.model_selection import train_test_split\nX_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.2, random_state=42)\nX_train.shape, X_test.shape, y_train.shape, y_test.shape"
+    },
+    {
+      "type": "stream",
+      "text": "Linear Regression\nModel performance for Training set\n- Root Mean Squared Error: 5.3243\n- Mean Absolute Error: 4.2671\n- R2 Score: 0.8743\n----------------------------------\nModel performance for Test set\n- Root Mean Squared Error: 5.3960\n- Mean Absolute Error: 4.2158\n- R2 Score: 0.8803\n===================================\n\n\nLasso\nModel performance for Training set\n- Root Mean Squared Error: 6.5938\n- Mean Absolute Error: 5.2063\n- R2 Score: 0.8071\n----------------------------------\nModel performance for Test set\n- Root Mean Squared Error: 6.5197\n- Mean Absolute Error: 5.1579\n- R2 Score: 0.8253\n===================================\n\n\nRidge\nModel performance for Training set\n- Root Mean Squared Error: 5.3233\n- Mean Absolute Error: 4.2650\n- R2 Score: 0.8743\n----------------------------------\nModel performance for Test set\n- Root Mean Squared Error: 5.3904\n- Mean Absolute Error: 4.2111\n- R2 Score: 0.8806\n===================================\n\n\n",
+      "code": "models = {\n    \"Linear Regression\": LinearRegression(),\n    \"Lasso\": Lasso(),\n    \"Ridge\": Ridge(),\n    \"K-Neighbors Regressor\": KNeighborsRegressor(),\n    \"Decision Tree\": DecisionTreeRegressor(),\n    \"Random Forest Regressor\": RandomForestRegressor(),\n    \"XGBRegressor\": XGBRegressor(),\n    \"CatBoost Regressor\": CatBoostRegressor(verbose=False),\n    \"AdaBoost Regressor\": AdaBoostRegressor()\n}\n\nm"
+    },
+    {
+      "type": "stream",
+      "text": "K-Neighbors Regressor\nModel performance for Training set\n- Root Mean Squared Error: 5.7077\n- Mean Absolute Error: 4.5167\n- R2 Score: 0.8555\n----------------------------------\nModel performance for Test set\n- Root Mean Squared Error: 7.2530\n- Mean Absolute Error: 5.6210\n- R2 Score: 0.7838\n===================================\n\n\nDecision Tree\nModel performance for Training set\n- Root Mean Squared Error: 0.2795\n- Mean Absolute Error: 0.0187\n- R2 Score: 0.9997\n----------------------------------\nModel performance for Test set\n- Root Mean Squared Error: 7.8403\n- Mean Absolute Error: 6.2800\n- R2 Score: 0.7474\n===================================\n\n\nRandom Forest Regressor\nModel performance for Training set\n- Root Mean Squared Error: 2.3058\n- Mean Absolute Error: 1.8250\n- R2 Score: 0.9764\n----------------------------------\nModel performance for Test set\n- Root Mean Squared Error: 6.0161\n- Mean Absolute Error: 4.6468\n- R2 Score: 0.8513\n===================================\n\n\nXGBRegressor\nModel performance for Training set\n- Root Mean Squared Error: 1.0073\n- Mean Absolute Error: 0.6875\n- R2 Score: 0.9955\n----------------------------------\nModel performance for Test set\n- Root Mean Squared Error: 6.4733\n- Mean Absolute Error: 5.0577\n- R2 Score: 0.8278\n===================================\n\n\nCatBoost Regressor\nModel performance for Training set\n- Root Mean Squared Error: 3.0427\n- Mean Absolute Error: 2.4054\n- R2 Score: 0.9589\n----------------------------------\nModel performance for Test set\n- Root Mean Squared Error: 6.0086\n- Mean Absolute Error: 4.6125\n- R2 Score: 0.8516\n===================================\n\n\nAdaBoost Regressor\nModel performance for Training set\n- Root Mean Squared Error: 5.8287\n- Mean Absolute Error: 4.7452\n- R2 Score: 0.8493\n----------------------------------\nModel performance for Test set\n- Root Mean Squared Error: 6.0801\n- Mean Absolute Error: 4.7495\n- R2 Score: 0.8481\n===================================\n\n\n",
+      "code": "models = {\n    \"Linear Regression\": LinearRegression(),\n    \"Lasso\": Lasso(),\n    \"Ridge\": Ridge(),\n    \"K-Neighbors Regressor\": KNeighborsRegressor(),\n    \"Decision Tree\": DecisionTreeRegressor(),\n    \"Random Forest Regressor\": RandomForestRegressor(),\n    \"XGBRegressor\": XGBRegressor(),\n    \"CatBoost Regressor\": CatBoostRegressor(verbose=False),\n    \"AdaBoost Regressor\": AdaBoostRegressor()\n}\n\nm"
+    },
+    {
+      "type": "text",
+      "text": "                Model Name  R2_Score\n2                    Ridge  0.880593\n0        Linear Regression  0.880345\n7       CatBoost Regressor  0.851632\n5  Random Forest Regressor  0.851263\n8       AdaBoost Regressor  0.848081\n6             XGBRegressor  0.827797\n1                    Lasso  0.825320\n3    K-Neighbors Regressor  0.783813\n4            Decision Tree  0.747389",
+      "code": "pd.DataFrame(list(zip(model_list, r2_list)), columns=['Model Name', 'R2_Score']).sort_values(by=[\"R2_Score\"],ascending=False)"
+    },
+    {
+      "type": "stream",
+      "text": " Accuracy of the model is 88.03\n",
+      "code": "lin_model = LinearRegression(fit_intercept=True)\nlin_model = lin_model.fit(X_train, y_train)\ny_pred = lin_model.predict(X_test)\nscore = r2_score(y_test, y_pred)*100\nprint(\" Accuracy of the model is %.2f\" %score)"
+    },
+    {
+      "type": "image",
+      "file": "student-model-1.png",
+      "code": "plt.scatter(y_test,y_pred);\nplt.xlabel('Actual');\nplt.ylabel('Predicted');"
+    },
+    {
+      "type": "image",
+      "file": "student-model-2.png",
+      "code": "sns.regplot(x=y_test,y=y_pred,ci=None,color ='red');"
+    },
+    {
+      "type": "text",
+      "text": "     Actual Value  Predicted Value  Difference\n521            91        76.507812   14.492188\n737            53        58.953125   -5.953125\n740            80        76.960938    3.039062\n660            74        76.757812   -2.757812\n411            84        87.539062   -3.539062\n..            ...              ...         ...\n408            52        43.546875    8.453125\n332            62        62.031250   -0.031250\n208            74        67.976562    6.023438\n613            65        67.132812   -2.132812\n78             61        62.492188   -1.492188\n\n[200 rows x 3 columns]",
+      "code": "pred_df=pd.DataFrame({'Actual Value':y_test,'Predicted Value':y_pred,'Difference':y_test-y_pred})\npred_df"
+    }
+  ]
+}

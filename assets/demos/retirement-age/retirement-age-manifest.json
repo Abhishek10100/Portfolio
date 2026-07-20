@@ -1,0 +1,84 @@
+{
+  "markdown": [
+    "# **Importing Libraries**",
+    "# **Reading Data**",
+    "Q1. What is the summary and statistics of data.",
+    "Observation:-\n\n* As we can see the data has no missing values.\n* We have 1175 records in total & 7 idependent features.\n",
+    "Q2. What is the count of total countries in our dataset.",
+    "Q3. What is the average retirement age with respect to gender ?",
+    "An average man exits the market at the age of 63-64 years, while a woman exits the market at the age of 61-62 years",
+    "Q4. What is the trend in retirement ages in last 6 decades genderwise ?\n",
+    "Q5. What is the trend in retirement ages in different nations genderwise in past 6 decades ?",
+    "Q6. What is distribution of average ages over different nations ?",
+    "Q7. What is the average age of labor market exit for each year globally ?",
+    "Q8. Which are the countries with highest and lowest average ages for labor market exit ?",
+    "Q9. What is the Effective Labor Market Exit Age around globe ?"
+  ],
+  "outputs": [
+    {
+      "type": "text",
+      "text": "   COU    Country     IND                              Indicator Gender  Year  \\\n0  AUS  Australia  PEN19A  Effective labour market exit age, men    men  1970   \n1  AUS  Australia  PEN19A  Effective labour market exit age, men    men  1980   \n2  AUS  Australia  PEN19A  Effective labour market exit age, men    men  1990   \n3  AUS  Australia  PEN19A  Effective labour market exit age, men    men  2000   \n4  AUS  Australia  PEN19A  Effective labour market exit age, men    men  2005   \n\n   Average Age  \n0         65.7  \n1         62.7  \n2         61.1  \n3         60.6  \n4         62.1  ",
+      "code": "df.head()"
+    },
+    {
+      "type": "text",
+      "text": "       COU                        Country     IND  \\\n1170  EU27  European Union (27 countries)  PEN19A   \n1171  EU27  European Union (27 countries)  PEN19A   \n1172  EU27  European Union (27 countries)  PEN19A   \n1173  EU27  European Union (27 countries)  PEN19A   \n1174  EU27  European Union (27 countries)  PEN19A   \n\n                                  Indicator Gender  Year  Average Age  \n1170  Effective labour market exit age, men    men  2016         62.3  \n1171  Effective labour market exit age, men    men  2017         62.6  \n1172  Effective labour market exit age, men    men  2018         62.9  \n1173  Effective labour market exit age, men    men  2019         63.1  \n1174  Effective labour market exit age, men    men  2020         63.1  ",
+      "code": "df.tail()"
+    },
+    {
+      "type": "text",
+      "text": "(1175, 7)",
+      "code": "df.shape"
+    },
+    {
+      "type": "stream",
+      "text": "<class 'pandas.core.frame.DataFrame'>\nRangeIndex: 1175 entries, 0 to 1174\nData columns (total 7 columns):\n #   Column       Non-Null Count  Dtype  \n---  ------       --------------  -----  \n 0   COU          1175 non-null   object \n 1   Country      1175 non-null   object \n 2   IND          1175 non-null   object \n 3   Indicator    1175 non-null   object \n 4   Gender       1175 non-null   object \n 5   Year         1175 non-null   int64  \n 6   Average Age  1175 non-null   float64\ndtypes: float64(1), int64(1), object(5)\nmemory usage: 64.4+ KB\n",
+      "code": "df.info()"
+    },
+    {
+      "type": "text",
+      "text": "count    1175.000000\nmean       62.631489\nstd         3.235645\nmin        51.100000\n25%        60.450000\n50%        62.500000\n75%        64.500000\nmax        78.600000\nName: Average Age, dtype: float64",
+      "code": "df['Average Age'].describe()"
+    },
+    {
+      "type": "text",
+      "text": "array(['AUS', 'AUT', 'BEL', 'CAN', 'CZE', 'DNK', 'FIN', 'FRA', 'DEU',\n       'GRC', 'HUN', 'ISL', 'IRL', 'ITA', 'JPN', 'KOR', 'LUX', 'MEX',\n       'NLD', 'NZL', 'NOR', 'POL', 'PRT', 'SVK', 'ESP', 'SWE', 'CHE',\n       'TUR', 'GBR', 'USA', 'CHL', 'EST', 'ISR', 'SVN', 'OAVG', 'LVA',\n       'ARG', 'BRA', 'CHN', 'IND', 'IDN', 'LTU', 'RUS', 'SAU', 'ZAF',\n       'BGR', 'COL', 'CRI', 'HRV', 'CYP', 'MLT', 'ROU', 'EU27'],\n      dtype=object)",
+      "code": "df['COU'].unique()"
+    },
+    {
+      "type": "text",
+      "text": "array(['Australia', 'Austria', 'Belgium', 'Canada', 'Czech Republic',\n       'Denmark', 'Finland', 'France', 'Germany', 'Greece', 'Hungary',\n       'Iceland', 'Ireland', 'Italy', 'Japan', 'Korea', 'Luxembourg',\n       'Mexico', 'Netherlands', 'New Zealand', 'Norway', 'Poland',\n       'Portugal', 'Slovak Republic', 'Spain', 'Sweden', 'Switzerland',\n       'T\u00fcrkiye', 'United Kingdom', 'United States', 'Chile', 'Estonia',\n       'Israel', 'Slovenia', 'OECD - Average', 'Latvia', 'Argentina',\n       'Brazil', \"China (People's Republic of)\", 'India', 'Indonesia',\n       'Lithuania', 'Russia', 'Saudi Arabia', 'South Africa', 'Bulgaria',\n       'Colombia', 'Costa Rica', 'Croatia', 'Cyprus', 'Malta', 'Romania',\n       'European Union (27 countries)'], dtype=object)",
+      "code": "df['Country'].unique()\n"
+    },
+    {
+      "type": "stream",
+      "text": "We have in total 53 countries in our dataset\n",
+      "code": "df['Country'].unique()\nprint(f\"We have in total {len(df['Country'].unique())} countries in our dataset\")"
+    },
+    {
+      "type": "text",
+      "text": "Gender\nmen      63.486050\nwomen    61.754828\nName: Average Age, dtype: float64",
+      "code": "df.groupby(by='Gender')['Average Age'].mean()"
+    },
+    {
+      "type": "text",
+      "text": "Gender  Year\nmen     1970    66.233333\nwomen   1970    64.837143\nName: Average Age, dtype: float64",
+      "code": "df.groupby(by=['Gender', 'Year'])['Average Age'].mean().sort_values(ascending=False)[0:2]"
+    },
+    {
+      "type": "text",
+      "text": "Gender  Country        \nmen     Mexico             69.358333\n        Indonesia          69.220000\n        Colombia           68.833333\nwomen   Indonesia          68.580000\nmen     Iceland            67.658333\n                             ...    \nwomen   Belgium            58.616667\n        Slovenia           58.600000\n        Croatia            58.144444\n        Slovak Republic    58.141667\n        Saudi Arabia       52.112500\nName: Average Age, Length: 105, dtype: float64",
+      "code": "df.groupby(by=['Gender','Country'])['Average Age'].mean().sort_values(ascending=False)"
+    },
+    {
+      "type": "image",
+      "file": "retirement-age-1.png",
+      "code": "df['Year'] = pd.to_datetime(df['Year'], format='%Y')\n\nglobal_avg_age = df.groupby('Year')['Average Age'].mean()\n\nplt.figure(figsize=(10, 6))\nplt.plot(global_avg_age.index, global_avg_age.values, marker='o', linestyle='-')\nplt.title('Average Age of Labor Market Exit Over Time (Globally)')\nplt.xlabel('Year')\nplt.ylabel('Average Age')\nplt.grid(True)\nplt.xticks(rotation=45)\nplt.tight_layout()\nplt.show"
+    },
+    {
+      "type": "stream",
+      "text": "Countries with higher average ages of labor market exit:\n           mean  median   min   max\nCountry                            \nIndonesia  68.9   68.65  63.9  71.3\n\nCountries with lower average ages of labor market exit:\n                   mean  median   min   max\nCountry                                    \nSaudi Arabia  58.164706    58.9  51.1  66.3\n",
+      "code": "# Calculate summary statistics\ncountry_stats = df.groupby('Country')['Average Age'].agg(['mean', 'median', 'min', 'max'])\n\n# Identify countries with higher/lower average ages\nhighest_avg_age_countries = country_stats[country_stats['mean'] == country_stats['mean'].max()]\nlowest_avg_age_countries = country_stats[country_stats['mean'] == country_stats['mean'].min()]\n\n# Print countries with higher ave"
+    }
+  ]
+}

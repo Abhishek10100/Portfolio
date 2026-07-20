@@ -1,0 +1,197 @@
+{
+  "markdown": [
+    "# **Rice Grain image classification**",
+    "### **Data Preparation**",
+    "### **Data Preprocessing**",
+    "### **Modeling**",
+    "**VGG-16 Model**",
+    "**Resnet Architecture**",
+    "**DenseNet Architecture**",
+    "**Inception Model**",
+    "**Xception Model**",
+    "**Mobilenet Model**",
+    "**VGG-19 Model**"
+  ],
+  "outputs": [
+    {
+      "type": "stream",
+      "text": "/opt/conda/lib/python3.10/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.16.5 and <1.23.0 is required for this version of SciPy (detected version 1.23.5\n  warnings.warn(f\"A NumPy version >={np_minversion} and <{np_maxversion}\"\n",
+      "code": "# Standard Python Libraries\nimport os\nimport cv2\nimport numpy as np\n\n# Data Visualization\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n# Deep Learning and Machine Learning Libraries\nimport tensorflow as tf\nfrom tensorflow.keras.models import Model\nfrom tensorflow.keras.optimizers import Adam\nfrom tensorflow.keras.applications import VGG16\nfrom tensorflow.keras.utils import to_categorical"
+    },
+    {
+      "type": "stream",
+      "text": "Success in importing libs\n",
+      "code": "# Standard Python Libraries\nimport os\nimport cv2\nimport numpy as np\n\n# Data Visualization\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n# Deep Learning and Machine Learning Libraries\nimport tensorflow as tf\nfrom tensorflow.keras.models import Model\nfrom tensorflow.keras.optimizers import Adam\nfrom tensorflow.keras.applications import VGG16\nfrom tensorflow.keras.utils import to_categorical"
+    },
+    {
+      "type": "stream",
+      "text": "Step Success\n",
+      "code": "num_classes = 5\n\n# Define your dataset directory where you've stored the rice grain images.\ndata_dir = '/kaggle/input/rice-data/Rice_Image_Dataset'\n\n# List of rice variety folders in your dataset.\nrice_varieties = os.listdir(data_dir)\n\n# Initialize lists to store images and corresponding labels.\nimages = []\nlabels = []\n\n# Load images and labels.\nfor variety in rice_varieties:\n    variety_path = os"
+    },
+    {
+      "type": "stream",
+      "text": "Step Success\n",
+      "code": "# Function to load and preprocess images\ndef load_and_preprocess_image(image_path, target_size=(75, 75)):\n    img = load_img(image_path, target_size=target_size)\n    img_array = img_to_array(img)\n    img_array = img_array / 255.0  # Normalize pixel values\n    return img, img_array  # Return the original image and the preprocessed image\n\n# Load and preprocess images for training set\nX_train_process"
+    },
+    {
+      "type": "image",
+      "file": "rice-grain-1.png",
+      "code": "# Displaying some rice grain images before preprocessing\nplt.figure(figsize=(15, 6))\nfor i in range(6):  # Display the first 6 images\n    plt.subplot(2, 3, i + 1)\n    img = plt.imread(X_train[i])\n    plt.imshow(img)\n    plt.title(rice_varieties[y_train[i]])\nplt.suptitle('Rice Grain Images Before Preprocessing')\nplt.show()\n\n# Displaying some rice grain images after preprocessing\nplt.figure(figsize="
+    },
+    {
+      "type": "image",
+      "file": "rice-grain-2.png",
+      "code": "# Displaying some rice grain images before preprocessing\nplt.figure(figsize=(15, 6))\nfor i in range(6):  # Display the first 6 images\n    plt.subplot(2, 3, i + 1)\n    img = plt.imread(X_train[i])\n    plt.imshow(img)\n    plt.title(rice_varieties[y_train[i]])\nplt.suptitle('Rice Grain Images Before Preprocessing')\nplt.show()\n\n# Displaying some rice grain images after preprocessing\nplt.figure(figsize="
+    },
+    {
+      "type": "stream",
+      "text": "Epoch 1/10\n547/547 [==============================] - ETA: 0s - loss: 0.4927 - accuracy: 0.7835\nEpoch 1: val_accuracy improved from inf to 0.95227, saving model to best_model.h5\n547/547 [==============================] - 61s 73ms/step - loss: 0.4927 - accuracy: 0.7835 - val_loss: 0.1588 - val_accuracy: 0.9523\nEpoch 2/10\n547/547 [==============================] - ETA: 0s - loss: 0.1581 - accuracy: 0.9500\nEpoch 2: val_accuracy improved from 0.95227 to 0.91787, saving model to best_model.h5\n547/547 [==============================] - 38s 70ms/step - loss: 0.1581 - accuracy: 0.9500 - val_loss: 0.2367 - val_accuracy: 0.9179\nEpoch 3/10\n547/547 [==============================] - ETA: 0s - loss: 0.1272 - accuracy: 0.9586\nEpoch 3: val_accuracy did not improve from 0.91787\n547/547 [==============================] - 38s 70ms/step - loss: 0.1272 - accuracy: 0.9586 - val_loss: 0.0440 - val_accuracy: 0.9875\nEpoch 4/10\n547/547 [==============================] - ETA: 0s - loss: 0.1026 - accuracy: 0.9693\nEpoch 4: val_accuracy did not improve from 0.91787\n547/547 [==============================] - 38s 69ms/step - loss: 0.1026 - accuracy: 0.9693 - val_loss: 0.0721 - val_accuracy: 0.9771\nEpoch 5/10\n547/547 [==============================] - ETA: 0s - loss: 0.0622 - accuracy: 0.9805\nEpoch 5: val_accuracy did not improve from 0.91787\n547/547 [==============================] - 38s 69ms/step - loss: 0.0622 - accuracy: 0.9805 - val_loss: 0.0267 - val_accuracy: 0.9917\nEpoch 6/10\n547/547 [==============================] - ETA: 0s - loss: 0.0765 - accuracy: 0.9794\nEpoch 6: val_accuracy did not improve from 0.91787\n547/547 [==============================] - 38s 69ms/step - loss: 0.0765 - accuracy: 0.9794 - val_loss: 0.0440 - val_accuracy: 0.9848\nEpoch 7/10\n547/547 [==============================] - ETA: 0s - loss: 0.0571 - accuracy: 0.9824\nEpoch 7: val_accuracy did not improve from 0.91787\n547/547 [==============================] - 38s 69ms/step - loss: 0.0571 - accuracy: 0.9824 - val_loss: 0.0482 - val_accuracy: 0.9872\nEpoch 8/10\n547/547 [==============================] - ETA: 0s - loss: 0.0435 - accuracy: 0.9880\nEpoch 8: val_accuracy did not improve from 0.91787\n547/547 [==============================] - 38s 69ms/step - loss: 0.0435 - accuracy: 0.9880 - val_loss: 0.0250 - val_accuracy: 0.9928\nEpoch 9/10\n547/547 [==============================] - ETA: 0s - loss: 0.0717 - accuracy: 0.9794\nEpoch 9: val_accuracy did not improve from 0.91787\n547/547 [==============================] - 38s 69ms/step - loss: 0.0717 - accuracy: 0.9794 - val_loss: 0.0284 - val_accuracy: 0.9931\nEpoch 10/10\n547/547 [==============================] - ETA: 0s - loss: 0.0600 - accuracy: 0.9816\nEpoch 10: val_accuracy did not improve from 0.91787\n547/547 [==============================] - 38s 69ms/step - loss: 0.0600 - accuracy: 0.9816 - val_loss: 0.0525 - val_accuracy: 0.9856\n",
+      "code": "# Step 4: Training the Model\n\n# Define the number of epochs and batch size\nepochs = 10\nbatch_size = 32\n\n# Set up callbacks\nmodel_checkpoint = ModelCheckpoint('best_model.h5', save_best_only=True, save_weights_only=True, monitor='val_accuracy', mode='min', verbose=1)\nearly_stopping = EarlyStopping(monitor='val_accuracy', patience=5, verbose=1)\n\n# Train the model\nhistory = model.fit(\n    X_train_pro"
+    },
+    {
+      "type": "stream",
+      "text": "118/118 [==============================] - 2s 20ms/step\n              precision    recall  f1-score   support\n\n           0       0.83      0.94      0.88       742\n           1       1.00      0.94      0.97       732\n           2       0.95      0.94      0.95       752\n           3       0.92      0.77      0.84       757\n           4       0.91      1.00      0.95       767\n\n    accuracy                           0.92      3750\n   macro avg       0.92      0.92      0.92      3750\nweighted avg       0.92      0.92      0.92      3750\n\n",
+      "code": "# Evaluate the model on the test set\nmodel.load_weights('best_model.h5')  # Load the weights of the best model during training\ny_pred = model.predict(X_test_processed)\ny_pred_classes = np.argmax(y_pred, axis=1)\ny_true = np.argmax(y_test_categorical, axis=1)\n\n# Display classification report\nprint(classification_report(y_true, y_pred_classes))"
+    },
+    {
+      "type": "image",
+      "file": "rice-grain-3.png",
+      "code": "# Plot training & validation loss values\nplt.figure(figsize=(8, 4))\nplt.subplot(121)\nplt.plot(history.history['loss'])\nplt.plot(history.history['val_loss'])\nplt.title('Model loss')\nplt.ylabel('Loss')\nplt.xlabel('Epoch')\nplt.legend(['Train', 'Validation'], loc='upper right')\n\n# Plot training & validation accuracy values\nplt.subplot(122)\nplt.plot(history.history['accuracy'])\nplt.plot(history.history"
+    },
+    {
+      "type": "stream",
+      "text": "118/118 [==============================] - 2s 20ms/step\n118/118 [==============================] - 2s 20ms/step - loss: 0.2285 - accuracy: 0.9184\nTest Accuracy: 91.84%\nClassification Report:\n              precision    recall  f1-score   support\n\n   Karacadag       0.83      0.94      0.88       742\n     Basmati       1.00      0.94      0.97       732\n     Jasmine       0.95      0.94      0.95       752\n     Arborio       0.92      0.77      0.84       757\n      Ipsala       0.91      1.00      0.95       767\n\n    accuracy                           0.92      3750\n   macro avg       0.92      0.92      0.92      3750\nweighted avg       0.92      0.92      0.92      3750\n\nConfusion Matrix:\n[[695   0   0  47   0]\n [  4 688  34   6   0]\n [ 42   0 710   0   0]\n [ 97   0   1 584  75]\n [  0   0   0   0 767]]\n",
+      "code": "# Step 4: Evaluation\n\n# Load the saved model\nmodel.load_weights('best_model.h5')  # Load the best weights obtained during training\n\n# Make predictions on the test set\npredictions = model.predict(X_test_processed)\n\n# Evaluate the model on the test set\nvgg_test_loss, vgg_test_accuracy = model.evaluate(X_test_processed, y_test_categorical, verbose=1)\n\n# Print the test accuracy\nprint(\"Test Accuracy: {"
+    },
+    {
+      "type": "image",
+      "file": "rice-grain-4.png",
+      "code": "# Create a confusion matrix heatmap\nplt.figure(figsize=(8, 6))\nsns.set(font_scale=1.2)  # Adjust the font scale as needed\n\nsns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', xticklabels=class_labels, yticklabels=class_labels)\n# Set axis labels and plot title\nplt.xlabel('Predicted')\nplt.ylabel('True')\nplt.title('Confusion Matrix')\n# Display the plot\nplt.show()"
+    },
+    {
+      "type": "image",
+      "file": "rice-grain-5.png",
+      "code": "# Plot training & validation loss values\nplt.figure(figsize=(8, 4))\nplt.subplot(121)\nplt.plot(history_1.history['loss'])\nplt.plot(history_1.history['val_loss'])\nplt.title('Model loss')\nplt.ylabel('Loss')\nplt.xlabel('Epoch')\nplt.legend(['Train', 'Validation'], loc='upper right')\n\n# Plot training & validation accuracy values\nplt.subplot(122)\nplt.plot(history_1.history['accuracy'])\nplt.plot(history_1"
+    },
+    {
+      "type": "image",
+      "file": "rice-grain-6.png",
+      "code": "# Step 4: Evaluation\n\n# Assuming you have 'num_classes' defined as the number of classes\ny_test_categorical = to_categorical(y_test, num_classes=num_classes)\n\n# Load the saved model\nmodel_resnet.load_weights('resnet_model_weights.h5')  # Load the best weights obtained during training\n\n# Make predictions on the test set\npredictions = model_resnet.predict(X_test_processed)\n\n# Evaluate the model on t"
+    },
+    {
+      "type": "stream",
+      "text": "118/118 [==============================] - 3s 19ms/step\n118/118 [==============================] - 2s 20ms/step - loss: 0.0264 - accuracy: 0.9917\nTest Accuracy: 99.17%\nClassification Report:\n              precision    recall  f1-score   support\n\n   Karacadag       1.00      0.98      0.99       742\n     Basmati       1.00      0.99      0.99       732\n     Jasmine       0.99      0.99      0.99       752\n     Arborio       0.98      1.00      0.99       757\n      Ipsala       1.00      1.00      1.00       767\n\n    accuracy                           0.99      3750\n   macro avg       0.99      0.99      0.99      3750\nweighted avg       0.99      0.99      0.99      3750\n\nConfusion Matrix:\n[[727   0   0  15   0]\n [  0 723   9   0   0]\n [  0   3 747   2   0]\n [  2   0   0 755   0]\n [  0   0   0   0 767]]\n",
+      "code": "# Step 4: Evaluation\n\n# Assuming you have 'num_classes' defined as the number of classes\ny_test_categorical = to_categorical(y_test, num_classes=num_classes)\n\n# Load the saved model\nmodel_resnet.load_weights('resnet_model_weights.h5')  # Load the best weights obtained during training\n\n# Make predictions on the test set\npredictions = model_resnet.predict(X_test_processed)\n\n# Evaluate the model on t"
+    },
+    {
+      "type": "image",
+      "file": "rice-grain-7.png",
+      "code": "# Plot training & validation loss values\nplt.figure(figsize=(8, 4))\nplt.subplot(121)\nplt.plot(history_2.history['loss'])\nplt.plot(history_2.history['val_loss'])\nplt.title('Model loss')\nplt.ylabel('Loss')\nplt.xlabel('Epoch')\nplt.legend(['Train', 'Validation'], loc='upper right')\n\n# Plot training & validation accuracy values\nplt.subplot(122)\nplt.plot(history_2.history['accuracy'])\nplt.plot(history_2"
+    },
+    {
+      "type": "image",
+      "file": "rice-grain-8.png",
+      "code": "# Step 4: Evaluation\n\n# Assuming you have 'num_classes' defined as the number of classes\ny_test_categorical = to_categorical(y_test, num_classes=num_classes)\n\n# Load the saved model\nmodel_densenet.load_weights('densenet_model_weights.h5')  # Load the best weights obtained during training\n\n# Make predictions on the test set\npredictions = model_densenet.predict(X_test_processed)\n\n# Evaluate the mode"
+    },
+    {
+      "type": "stream",
+      "text": "118/118 [==============================] - 4s 16ms/step\n118/118 [==============================] - 2s 18ms/step - loss: 0.0316 - accuracy: 0.9923\nTest Accuracy: 99.23%\nClassification Report:\n              precision    recall  f1-score   support\n\n   Karacadag       1.00      0.99      1.00       742\n     Basmati       0.99      1.00      1.00       732\n     Jasmine       0.98      0.99      0.99       752\n     Arborio       0.99      0.98      0.99       757\n      Ipsala       1.00      1.00      1.00       767\n\n    accuracy                           0.99      3750\n   macro avg       0.99      0.99      0.99      3750\nweighted avg       0.99      0.99      0.99      3750\n\nConfusion Matrix:\n[[738   0   0   4   0]\n [  0 732   0   0   0]\n [  0   7 745   0   0]\n [  3   0  15 739   0]\n [  0   0   0   0 767]]\n",
+      "code": "# Step 4: Evaluation\n\n# Assuming you have 'num_classes' defined as the number of classes\ny_test_categorical = to_categorical(y_test, num_classes=num_classes)\n\n# Load the saved model\nmodel_densenet.load_weights('densenet_model_weights.h5')  # Load the best weights obtained during training\n\n# Make predictions on the test set\npredictions = model_densenet.predict(X_test_processed)\n\n# Evaluate the mode"
+    },
+    {
+      "type": "stream",
+      "text": "Downloading data from https://storage.googleapis.com/tensorflow/keras-applications/inception_v3/inception_v3_weights_tf_dim_ordering_tf_kernels_notop.h5\n87910968/87910968 [==============================] - 1s 0us/step\nEpoch 1/20\n547/547 [==============================] - ETA: 0s - loss: 0.2590 - accuracy: 0.9391\nEpoch 1: val_loss improved from inf to 0.73742, saving model to inception_model.h5\n547/547 [==============================] - 76s 62ms/step - loss: 0.2590 - accuracy: 0.9391 - val_loss: 0.7374 - val_accuracy: 0.7651\nEpoch 2/20\n546/547 [============================>.] - ETA: 0s - loss: 0.0663 - accuracy: 0.9829\nEpoch 2: val_loss improved from 0.73742 to 0.03976, saving model to inception_model.h5\n547/547 [==============================] - 29s 54ms/step - loss: 0.0662 - accuracy: 0.9830 - val_loss: 0.0398 - val_accuracy: 0.9896\nEpoch 3/20\n546/547 [============================>.] - ETA: 0s - loss: 0.0836 - accuracy: 0.9862\nEpoch 3: val_loss did not improve from 0.03976\n547/547 [==============================] - 29s 52ms/step - loss: 0.0837 - accuracy: 0.9861 - val_loss: 0.1860 - val_accuracy: 0.9400\nEpoch 4/20\n546/547 [============================>.] - ETA: 0s - loss: 0.0634 - accuracy: 0.9904\nEpoch 4: val_loss improved from 0.03976 to 0.01109, saving model to inception_model.h5\n547/547 [==============================] - 29s 53ms/step - loss: 0.0633 - accuracy: 0.9905 - val_loss: 0.0111 - val_accuracy: 0.9971\nEpoch 5/20\n546/547 [============================>.] - ETA: 0s - loss: 0.1262 - accuracy: 0.9768\nEpoch 5: val_loss did not improve from 0.01109\n547/547 [==============================] - 29s 52ms/step - loss: 0.1261 - accuracy: 0.9768 - val_loss: 0.0780 - val_accuracy: 0.9781\nEpoch 6/20\n547/547 [==============================] - ETA: 0s - loss: 0.0932 - accuracy: 0.9822\nEpoch 6: val_loss did not improve from 0.01109\n547/547 [==============================] - 29s 53ms/step - loss: 0.0932 - accuracy: 0.9822 - val_loss: 0.2731 - val_accuracy: 0.9112\nEpoch 7/20\n546/547 [============================>.] - ETA: 0s - loss: 0.0426 - accuracy: 0.9910\nEpoch 7: val_loss did not improve from 0.01109\n547/547 [==============================] - 28s 52ms/step - loss: 0.0426 - accuracy: 0.9909 - val_loss: 0.0181 - val_accuracy: 0.9949\nEpoch 8/20\n546/547 [============================>.] - ETA: 0s - loss: 0.0315 - accuracy: 0.9915\nEpoch 8: val_loss did not improve from 0.01109\n547/547 [==============================] - 28s 52ms/step - loss: 0.0551 - accuracy: 0.9915 - val_loss: 0.2741 - val_accuracy: 0.9437\nEpoch 9/20\n546/547 [============================>.] - ETA: 0s - loss: 0.0280 - accuracy: 0.9934\nEpoch 9: val_loss did not improve from 0.01109\n547/547 [==============================] - 29s 52ms/step - loss: 0.0279 - accuracy: 0.9934 - val_loss: 0.0446 - val_accuracy: 0.9885\nEpoch 9: early stopping\n",
+      "code": "from tensorflow.keras.applications import InceptionV3\n\n# Load the pre-trained InceptionV3 model (without top classification layers)\ninput_shape = (75, 75, 3)  # Adjust as needed\nbase_model = InceptionV3(weights='imagenet', include_top=False, input_shape=input_shape)\n\n# Add custom classification layers\nx = base_model.output\nx = GlobalAveragePooling2D()(x)\nx = Dense(1024, activation='relu')(x)\nx = D"
+    },
+    {
+      "type": "image",
+      "file": "rice-grain-9.png",
+      "code": "# Plot training & validation loss values\nplt.figure(figsize=(8, 4))\nplt.subplot(121)\nplt.plot(history_3.history['loss'])\nplt.plot(history_3.history['val_loss'])\nplt.title('Model loss')\nplt.ylabel('Loss')\nplt.xlabel('Epoch')\nplt.legend(['Train', 'Validation'], loc='upper right')\n\n# Plot training & validation accuracy values\nplt.subplot(122)\nplt.plot(history_3.history['accuracy'])\nplt.plot(history_3"
+    },
+    {
+      "type": "image",
+      "file": "rice-grain-10.png",
+      "code": "# Step 4: Evaluation\n\n# Assuming you have 'num_classes' defined as the number of classes\ny_test_categorical = to_categorical(y_test, num_classes=num_classes)\n\n# Load the saved model\nmodel_inception.load_weights('inception_model.h5')  # Load the best weights obtained during training\n\n# Make predictions on the test set\npredictions = model_inception.predict(X_test_processed)\n\n# Evaluate the model on "
+    },
+    {
+      "type": "stream",
+      "text": "118/118 [==============================] - 3s 13ms/step\n118/118 [==============================] - 2s 14ms/step - loss: 0.0081 - accuracy: 0.9973\nTest Accuracy: 99.73%\nClassification Report:\n              precision    recall  f1-score   support\n\n   Karacadag       1.00      0.99      1.00       742\n     Basmati       0.99      1.00      1.00       732\n     Jasmine       1.00      1.00      1.00       752\n     Arborio       0.99      1.00      1.00       757\n      Ipsala       1.00      1.00      1.00       767\n\n    accuracy                           1.00      3750\n   macro avg       1.00      1.00      1.00      3750\nweighted avg       1.00      1.00      1.00      3750\n\nConfusion Matrix:\n[[737   1   0   4   0]\n [  0 732   0   0   0]\n [  0   3 749   0   0]\n [  0   0   1 756   0]\n [  0   0   0   1 766]]\n",
+      "code": "# Step 4: Evaluation\n\n# Assuming you have 'num_classes' defined as the number of classes\ny_test_categorical = to_categorical(y_test, num_classes=num_classes)\n\n# Load the saved model\nmodel_inception.load_weights('inception_model.h5')  # Load the best weights obtained during training\n\n# Make predictions on the test set\npredictions = model_inception.predict(X_test_processed)\n\n# Evaluate the model on "
+    },
+    {
+      "type": "stream",
+      "text": "Downloading data from https://storage.googleapis.com/tensorflow/keras-applications/xception/xception_weights_tf_dim_ordering_tf_kernels_notop.h5\n83683744/83683744 [==============================] - 0s 0us/step\nEpoch 1/20\n547/547 [==============================] - ETA: 0s - loss: 0.1545 - accuracy: 0.9566\nEpoch 1: val_loss improved from inf to 0.21258, saving model to xception_model.h5\n547/547 [==============================] - 79s 88ms/step - loss: 0.1545 - accuracy: 0.9566 - val_loss: 0.2126 - val_accuracy: 0.9344\nEpoch 2/20\n547/547 [==============================] - ETA: 0s - loss: 0.0604 - accuracy: 0.9893\nEpoch 2: val_loss improved from 0.21258 to 0.00941, saving model to xception_model.h5\n547/547 [==============================] - 44s 81ms/step - loss: 0.0604 - accuracy: 0.9893 - val_loss: 0.0094 - val_accuracy: 0.9979\nEpoch 3/20\n547/547 [==============================] - ETA: 0s - loss: 0.0617 - accuracy: 0.9858\nEpoch 3: val_loss did not improve from 0.00941\n547/547 [==============================] - 44s 81ms/step - loss: 0.0617 - accuracy: 0.9858 - val_loss: 0.0707 - val_accuracy: 0.9835\nEpoch 4/20\n547/547 [==============================] - ETA: 0s - loss: 0.0169 - accuracy: 0.9957\nEpoch 4: val_loss did not improve from 0.00941\n547/547 [==============================] - 44s 81ms/step - loss: 0.0169 - accuracy: 0.9957 - val_loss: 0.0099 - val_accuracy: 0.9968\nEpoch 5/20\n547/547 [==============================] - ETA: 0s - loss: 0.0138 - accuracy: 0.9966\nEpoch 5: val_loss improved from 0.00941 to 0.00652, saving model to xception_model.h5\n547/547 [==============================] - 44s 81ms/step - loss: 0.0138 - accuracy: 0.9966 - val_loss: 0.0065 - val_accuracy: 0.9981\nEpoch 6/20\n238/547 [============>.................] - ETA: 23s - loss: 0.0097 - accuracy: 0.9967",
+      "code": "from tensorflow.keras.applications import Xception\n\n# Load the pre-trained Xception model (without top classification layers)\ninput_shape = (75, 75, 3)  # Adjust as needed\nbase_model = Xception(weights='imagenet', include_top=False, input_shape=input_shape)\n\n# Add custom classification layers\nx = base_model.output\nx = GlobalAveragePooling2D()(x)\nx = Dense(1024, activation='relu')(x)\nx = Dropout(0."
+    },
+    {
+      "type": "stream",
+      "text": "IOPub message rate exceeded.\nThe notebook server will temporarily stop sending output\nto the client in order to avoid crashing it.\nTo change this limit, set the config variable\n`--NotebookApp.iopub_msg_rate_limit`.\n\nCurrent values:\nNotebookApp.iopub_msg_rate_limit=1000.0 (msgs/sec)\nNotebookApp.rate_limit_window=3.0 (secs)\n\n",
+      "code": "from tensorflow.keras.applications import Xception\n\n# Load the pre-trained Xception model (without top classification layers)\ninput_shape = (75, 75, 3)  # Adjust as needed\nbase_model = Xception(weights='imagenet', include_top=False, input_shape=input_shape)\n\n# Add custom classification layers\nx = base_model.output\nx = GlobalAveragePooling2D()(x)\nx = Dense(1024, activation='relu')(x)\nx = Dropout(0."
+    },
+    {
+      "type": "stream",
+      "text": "547/547 [==============================] - ETA: 0s - loss: 0.0162 - accuracy: 0.9965\nEpoch 8: val_loss did not improve from 0.00282\n547/547 [==============================] - 44s 81ms/step - loss: 0.0162 - accuracy: 0.9965 - val_loss: 0.7752 - val_accuracy: 0.9083\nEpoch 9/20\n547/547 [==============================] - ETA: 0s - loss: 0.0197 - accuracy: 0.9949\nEpoch 9: val_loss did not improve from 0.00282\n547/547 [==============================] - 44s 81ms/step - loss: 0.0197 - accuracy: 0.9949 - val_loss: 0.0061 - val_accuracy: 0.9989\nEpoch 10/20\n547/547 [==============================] - ETA: 0s - loss: 0.0083 - accuracy: 0.9985\nEpoch 10: val_loss did not improve from 0.00282\n547/547 [==============================] - 44s 81ms/step - loss: 0.0083 - accuracy: 0.9985 - val_loss: 0.0133 - val_accuracy: 0.9981\nEpoch 11/20\n547/547 [==============================] - ETA: 0s - loss: 0.0261 - accuracy: 0.9951\nEpoch 11: val_loss did not improve from 0.00282\n547/547 [==============================] - 44s 81ms/step - loss: 0.0261 - accuracy: 0.9951 - val_loss: 0.0161 - val_accuracy: 0.9968\nEpoch 11: early stopping\n",
+      "code": "from tensorflow.keras.applications import Xception\n\n# Load the pre-trained Xception model (without top classification layers)\ninput_shape = (75, 75, 3)  # Adjust as needed\nbase_model = Xception(weights='imagenet', include_top=False, input_shape=input_shape)\n\n# Add custom classification layers\nx = base_model.output\nx = GlobalAveragePooling2D()(x)\nx = Dense(1024, activation='relu')(x)\nx = Dropout(0."
+    },
+    {
+      "type": "image",
+      "file": "rice-grain-11.png",
+      "code": "# Plot training & validation loss values\nplt.figure(figsize=(8, 4))\nplt.subplot(121)\nplt.plot(history_4.history['loss'])\nplt.plot(history_4.history['val_loss'])\nplt.title('Model loss')\nplt.ylabel('Loss')\nplt.xlabel('Epoch')\nplt.legend(['Train', 'Validation'], loc='upper right')\n\n# Plot training & validation accuracy values\nplt.subplot(122)\nplt.plot(history_4.history['accuracy'])\nplt.plot(history_4"
+    },
+    {
+      "type": "image",
+      "file": "rice-grain-12.png",
+      "code": "# Step 4: Evaluation\n\n# Assuming you have 'num_classes' defined as the number of classes\ny_test_categorical = to_categorical(y_test, num_classes=num_classes)\n\n# Load the saved model\nmodel_xception.load_weights('xception_model.h5')  # Load the best weights obtained during training\n\n# Make predictions on the test set\npredictions = model_xception.predict(X_test_processed)\n\n# Evaluate the model on the"
+    },
+    {
+      "type": "stream",
+      "text": "118/118 [==============================] - 3s 19ms/step\n118/118 [==============================] - 2s 20ms/step - loss: 0.0020 - accuracy: 0.9995\nTest Accuracy: 99.95%\nClassification Report:\n              precision    recall  f1-score   support\n\n   Karacadag       1.00      1.00      1.00       742\n     Basmati       1.00      1.00      1.00       732\n     Jasmine       1.00      1.00      1.00       752\n     Arborio       1.00      1.00      1.00       757\n      Ipsala       1.00      1.00      1.00       767\n\n    accuracy                           1.00      3750\n   macro avg       1.00      1.00      1.00      3750\nweighted avg       1.00      1.00      1.00      3750\n\nConfusion Matrix:\n[[741   0   0   1   0]\n [  0 732   0   0   0]\n [  0   0 751   1   0]\n [  0   0   0 757   0]\n [  0   0   0   0 767]]\n",
+      "code": "# Step 4: Evaluation\n\n# Assuming you have 'num_classes' defined as the number of classes\ny_test_categorical = to_categorical(y_test, num_classes=num_classes)\n\n# Load the saved model\nmodel_xception.load_weights('xception_model.h5')  # Load the best weights obtained during training\n\n# Make predictions on the test set\npredictions = model_xception.predict(X_test_processed)\n\n# Evaluate the model on the"
+    },
+    {
+      "type": "image",
+      "file": "rice-grain-13.png",
+      "code": "# Plot training & validation loss values\nplt.figure(figsize=(8, 4))\nplt.subplot(121)\nplt.plot(history_5.history['loss'])\nplt.plot(history_5.history['val_loss'])\nplt.title('Model loss')\nplt.ylabel('Loss')\nplt.xlabel('Epoch')\nplt.legend(['Train', 'Validation'], loc='upper right')\n\n# Plot training & validation accuracy values\nplt.subplot(122)\nplt.plot(history_5.history['accuracy'])\nplt.plot(history_5"
+    },
+    {
+      "type": "image",
+      "file": "rice-grain-14.png",
+      "code": "# Step 4: Evaluation\n\n# Assuming you have 'num_classes' defined as the number of classes\ny_test_categorical = to_categorical(y_test, num_classes=num_classes)\n\n# Load the saved model\nmodel_mobilenet.load_weights('mobilenet_model.h5')  # Load the best weights obtained during training\n\n# Make predictions on the test set\npredictions = model_mobilenet.predict(X_test_processed)\n\n# Evaluate the model on "
+    },
+    {
+      "type": "stream",
+      "text": "118/118 [==============================] - 1s 6ms/step\n118/118 [==============================] - 1s 7ms/step - loss: 0.0016 - accuracy: 0.9997\nTest Accuracy: 99.97%\nClassification Report:\n              precision    recall  f1-score   support\n\n   Karacadag       1.00      1.00      1.00       742\n     Basmati       1.00      1.00      1.00       732\n     Jasmine       1.00      1.00      1.00       752\n     Arborio       1.00      1.00      1.00       757\n      Ipsala       1.00      1.00      1.00       767\n\n    accuracy                           1.00      3750\n   macro avg       1.00      1.00      1.00      3750\nweighted avg       1.00      1.00      1.00      3750\n\nConfusion Matrix:\n[[742   0   0   0   0]\n [  0 731   1   0   0]\n [  0   0 752   0   0]\n [  0   0   0 757   0]\n [  0   0   0   0 767]]\n",
+      "code": "# Step 4: Evaluation\n\n# Assuming you have 'num_classes' defined as the number of classes\ny_test_categorical = to_categorical(y_test, num_classes=num_classes)\n\n# Load the saved model\nmodel_mobilenet.load_weights('mobilenet_model.h5')  # Load the best weights obtained during training\n\n# Make predictions on the test set\npredictions = model_mobilenet.predict(X_test_processed)\n\n# Evaluate the model on "
+    },
+    {
+      "type": "stream",
+      "text": "Downloading data from https://storage.googleapis.com/tensorflow/keras-applications/vgg19/vgg19_weights_tf_dim_ordering_tf_kernels_notop.h5\n80134624/80134624 [==============================] - 0s 0us/step\nEpoch 1/20\n547/547 [==============================] - ETA: 0s - loss: 1.6222 - accuracy: 0.1954\nEpoch 1: val_loss improved from inf to 1.60944, saving model to vgg_19_model.h5\n547/547 [==============================] - 53s 86ms/step - loss: 1.6222 - accuracy: 0.1954 - val_loss: 1.6094 - val_accuracy: 0.2000\nEpoch 2/20\n547/547 [==============================] - ETA: 0s - loss: 1.6098 - accuracy: 0.1966\nEpoch 2: val_loss did not improve from 1.60944\n547/547 [==============================] - 46s 84ms/step - loss: 1.6098 - accuracy: 0.1966 - val_loss: 1.6096 - val_accuracy: 0.2013\nEpoch 3/20\n547/547 [==============================] - ETA: 0s - loss: 1.6098 - accuracy: 0.2013\nEpoch 3: val_loss did not improve from 1.60944\n547/547 [==============================] - 46s 84ms/step - loss: 1.6098 - accuracy: 0.2013 - val_loss: 1.6097 - val_accuracy: 0.2000\nEpoch 4/20\n547/547 [==============================] - ETA: 0s - loss: 1.6099 - accuracy: 0.1922\nEpoch 4: val_loss did not improve from 1.60944\n547/547 [==============================] - 46s 84ms/step - loss: 1.6099 - accuracy: 0.1922 - val_loss: 1.6095 - val_accuracy: 0.2000\nEpoch 5/20\n547/547 [==============================] - ETA: 0s - loss: 1.6097 - accuracy: 0.1951\nEpoch 5: val_loss did not improve from 1.60944\n547/547 [==============================] - 46s 84ms/step - loss: 1.6097 - accuracy: 0.1951 - val_loss: 1.6097 - val_accuracy: 0.2000\nEpoch 6/20\n547/547 [==============================] - ETA: 0s - loss: 1.6097 - accuracy: 0.2018\nEpoch 6: val_loss did not improve from 1.60944\n547/547 [==============================] - 46s 84ms/step - loss: 1.6097 - accuracy: 0.2018 - val_loss: 1.6096 - val_accuracy: 0.2000\nEpoch 6: early stopping\n",
+      "code": "from tensorflow.keras.applications import VGG19\n\n# Load the pre-trained VGG-19 model (without top classification layers)\ninput_shape = (75, 75, 3)  # Adjust as needed\nbase_model = VGG19(weights='imagenet', include_top=False, input_shape=input_shape)\n\n# Add custom classification layers\nx = base_model.output\nx = GlobalAveragePooling2D()(x)\nx = Dense(1024, activation='relu')(x)\nx = Dropout(0.5)(x)\npr"
+    },
+    {
+      "type": "image",
+      "file": "rice-grain-15.png",
+      "code": "# Plot training & validation loss values\nplt.figure(figsize=(8, 4))\nplt.subplot(121)\nplt.plot(history_6.history['loss'])\nplt.plot(history_6.history['val_loss'])\nplt.title('Model loss')\nplt.ylabel('Loss')\nplt.xlabel('Epoch')\nplt.legend(['Train', 'Validation'], loc='upper right')\n\n# Plot training & validation accuracy values\nplt.subplot(122)\nplt.plot(history_6.history['accuracy'])\nplt.plot(history_6"
+    },
+    {
+      "type": "image",
+      "file": "rice-grain-16.png",
+      "code": "# Step 4: Evaluation\n\n# Assuming you have 'num_classes' defined as the number of classes\ny_test_categorical = to_categorical(y_test, num_classes=num_classes)\n\n# Load the saved model\nmodel_vgg19.load_weights('vgg_19_model.h5')  # Load the best weights obtained during training\n\n# Make predictions on the test set\npredictions = model_vgg19.predict(X_test_processed)\n\n# Evaluate the model on the test se"
+    },
+    {
+      "type": "stream",
+      "text": "118/118 [==============================] - 3s 24ms/step\n118/118 [==============================] - 3s 25ms/step - loss: 1.6098 - accuracy: 0.1952\nTest Accuracy: 19.52%\nClassification Report:\n              precision    recall  f1-score   support\n\n   Karacadag       0.00      0.00      0.00       742\n     Basmati       0.20      1.00      0.33       732\n     Jasmine       0.00      0.00      0.00       752\n     Arborio       0.00      0.00      0.00       757\n      Ipsala       0.00      0.00      0.00       767\n\n    accuracy                           0.20      3750\n   macro avg       0.04      0.20      0.07      3750\nweighted avg       0.04      0.20      0.06      3750\n\nConfusion Matrix:\n[[  0 742   0   0   0]\n [  0 732   0   0   0]\n [  0 752   0   0   0]\n [  0 757   0   0   0]\n [  0 767   0   0   0]]\n",
+      "code": "# Step 4: Evaluation\n\n# Assuming you have 'num_classes' defined as the number of classes\ny_test_categorical = to_categorical(y_test, num_classes=num_classes)\n\n# Load the saved model\nmodel_vgg19.load_weights('vgg_19_model.h5')  # Load the best weights obtained during training\n\n# Make predictions on the test set\npredictions = model_vgg19.predict(X_test_processed)\n\n# Evaluate the model on the test se"
+    },
+    {
+      "type": "stream",
+      "text": "/opt/conda/lib/python3.10/site-packages/sklearn/metrics/_classification.py:1344: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.\n  _warn_prf(average, modifier, msg_start, len(result))\n/opt/conda/lib/python3.10/site-packages/sklearn/metrics/_classification.py:1344: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.\n  _warn_prf(average, modifier, msg_start, len(result))\n/opt/conda/lib/python3.10/site-packages/sklearn/metrics/_classification.py:1344: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.\n  _warn_prf(average, modifier, msg_start, len(result))\n",
+      "code": "# Step 4: Evaluation\n\n# Assuming you have 'num_classes' defined as the number of classes\ny_test_categorical = to_categorical(y_test, num_classes=num_classes)\n\n# Load the saved model\nmodel_vgg19.load_weights('vgg_19_model.h5')  # Load the best weights obtained during training\n\n# Make predictions on the test set\npredictions = model_vgg19.predict(X_test_processed)\n\n# Evaluate the model on the test se"
+    },
+    {
+      "type": "stream",
+      "text": "      Models  Train Accuracy  Val_Accuracy  Test Accuracy  Train Loss  \\\n0     VGG-16        0.981600      0.985600       0.918400    0.059959   \n1     ResNet        0.990457      0.983467       0.991733    0.034593   \n2   DenseNet        0.986114      0.945867       0.992267    0.046054   \n3  Inception        0.993371      0.988533       0.997333    0.027918   \n4   Xception        0.995086      0.996800       0.999467    0.026094   \n5  MobileNet        0.995429      0.991467       0.999733    0.015482   \n6      VGG19        0.201771      0.200000       0.195200    1.609686   \n\n   Test loss  Validation Loss  \n0   0.228547         0.052533  \n1   0.026396         0.057247  \n2   0.031630         0.187432  \n3   0.008099         0.044585  \n4   0.001957         0.016109  \n5   0.001561         0.042809  \n6   1.609780         1.609565  \n",
+      "code": "results = {\"Models\": models, \"Train Accuracy\": train_acc, \"Val_Accuracy\": val_acc, \"Test Accuracy\": test_acc, \"Train Loss\": train_loss,\n          \"Test loss\": test_loss, \"Validation Loss\": val_loss}\n\n# Create a dataframe\nimport pandas as pd\ndf = pd.DataFrame(results)\n\n# Display the dataframe\nprint(df)"
+    }
+  ]
+}

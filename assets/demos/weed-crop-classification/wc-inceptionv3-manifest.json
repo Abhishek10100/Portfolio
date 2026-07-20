@@ -1,0 +1,42 @@
+{
+  "markdown": [
+    "**FOR REAL TIME IDENTIFICATION**"
+  ],
+  "outputs": [
+    {
+      "type": "stream",
+      "text": "X_train shape: (4200, 128, 128, 3), y_train shape: (4200, 2)\nX_val shape: (900, 128, 128, 3), y_val shape: (900, 2)\nX_test shape: (900, 128, 128, 3), y_test shape: (900, 2)\n",
+      "code": "# Split the dataset into training, validation, and test sets\nX_train, X_temp, y_train, y_temp = train_test_split(data, labels, test_size=0.3, random_state=42)\nX_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)\n\n# Convert labels to one-hot encoding\ny_train = to_categorical(y_train, num_classes=2)\ny_val = to_categorical(y_val, num_classes=2)\ny_test = to_c"
+    },
+    {
+      "type": "stream",
+      "text": "Downloading data from https://storage.googleapis.com/tensorflow/keras-applications/inception_v3/inception_v3_weights_tf_dim_ordering_tf_kernels_notop.h5\n87910968/87910968 [==============================] - 0s 0us/step\n",
+      "code": "# Loading the InceptionV3 model with pre-trained weights\nbase_model = InceptionV3(weights='imagenet', include_top=False, input_shape=(128, 128, 3))\n\n# Freeze the pre-trained layers\nfor layer in base_model.layers:\n    layer.trainable = False\n\n# Add your own classification layers\nx = base_model.output\nx = GlobalAveragePooling2D()(x)\nx = Dense(1024, activation='relu')(x)  # Add more units or layers a"
+    },
+    {
+      "type": "stream",
+      "text": "Epoch 1/100\n131/131 [==============================] - 18s 135ms/step - loss: 0.0387 - accuracy: 0.9870 - val_loss: 0.0310 - val_accuracy: 0.9933\nEpoch 2/100\n131/131 [==============================] - 17s 130ms/step - loss: 0.0270 - accuracy: 0.9906 - val_loss: 0.1648 - val_accuracy: 0.9375\nEpoch 3/100\n131/131 [==============================] - 17s 127ms/step - loss: 0.0381 - accuracy: 0.9863 - val_loss: 0.1027 - val_accuracy: 0.9609\nEpoch 4/100\n131/131 [==============================] - 16s 125ms/step - loss: 0.0505 - accuracy: 0.9820 - val_loss: 0.1349 - val_accuracy: 0.9420\nEpoch 5/100\n131/131 [==============================] - 16s 126ms/step - loss: 0.0215 - accuracy: 0.9926 - val_loss: 0.1196 - val_accuracy: 0.9475\nEpoch 6/100\n131/131 [==============================] - 17s 127ms/step - loss: 0.0248 - accuracy: 0.9918 - val_loss: 0.0208 - val_accuracy: 0.9933\nEpoch 7/100\n131/131 [==============================] - 17s 131ms/step - loss: 0.0286 - accuracy: 0.9899 - val_loss: 0.0379 - val_accuracy: 0.9855\nEpoch 8/100\n131/131 [==============================] - 17s 128ms/step - loss: 0.0428 - accuracy: 0.9834 - val_loss: 0.0847 - val_accuracy: 0.9632\nEpoch 9/100\n131/131 [==============================] - 17s 126ms/step - loss: 0.0231 - accuracy: 0.9930 - val_loss: 0.0179 - val_accuracy: 0.9944\nEpoch 10/100\n131/131 [==============================] - 17s 126ms/step - loss: 0.0339 - accuracy: 0.9883 - val_loss: 0.3352 - val_accuracy: 0.8817\nEpoch 11/100\n131/131 [==============================] - 16s 126ms/step - loss: 0.0321 - accuracy: 0.9899 - val_loss: 0.1149 - val_accuracy: 0.9531\nEpoch 12/100\n131/131 [==============================] - 17s 127ms/step - loss: 0.0431 - accuracy: 0.9842 - val_loss: 0.0217 - val_accuracy: 0.9944\nEpoch 13/100\n131/131 [==============================] - 17s 127ms/step - loss: 0.0188 - accuracy: 0.9940 - val_loss: 0.0370 - val_accuracy: 0.9877\nEpoch 14/100\n131/131 [==============================] - 16s 125ms/step - loss: 0.0273 - accuracy: 0.9909 - val_loss: 0.0483 - val_accuracy: 0.9855\nEpoch 15/100\n131/131 [==============================] - 17s 128ms/step - loss: 0.0287 - accuracy: 0.9897 - val_loss: 0.0264 - val_accuracy: 0.9911\nEpoch 16/100\n131/131 [==============================] - 17s 130ms/step - loss: 0.0271 - accuracy: 0.9909 - val_loss: 0.0799 - val_accuracy: 0.9643\n29/29 [==============================] - 1s 26ms/step - loss: 0.0178 - accuracy: 0.9944\nValidation Loss: 0.017816906794905663\nValidation Accuracy: 0.9944444298744202\n",
+      "code": "# Define hyperparameters for training\nepochs = 100  # You can adjust the number of epochs as needed\nbatch_size = 32  # You can adjust the batch size as needed\n\nearly_stopping = EarlyStopping(monitor='val_loss', patience=7, restore_best_weights=True)\n\n# Train the model\nhistory = model.fit(\n    train_generator,\n    steps_per_epoch=len(X_train) // batch_size,\n    epochs=epochs,\n    validation_data=va"
+    },
+    {
+      "type": "stream",
+      "text": "900/900 [==============================] - 9s 8ms/step\n              precision    recall  f1-score   support\n\n        Crop       0.99      1.00      1.00       440\n        Weed       1.00      0.99      1.00       460\n\n    accuracy                           1.00       900\n   macro avg       1.00      1.00      1.00       900\nweighted avg       1.00      1.00      1.00       900\n\n",
+      "code": "# Create a data generator for the test set\ntest_generator = ImageDataGenerator(rescale=1./255).flow(X_test, y_test, batch_size=1, shuffle=False)\n\n# Get predictions from the model\ny_pred = model.predict(test_generator)\ny_pred_classes = np.argmax(y_pred, axis=1)\ny_true = np.argmax(y_test, axis=1)\n\n# Compute the classification report\nreport = classification_report(y_true, y_pred_classes, target_names"
+    },
+    {
+      "type": "image",
+      "file": "wc-inceptionv3-1.png",
+      "code": "#Visualize Training and Validation Curves\n# Extract training history from the history object\ntraining_loss = history.history['loss']\ntraining_accuracy = history.history['accuracy']\nvalidation_loss = history.history['val_loss']\nvalidation_accuracy = history.history['val_accuracy']\n\n# Plot training and validation loss\nplt.figure(figsize=(12, 4))\nplt.subplot(1, 2, 1)\nplt.plot(training_loss, label='Tr"
+    },
+    {
+      "type": "image",
+      "file": "wc-inceptionv3-2.png",
+      "code": "#Analyze Misclassified Images\nimport random\n\nmisclassified_images = []\n\nfor i in range(len(y_true)):\n    if y_pred_classes[i] != y_true[i]:\n        misclassified_images.append((X_test[i], y_pred_classes[i], y_true[i]))\n\n# Randomly select and display some misclassified images\nplt.figure(figsize=(12, 6))\nnum_displayed = min(6, len(misclassified_images))\nfor i in range(num_displayed):\n    index = ran"
+    },
+    {
+      "type": "image",
+      "file": "wc-inceptionv3-3.png",
+      "code": "# Compute the confusion matrix\nconfusion = confusion_matrix(y_true, y_pred_classes)\n\n# Plot the confusion matrix\nlabels = ['Crop', 'Weed']\nplt.figure(figsize=(6, 4))\nsns.heatmap(confusion, annot=True, fmt=\"d\", cmap=\"Blues\", xticklabels=labels, yticklabels=labels)\nplt.xlabel('Predicted')\nplt.ylabel('True')\nplt.title('Confusion Matrix')\nplt.show()"
+    }
+  ]
+}

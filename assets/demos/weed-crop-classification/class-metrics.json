@@ -1,0 +1,13 @@
+{
+  "Crop": {
+    "InceptionV3": {"precision": 0.99, "recall": 1.00, "f1": 1.00},
+    "LeNet-5":     {"precision": 1.00, "recall": 0.99, "f1": 0.99},
+    "Xception":    {"precision": 1.00, "recall": 0.99, "f1": 0.99}
+  },
+  "Weed": {
+    "InceptionV3": {"precision": 1.00, "recall": 0.99, "f1": 1.00},
+    "LeNet-5":     {"precision": 0.99, "recall": 1.00, "f1": 0.99},
+    "Xception":    {"precision": 0.99, "recall": 1.00, "f1": 0.99}
+  },
+  "support": {"Crop": 440, "Weed": 460}
+}
