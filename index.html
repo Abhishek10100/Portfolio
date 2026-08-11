@@ -5,604 +5,915 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Abhishek Tripathi — Associate Data Scientist</title>
 <meta name="description" content="Abhishek Tripathi — Associate Data Scientist. GenAI, RAG, ML & Computer Vision. I turn business questions into shipped, measurable AI systems.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0b0a'/%3E%3Crect x='11' y='11' width='10' height='10' rx='2' fill='%23c9f24e'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231C1B19'/%3E%3Crect x='9' y='9' width='14' height='14' rx='2' fill='%23B3392E'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--acc:#c9f24e;--acc-dim:#7f9a34;--bg:#0a0b0a;--bg2:#0d0f0d;--panel:#121412;--line:rgba(255,255,255,.08);--ink:#e9ece4;--mut:#818779}
+:root{
+  --paper:#FBFAF7; --chrome:#F2EFE9; --cell-bg:#F4F2EC; --surface:#FFFFFF; --surface-alt:#FAF9F5;
+  --ink:#1C1B19; --ink-2:#57524A; --ink-3:#8B8579; --ink-4:#C4BEB2;
+  --rule:#E3DFD6; --rule-2:#F0EDE6; --rule-3:#C9C3B7;
+  --accent:#B3392E; --accent-deep:#8C2A21; --accent-wash:#FBEEEC; --accent-wash-border:#F0D8D4;
+  --in-prompt:#3D6FD1; --ok:#2E7D6B; --ok-wash:#E6F1ED;
+  --mono:'JetBrains Mono',monospace; --sans:Archivo,system-ui,sans-serif;
+}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:var(--acc);text-decoration:none}
-a:hover{color:#dbff6b}
-::selection{background:var(--acc);color:#0a0b0a}
-.mono{font-family:'JetBrains Mono',monospace}
-.cell{width:100%;aspect-ratio:1;border-radius:2px;background:rgba(201,242,78,.08);will-change:transform,opacity}
-.caret{display:inline-block;width:9px;height:1.05em;background:var(--acc);vertical-align:-2px;margin-left:2px;animation:blink 1s steps(1) infinite}
-@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
-.navlink{font:500 12.5px 'JetBrains Mono',monospace;color:var(--mut);letter-spacing:.02em;transition:color .2s}
-.navlink:hover{color:var(--ink)}
-.chip{font:500 11px 'JetBrains Mono',monospace;color:var(--ink);background:rgba(201,242,78,.07);border:1px solid rgba(201,242,78,.18);border-radius:999px;padding:6px 12px}
-.pcard{transition:border-color .25s,transform .25s,background .25s}
-.pcard:hover{border-color:rgba(201,242,78,.4);transform:translateY(-3px);background:#141712}
-.btn-p{background:var(--acc);color:#0a0b0a;font:700 12px 'JetBrains Mono',monospace;padding:13px 22px;border-radius:8px;letter-spacing:.04em;transition:box-shadow .25s,transform .2s;display:inline-block}
-.btn-p:hover{color:#0a0b0a;box-shadow:0 0 0 4px rgba(201,242,78,.18);transform:translateY(-1px)}
-.btn-o{border:1px solid rgba(255,255,255,.2);color:var(--ink);font:500 12px 'JetBrains Mono',monospace;padding:13px 22px;border-radius:8px;transition:border-color .2s,color .2s;display:inline-block}
-.btn-o:hover{border-color:var(--acc);color:var(--acc)}
-.section{max-width:1120px;margin:0 auto;padding:0 40px}
-.eyebrow{font:600 11px 'JetBrains Mono',monospace;letter-spacing:.32em;color:var(--acc);text-transform:uppercase}
-.h2{font:700 42px/1.02 'Space Grotesk',sans-serif;letter-spacing:-.02em;margin:14px 0 0}
-.reveal{opacity:0;transform:translateY(22px)}
-@media (max-width:860px){
-  nav{padding:14px 20px !important}
-  nav > div{gap:14px !important}
-  .navlink{display:none}
-  .section{padding:0 20px}
-  #home h1{font-size:clamp(38px,12vw,64px) !important}
-  #education .section, #clients .section > div:last-child{grid-template-columns:1fr !important}
-  #projects .section > div, #skills .section > div, #demo-lab .section > div:nth-of-type(2){grid-template-columns:1fr !important}
-  #stats .section{grid-template-columns:repeat(3,1fr) !important}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--accent-deep)}
+::selection{background:var(--accent);color:#fff}
+p,h1,h2,h3{text-wrap:pretty}
+h1,h2{text-wrap:balance}
+
+@keyframes nbTick{0%,100%{opacity:1}50%{opacity:.15}}
+@keyframes nbPulse{0%{box-shadow:0 0 0 0 rgba(46,125,107,.4)}70%{box-shadow:0 0 0 12px rgba(46,125,107,0)}100%{box-shadow:0 0 0 0 rgba(46,125,107,0)}}
+@keyframes nbBar{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+@keyframes nbSpin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+@keyframes nbBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes nbBlink{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.12)}}
+@keyframes nbCaret{0%,100%{opacity:1}50%{opacity:0}}
+
+/* Toolbar */
+.toolbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:12px 22px;border-bottom:1px solid var(--rule);background:var(--chrome)}
+.toolbar-left{display:flex;align-items:center;gap:14px;font:500 12px var(--mono);color:var(--ink-3);flex-wrap:wrap}
+.toolbar-left b{font-weight:700;color:var(--ink)}
+.toolbar-right{display:flex;align-items:center;gap:9px;font:500 11px var(--mono);color:var(--ink-3)}
+.kernel-dot{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--ink-3);animation:nbTick 2.4s ease-in-out infinite;flex:none}
+.toc-toggle{display:none;border:1px solid var(--rule-3);background:none;color:var(--ink-2);font:600 11px var(--mono);letter-spacing:.08em;padding:6px 10px;border-radius:3px;cursor:pointer}
+
+/* Layout grid */
+.nb-shell{display:grid;grid-template-columns:minmax(0,1fr) 268px}
+#nb-col{padding:26px 0 64px;min-width:0}
+.toc-rail{border-left:1px solid var(--rule);background:var(--chrome);padding:26px 22px;display:flex;flex-direction:column;gap:20px;position:sticky;top:45px;height:calc(100vh - 45px);box-sizing:border-box}
+.rail-label{font:600 10px var(--mono);letter-spacing:.14em;color:var(--ink-3)}
+.rail-hr{height:1px;background:var(--rule);flex:none}
+.toc-links{display:flex;flex-direction:column;gap:11px;font:500 13px var(--sans)}
+.toc-links a{color:var(--ink-2)}
+.toc-links a.active{color:var(--ink);font-weight:700}
+.kernel-vars{font:400 12px/1.9 var(--mono);color:var(--ink-2)}
+.kernel-vars b{color:var(--ink)}
+.clients-list{font:500 12.5px/1.9 var(--sans);color:var(--ink-2)}
+.rail-spacer{flex:1}
+.run-all{padding:13px;background:var(--ink);color:var(--paper);text-align:center;font:600 11px var(--mono);letter-spacing:.12em;cursor:pointer;border-radius:2px}
+.dl-resume{padding:13px;border:1px solid var(--rule-3);text-align:center;font:600 11px var(--mono);letter-spacing:.12em;color:var(--ink-2);border-radius:2px;display:block}
+
+/* Cell rows */
+.cell-row{display:grid;grid-template-columns:74px minmax(0,1fr)}
+.cell-row + .cell-row{margin-top:10px}
+.cell-row.gap-top{margin-top:34px}
+.prompt-in,.prompt-out{text-align:right;font:500 12px var(--mono)}
+.prompt-in{padding:16px 16px 0 0;color:var(--in-prompt)}
+.prompt-out{padding:8px 16px 0 0;color:var(--accent)}
+.prompt-label{display:none}
+.in-code{margin-right:26px;background:var(--cell-bg);border:1px solid var(--rule);border-radius:3px;padding:14px 18px;font:400 13.5px/1.7 var(--mono)}
+.in-code.contact-in{border-left:3px solid var(--accent);display:flex;align-items:center;gap:10px}
+.gt{color:var(--ink-3)}
+.str{color:var(--accent)}
+.kw{color:var(--in-prompt)}
+.out-content{margin-right:26px}
+.caret-block{width:8px;height:17px;background:var(--ink);animation:nbTick 1.05s steps(1) infinite;flex:none}
+
+/* Reveal */
+.reveal-target{opacity:0;transform:translateY(14px);transition:opacity .55s cubic-bezier(.2,.8,.2,1),transform .55s cubic-bezier(.2,.8,.2,1)}
+.reveal-target.in-view{opacity:1;transform:none}
+
+/* Hero */
+h1.hero-h1{margin:0;font-variation-settings:'wdth' 100,'wght' 800;font-size:clamp(40px,5.4vw,68px);line-height:.94;letter-spacing:-.038em}
+.hero-lead{margin:18px 0 0;max-width:680px;font:400 17px/1.6 var(--sans);color:var(--ink-2)}
+.hero-body{margin:14px 0 0;max-width:760px;font:400 15px/1.7 var(--sans);color:var(--ink-2)}
+.hero-ctas{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+.cta-solid{padding:12px 20px;background:var(--ink);color:var(--paper);border-radius:3px;font:600 11.5px var(--mono);letter-spacing:.08em}
+.cta-outline{padding:12px 20px;border:1px solid var(--rule-3);color:var(--ink);border-radius:3px;font:600 11.5px var(--mono);letter-spacing:.08em}
+
+/* Impact table */
+.impact-table{font:400 13px var(--mono)}
+.impact-row{display:grid;grid-template-columns:34px 1.7fr 1fr .8fr;padding:11px 0;border-bottom:1px solid var(--rule)}
+.impact-row:last-child{border-bottom:none}
+.impact-head{display:grid;grid-template-columns:34px 1.7fr 1fr .8fr;border-bottom:2px solid var(--ink);padding:0 0 8px;color:var(--ink-3);letter-spacing:.06em}
+.impact-num{color:var(--ink-3)}
+.impact-sys{font-weight:500}
+.impact-domain{color:var(--ink-2)}
+.impact-delta{text-align:right;font-weight:700}
+.delta-down{color:var(--accent)}
+.delta-up{color:var(--ok)}
+
+h2.section-h2{margin:0;font-variation-settings:'wdth' 100,'wght' 700;font-size:32px;letter-spacing:-.03em}
+
+/* Experience */
+.exp-list{margin-top:20px}
+.exp-row{display:grid;grid-template-columns:172px minmax(0,1fr);gap:26px;padding:22px 0;border-top:1px solid var(--rule)}
+.exp-list > .exp-row:last-child{border-bottom:1px solid var(--rule)}
+.current-pill{display:inline-flex;align-items:center;gap:7px;padding:4px 9px;background:var(--ok-wash);color:var(--ok);border-radius:3px;font:600 10px var(--mono);letter-spacing:.08em}
+.pulse-dot-sm{width:6px;height:6px;border-radius:50%;background:var(--ok);animation:nbTick 1.6s ease-in-out infinite;flex:none}
+.exp-date{font:500 11.5px var(--mono);color:var(--ink-3);margin-top:10px;line-height:1.7}
+.exp-date.no-pill{margin-top:0}
+.role-title{font:600 20px var(--sans);letter-spacing:-.02em}
+.role-company{color:var(--ink-3);font-weight:400}
+.bullet-list{display:grid;gap:9px;margin-top:14px;font:400 14px/1.6 var(--sans);color:var(--ink-2)}
+.bullet-list b{color:var(--ink)}
+.tri{color:var(--accent)}
+
+/* Cards grid */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:14px;margin-top:20px}
+.pcard{border:1px solid var(--rule);background:var(--surface);border-radius:4px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.pcard-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.pcard-label{font:600 10px var(--mono);letter-spacing:.12em;color:var(--accent)}
+.pcard-metric{text-align:right}
+.pcard-metric-num{font:700 30px var(--mono);letter-spacing:-.03em}
+.pcard-metric-cap{font:500 10px var(--mono);color:var(--ink-3)}
+.pcard-title{font:700 24px var(--sans);letter-spacing:-.025em}
+.pcard-desc{margin:0;font:400 14px/1.6 var(--sans);color:var(--ink-2)}
+.chip-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.chip{padding:5px 9px;background:var(--rule-2);border-radius:3px;font:500 10.5px var(--mono);color:var(--ink-2)}
+
+/* Detail cards */
+.detail-list{margin-right:26px;display:flex;flex-direction:column;gap:16px}
+.detail-card{border:1px solid var(--rule);border-radius:4px;background:var(--surface);overflow:hidden}
+.detail-flex{display:flex;flex-wrap:wrap;align-items:stretch}
+.detail-text{flex:1 1 420px;min-width:0;padding:28px;border-right:1px solid var(--rule)}
+.detail-cat{font:600 10px var(--mono);letter-spacing:.14em;color:var(--accent)}
+.detail-h3{margin:12px 0 0;font-variation-settings:'wdth' 100,'wght' 800;font-size:38px;line-height:1;letter-spacing:-.03em}
+.detail-desc{margin:14px 0 0;max-width:560px;font:400 15.5px/1.6 var(--sans);color:var(--ink-2)}
+.pipeline-row{display:flex;align-items:center;gap:8px;margin-top:24px;flex-wrap:wrap}
+.pipe-chip{padding:8px 12px;background:var(--cell-bg);border:1px solid var(--rule);border-radius:3px;font:500 11px var(--mono)}
+.pipe-chip.hi{background:var(--accent-wash);border-color:var(--accent-wash-border);color:var(--accent-deep)}
+.built-label{font:600 10px var(--mono);letter-spacing:.14em;color:var(--ink-3);margin-top:26px}
+.built-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px 28px;margin-top:12px;font:400 13.5px/1.6 var(--sans);color:var(--ink-2)}
+.detail-metrics{flex:1 1 240px;min-width:0;padding:28px 24px;background:var(--surface-alt);display:flex;flex-direction:column;gap:18px}
+.metric-big{font:700 44px var(--mono);letter-spacing:-.04em;color:var(--accent)}
+.metric-small{font:700 26px var(--mono);letter-spacing:-.03em}
+.metric-cap{font:500 10px var(--mono);letter-spacing:.1em;color:var(--ink-3);margin-top:5px}
+.metrics-hr{height:1px;background:var(--rule)}
+
+/* Demo lab */
+.demos-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:14px}
+.demos-head-text{max-width:660px}
+.demos-desc{margin:12px 0 0;font:400 14.5px/1.6 var(--sans);color:var(--ink-2)}
+.live-pill{display:flex;align-items:center;gap:8px;padding:8px 13px;background:var(--ok-wash);color:var(--ok);border-radius:3px;font:600 10.5px var(--mono);letter-spacing:.1em;white-space:nowrap}
+.pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--ok);animation:nbPulse 2.2s ease-out infinite;flex:none}
+.demo-table{margin-top:20px;border:1px solid var(--rule);border-radius:4px;background:var(--surface);overflow:hidden;font:400 12.5px var(--mono)}
+.demo-head-row{display:grid;grid-template-columns:30px 1.4fr 2.4fr 84px;gap:14px;padding:10px 16px;background:var(--cell-bg);border-bottom:1px solid var(--rule);font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--ink-3)}
+.demo-row{display:grid;grid-template-columns:30px 1.4fr 2.4fr 84px;gap:14px;padding:12px 16px;border-bottom:1px solid var(--rule-2);align-items:center;color:inherit}
+.demo-row:last-child{border-bottom:none}
+.demo-row:hover{background:var(--surface-alt)}
+.glyph-live{color:var(--ok)}
+.glyph-static{color:var(--ink-4)}
+.demo-name{font-weight:500}
+.demo-desc{color:var(--ink-2);font-family:var(--sans);font-size:13px}
+.state-live{text-align:right;color:var(--ok);font-weight:700;font-size:10px}
+.state-static{text-align:right;color:var(--ink-3);font-size:10px}
+
+/* Skills */
+.skills-grid{margin-top:18px;display:grid;grid-template-columns:190px minmax(0,1fr)}
+.skill-label{padding:16px 0;border-top:1px solid var(--rule);font:600 10.5px var(--mono);letter-spacing:.1em;color:var(--ink-3)}
+.skill-label.hi{color:var(--accent)}
+.skill-chips{padding:16px 0;border-top:1px solid var(--rule);display:flex;flex-wrap:wrap;gap:7px}
+.skills-grid > :nth-last-child(-n+2){border-bottom:1px solid var(--rule)}
+.skill-chip{padding:7px 12px;background:var(--surface);border:1px solid var(--rule);border-radius:3px;font:500 12.5px var(--sans)}
+.skill-chip.hi{background:var(--accent-wash);border-color:var(--accent-wash-border);color:var(--accent-deep)}
+
+/* Research */
+.research-card{border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--surface)}
+.research-top{padding:26px;border-bottom:1px solid var(--rule)}
+.badge{display:inline-block;padding:5px 10px;border:1px solid var(--rule);border-radius:3px;font:600 10px var(--mono);letter-spacing:.1em;color:var(--ink-3)}
+.research-title{margin:16px 0 0;font-variation-settings:'wdth' 100,'wght' 700;font-size:28px;line-height:1.18;letter-spacing:-.022em;max-width:800px}
+.research-cite{margin:12px 0 0;font:400 13.5px var(--sans);color:var(--ink-2)}
+.research-cta{display:inline-block;margin-top:20px;padding:12px 20px;background:var(--accent);color:#fff;border-radius:3px;font:700 11px var(--mono);letter-spacing:.08em}
+.research-cta:hover{color:#fff;background:var(--accent-deep)}
+.research-metrics{display:grid;grid-template-columns:repeat(3,1fr)}
+.rm-cell{padding:22px 26px;border-right:1px solid var(--rule)}
+.rm-cell:last-child{border-right:none}
+.rm-num{font:700 32px var(--mono);letter-spacing:-.03em}
+.rm-num.accent{color:var(--accent)}
+.rm-cap{font:500 10px var(--mono);letter-spacing:.1em;color:var(--ink-3);margin-top:6px}
+.progress-bar{height:4px;background:var(--rule-2);border-radius:2px;margin-top:12px;overflow:hidden}
+.progress-bar-fill{height:100%;width:96%;background:var(--accent);transform-origin:left;animation:nbBar 1.6s cubic-bezier(.2,.8,.2,1) forwards}
+.edu-cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:24px}
+.edu-cert-label{font:600 10.5px var(--mono);letter-spacing:.14em;color:var(--ink-3)}
+.edu-title{font:600 16px var(--sans);margin-top:12px}
+.edu-title.spaced{margin-top:16px}
+.edu-sub{font:400 12.5px var(--mono);color:var(--ink-3);margin-top:4px}
+.cert-list{display:grid;gap:8px;margin-top:12px;font:400 13.5px var(--sans);color:var(--ink-2)}
+.cert-list .ck{color:var(--ok)}
+
+/* Contact */
+h2.contact-h2{margin:0;font-variation-settings:'wdth' 100,'wght' 700;font-size:clamp(32px,3.8vw,50px);line-height:1.02;letter-spacing:-.036em;max-width:760px}
+.contact-lead{margin:14px 0 0;font:400 16px/1.6 var(--sans);color:var(--ink-2);max-width:520px}
+.contact-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:26px}
+.c-tile{border:1px solid var(--rule);background:var(--surface);border-radius:4px;padding:18px;color:inherit;display:block}
+.c-tile:hover{color:inherit;border-color:var(--rule-3)}
+.c-tile-solid{background:var(--ink);border:none;color:var(--paper)}
+.c-tile-solid:hover{color:var(--paper)}
+.c-tile-label{font:500 10px var(--mono);letter-spacing:.1em;color:var(--ink-3)}
+.c-tile-solid .c-tile-label{color:rgba(255,255,255,.55)}
+.c-tile-value{font:600 15px var(--sans);margin-top:8px}
+.c-tile-solid .c-tile-value{font-weight:700}
+.contact-footer{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:34px;padding-top:18px;border-top:1px solid var(--rule);font:400 11.5px var(--mono);color:var(--ink-3)}
+.available-line{display:flex;align-items:center;gap:8px;color:var(--ok)}
+.available-dot{width:6px;height:6px;border-radius:50%;background:var(--ok);animation:nbTick 1.7s ease-in-out infinite;flex:none}
+.credit-line{margin-top:14px;display:inline-flex;align-items:center;gap:10px;padding:11px 16px;background:var(--ink);color:var(--paper);border-radius:3px;font:500 11.5px var(--mono)}
+.credit-amp{color:var(--paper);font-weight:700}
+.blink-caret{width:7px;height:14px;background:var(--accent);animation:nbCaret 1.05s steps(1) infinite;flex:none}
+
+/* Mobile appendix (documentation-only band, desktop preview) */
+.appendix{display:none}
+
+/* Custom cursor */
+#nb-cursor-ring{position:fixed;left:0;top:0;width:30px;height:30px;margin:-15px 0 0 -15px;border:1px solid var(--accent);border-radius:50%;pointer-events:none;z-index:9998;opacity:0;transition:width .16s,height .16s,margin .16s,opacity .2s,background-color .16s}
+#nb-cursor-dot{position:fixed;left:0;top:0;width:3px;height:16px;margin:-8px 0 0 -1.5px;background:var(--ink);pointer-events:none;z-index:9999;opacity:0;transition:opacity .2s}
+
+/* Mini-Guide */
+#nb-pet{position:fixed;left:26px;bottom:26px;z-index:9997;display:flex;align-items:flex-end;gap:12px;font-family:var(--mono)}
+#nb-pet-body{position:relative;width:56px;height:56px;flex:none;border-radius:50%;background:var(--ink);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;animation:nbBob 3.4s ease-in-out infinite;box-shadow:0 6px 18px rgba(28,27,25,.22)}
+#nb-pet-body.muted{border-color:var(--rule-3)}
+#nb-pet-body .halo{position:absolute;inset:-7px;border:1px dashed rgba(179,57,46,.5);border-radius:50%;animation:nbSpin 9s linear infinite}
+#nb-pet-body .eye{width:7px;height:9px;border-radius:3px;background:var(--paper);animation:nbBlink 5s ease-in-out infinite}
+#nb-pet-bubble{max-width:290px;background:var(--paper);border:1px solid var(--ink);border-radius:4px;padding:12px 14px;box-shadow:0 6px 18px rgba(28,27,25,.14);pointer-events:none;opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s}
+#nb-pet-bubble.show{opacity:1;transform:none}
+.pet-tag{font:600 9.5px var(--mono);letter-spacing:.14em;color:var(--accent)}
+#nb-pet-text{margin-top:6px;font:400 12.5px/1.55 var(--sans);color:var(--ink)}
+
+@media (prefers-reduced-motion: reduce){
+  .reveal-target{opacity:1 !important;transform:none !important;transition:none !important}
+  #nb-pet-body,#nb-pet-body .halo,#nb-pet-body .eye,.kernel-dot,.pulse-dot,.pulse-dot-sm,.available-dot,.blink-caret,.caret-block,.progress-bar-fill{animation:none !important}
+}
+@media (pointer: coarse){
+  #nb-cursor-ring,#nb-cursor-dot{display:none !important}
+}
+
+/* Responsive: collapse TOC rail below ~1100px */
+@media (max-width:1100px){
+  .nb-shell{grid-template-columns:minmax(0,1fr)}
+  .toc-rail{display:none;position:fixed;top:45px;right:0;width:280px;max-width:86vw;height:calc(100vh - 45px);z-index:19;border-left:1px solid var(--rule);box-shadow:-8px 0 24px rgba(28,27,25,.12)}
+  .toc-rail.open{display:flex}
+  .toc-toggle{display:inline-block}
+}
+
+/* Responsive: collapse prompt gutter below ~760px */
+@media (max-width:760px){
+  .cell-row{grid-template-columns:minmax(0,1fr)}
+  .prompt-in,.prompt-out{display:none}
+  .prompt-label{display:block;font:500 11px var(--mono);margin:0 0 6px}
+  .prompt-label.in-lbl{color:var(--in-prompt)}
+  .prompt-label.out-lbl{color:var(--accent)}
+  .in-code{margin-right:0}
+  .out-content{margin-right:0}
+  .detail-list{margin-right:0}
+  .exp-row{grid-template-columns:minmax(0,1fr);gap:8px}
+  .research-metrics{grid-template-columns:1fr}
+  .rm-cell{border-right:none;border-bottom:1px solid var(--rule)}
+  .rm-cell:last-child{border-bottom:none}
+  .edu-cert-grid{grid-template-columns:1fr}
+  .toolbar-left span:not(:first-child){display:none}
+}
+
+/* Responsive: demo table drops description column below ~640px */
+@media (max-width:640px){
+  .demo-head-row,.demo-row{grid-template-columns:30px 1fr 70px}
+  .demo-desc{display:none}
 }
 </style>
 </head>
 <body>
 
-<div style="min-height:100vh">
+<div class="toolbar">
+  <div class="toolbar-left">
+    <b>abhishek_tripathi.ipynb</b>
+    <span>File</span><span>Run</span><span>Kernel</span><span>View</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:14px">
+    <div class="toolbar-right">Python 3 · idle<span class="kernel-dot"></span></div>
+    <button class="toc-toggle" id="toc-toggle-btn" aria-label="Toggle table of contents">TOC ≡</button>
+  </div>
+</div>
 
-  <!-- NAV -->
-  <nav style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;background:rgba(10,11,10,.72);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)">
-    <a href="#home" style="display:flex;align-items:center;gap:9px;color:var(--ink)">
-      <span style="width:10px;height:10px;background:var(--acc);border-radius:2px;box-shadow:0 0 10px var(--acc)"></span>
-      <span class="mono" style="font-weight:700;font-size:14px;letter-spacing:.02em">abhishek.dev</span>
-    </a>
-    <div style="display:flex;gap:28px;align-items:center">
-      <a class="navlink" href="#experience">experience</a>
-      <a class="navlink" href="#projects">projects</a>
-      <a class="navlink" href="#demo-lab">demo lab</a>
-      <a class="navlink" href="#skills">skills</a>
-      <a class="navlink" href="#publication">research</a>
-      <a class="navlink" href="#contact">contact</a>
-      <a class="navlink" href="/resume.pdf" target="_blank" rel="noopener">resume</a>
-      <a class="btn-p" style="padding:9px 16px" href="https://www.linkedin.com/in/abhishekab9873/" target="_blank" rel="noopener">LINKEDIN →</a>
-    </div>
-  </nav>
+<div class="nb-shell">
+  <div id="nb-col">
 
-  <!-- HERO -->
-  <header id="home" style="position:relative;height:calc(100vh - 59px);min-height:620px;overflow:hidden;background:var(--bg)">
-    <div id="cellgrid" style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(28,1fr);gap:9px;padding:28px;opacity:.9"></div>
-    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 66% 64% at 50% 46%,rgba(10,11,10,.94) 28%,rgba(10,11,10,.55) 60%,transparent 100%)"></div>
-    <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 40px">
-      <div id="hb1" class="mono" style="font-size:12px;letter-spacing:.34em;color:var(--acc);text-transform:uppercase;margin-bottom:22px">// associate_data_scientist</div>
-      <h1 id="hb2" style="margin:0;font:700 clamp(48px,8vw,92px)/0.9 'Space Grotesk',sans-serif;letter-spacing:-.025em">ABHISHEK<br><span style="color:var(--acc)">TRIPATHI</span></h1>
-      <p id="hb3" class="mono" style="margin:24px 0 0;font-size:15px;line-height:1.55;color:var(--mut);max-width:540px;text-wrap:pretty">GenAI · RAG · ML · Computer Vision — I turn business questions into shipped, measurable AI systems.</p>
-      <div id="hb4" class="mono" style="display:flex;flex-wrap:wrap;justify-content:center;gap:24px;margin-top:28px;font-size:13.5px;font-weight:500">
-        <span><span style="color:var(--acc)">1.5+</span> yrs</span>
-        <span style="color:rgba(255,255,255,.16)">/</span>
-        <span><span style="color:var(--acc)">95.93%</span> precision</span>
-        <span style="color:rgba(255,255,255,.16)">/</span>
-        <span><span style="color:var(--acc)">70%</span> effort cut</span>
-        <span style="color:rgba(255,255,255,.16)">/</span>
-        <span><span style="color:var(--acc)">1</span> published paper</span>
-      </div>
-      <div id="hb5" style="display:flex;gap:12px;margin-top:34px">
-        <a class="btn-p" href="#projects">VIEW WORK →</a>
-        <a class="btn-o" href="mailto:abhishek0akt@gmail.com">GET IN TOUCH</a>
+    <!-- In[1]/Out[1] — Summary -->
+    <div class="cell-row" id="top">
+      <div class="prompt-in">In [1]:</div>
+      <div class="in-code">
+        <span class="prompt-label in-lbl">In [1]:</span>
+        <span class="gt">&gt;&gt;&gt; </span>from career import AbhishekTripathi<br>
+        <span class="gt">&gt;&gt;&gt; </span>me = AbhishekTripathi(role=<span class="str">"Associate Data Scientist"</span>)<br>
+        <span class="gt">&gt;&gt;&gt; </span>me.summary()
       </div>
     </div>
-    <div class="mono" style="position:absolute;bottom:20px;left:40px;font-size:11px;color:var(--mut)">Pune, IN · +91-7668617782</div>
-    <div class="mono" style="position:absolute;bottom:20px;right:40px;font-size:11px;color:var(--mut)">scroll ↓</div>
-  </header>
-
-  <!-- STATS BAR -->
-  <section id="stats" style="border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2)">
-    <div class="section" style="padding-top:36px;padding-bottom:36px;display:grid;grid-template-columns:repeat(6,1fr);gap:24px">
-      <div class="statcell" style="text-align:center">
-        <div class="mono" style="font-weight:800;font-size:34px;color:var(--acc);line-height:1"><span class="counter" data-to="1.5" data-dec="1">0</span><span>+</span></div>
-        <div class="mono" style="font-size:10.5px;color:var(--mut);margin-top:9px;letter-spacing:.04em">YEARS EXP</div>
-      </div>
-      <div class="statcell" style="text-align:center">
-        <div class="mono" style="font-weight:800;font-size:34px;color:var(--acc);line-height:1"><span class="counter" data-to="95.93" data-dec="2">0</span><span>%</span></div>
-        <div class="mono" style="font-size:10.5px;color:var(--mut);margin-top:9px;letter-spacing:.04em">BEST PRECISION</div>
-      </div>
-      <div class="statcell" style="text-align:center">
-        <div class="mono" style="font-weight:800;font-size:34px;color:var(--acc);line-height:1"><span class="counter" data-to="70" data-dec="0">0</span><span>%</span></div>
-        <div class="mono" style="font-size:10.5px;color:var(--mut);margin-top:9px;letter-spacing:.04em">EFFORT CUT</div>
-      </div>
-      <div class="statcell" style="text-align:center">
-        <div class="mono" style="font-weight:800;font-size:34px;color:var(--acc);line-height:1"><span class="counter" data-to="60" data-dec="0">0</span><span>%</span></div>
-        <div class="mono" style="font-size:10.5px;color:var(--mut);margin-top:9px;letter-spacing:.04em">SCREENING CUT</div>
-      </div>
-      <div class="statcell" style="text-align:center">
-        <div class="mono" style="font-weight:800;font-size:34px;color:var(--acc);line-height:1"><span class="counter" data-to="35" data-dec="0">0</span><span>%</span></div>
-        <div class="mono" style="font-size:10.5px;color:var(--mut);margin-top:9px;letter-spacing:.04em">RETRIEVAL ↑</div>
-      </div>
-      <div class="statcell" style="text-align:center">
-        <div class="mono" style="font-weight:800;font-size:34px;color:var(--acc);line-height:1"><span class="counter" data-to="1000" data-dec="0">0</span><span>+</span></div>
-        <div class="mono" style="font-size:10.5px;color:var(--mut);margin-top:9px;letter-spacing:.04em">SLIDES PARSED</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CLIENTS HIGHLIGHT -->
-  <section id="clients" style="border-bottom:1px solid var(--line);background:var(--bg)">
-    <div class="section" style="padding-top:56px;padding-bottom:56px">
-      <div class="reveal" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:28px;background:linear-gradient(135deg,#111311,#0f120c);border:1px solid rgba(201,242,78,.2);border-radius:16px;padding:34px 36px">
-        <div style="max-width:420px">
-          <div class="eyebrow">// client_engagements</div>
-          <h3 style="margin:14px 0 0;font:700 26px/1.2 'Space Grotesk',sans-serif;text-wrap:pretty">Shipped for enterprise clients across <span style="color:var(--acc)">India &amp; Japan</span></h3>
-          <p class="mono" style="margin:12px 0 0;font-size:13px;line-height:1.6;color:var(--mut)">Under AlgoAnalytics — collaborating across Indian and Japanese teams to turn business needs into production ML &amp; GenAI.</p>
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:14px">
-          <div style="display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;min-width:180px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:26px 30px">
-            <span style="font:700 24px 'Space Grotesk',sans-serif;letter-spacing:.02em">NTT DATA</span>
-            <span class="mono" style="font-size:10.5px;color:var(--mut)">global IT services</span>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;min-width:180px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:26px 30px">
-            <span style="font:700 24px 'Space Grotesk',sans-serif;letter-spacing:.02em">Indigo Paints</span>
-            <span class="mono" style="font-size:10.5px;color:var(--mut)">consumer brand</span>
-          </div>
+    <div class="cell-row reveal-target">
+      <div class="prompt-out">Out[1]:</div>
+      <div class="out-content">
+        <span class="prompt-label out-lbl">Out[1]:</span>
+        <h1 class="hero-h1">Abhishek Tripathi</h1>
+        <p class="hero-lead">GenAI · RAG · ML · Computer Vision — I turn business questions into shipped, measurable AI systems.</p>
+        <p class="hero-body">Associate Data Scientist with 1.5+ years building machine learning, predictive analytics, and GenAI products end-to-end — and a peer-reviewed publication in deep-learning computer vision. Proficient in Python, SQL &amp; R across EDA, statistical modeling, hypothesis testing, and BI. I deploy scalable ML on AWS &amp; Azure and translate business questions into analytical frameworks — then communicate the insight to cross-functional stakeholders.</p>
+        <div class="hero-ctas">
+          <a href="#projects" class="cta-solid">VIEW WORK →</a>
+          <a href="mailto:abhishek0akt@gmail.com" class="cta-outline">GET IN TOUCH</a>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- ABOUT -->
-  <section style="padding:88px 0 40px">
-    <div class="section" style="max-width:840px">
-      <div class="eyebrow reveal">// summary</div>
-      <p class="reveal" style="font:600 26px/1.45 'Space Grotesk',sans-serif;margin:22px 0 0;color:var(--ink);text-wrap:pretty">Associate Data Scientist with <span style="color:var(--acc)">1.5+ years</span> building machine learning, predictive analytics, and GenAI products end-to-end — and a <span style="color:var(--acc)">peer-reviewed publication</span> in deep-learning computer vision.</p>
-      <p class="reveal mono" style="font-size:14px;line-height:1.75;color:var(--mut);margin:22px 0 0">Proficient in Python, SQL &amp; R across EDA, statistical modeling, hypothesis testing, and BI. I deploy scalable ML on AWS &amp; Azure and translate business questions into analytical frameworks — then communicate the insight to cross-functional stakeholders.</p>
-    </div>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section id="experience" style="padding:56px 0 40px">
-    <div class="section">
-      <div class="eyebrow reveal">// experience</div>
-      <h2 class="h2 reveal">Where I've shipped</h2>
-      <div style="margin-top:44px;position:relative;padding-left:30px;border-left:1px solid var(--line)">
-
-        <div class="reveal" style="position:relative;padding-bottom:48px">
-          <span style="position:absolute;left:-37px;top:4px;width:13px;height:13px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 4px var(--bg),0 0 14px var(--acc)"></span>
-          <div class="mono" style="font-size:11.5px;color:var(--acc);letter-spacing:.05em">JUN 2025 — PRESENT</div>
-          <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin-top:8px">
-            <span style="font:700 22px 'Space Grotesk',sans-serif">Associate Data Scientist</span>
-            <span class="mono" style="font-size:13px;color:var(--mut)">@ AlgoAnalytics, Pune</span>
-          </div>
-          <ul class="mono" style="margin:16px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px">
-            <li style="position:relative;padding-left:22px;font-size:13.5px;line-height:1.6;color:#c3c8ba"><span style="position:absolute;left:0;top:1px;color:var(--acc)">▹</span>AlgoCreator: architected an end-to-end GenAI product auto-generating branded PPTX decks from historical slide repositories with RAG + GPT-4o — cutting manual presentation effort by ~70%. Led a team of 6–8 interns and Associate Data Scientists.</li>
-            <li style="position:relative;padding-left:22px;font-size:13.5px;line-height:1.6;color:#c3c8ba"><span style="position:absolute;left:0;top:1px;color:var(--acc)">▹</span>Built a multi-modal extraction pipeline (python-pptx) for text, tables &amp; images across 1,000+ slides; vectorized into ChromaDB with LangChain orchestration; EDA lifted retrieval accuracy by 35%.</li>
-            <li style="position:relative;padding-left:22px;font-size:13.5px;line-height:1.6;color:#c3c8ba"><span style="position:absolute;left:0;top:1px;color:var(--acc)">▹</span>OneStopAI (Team Lead): led 4–6 interns and Associate Data Scientists through the full ML lifecycle across manufacturing &amp; finance — churn/retention analytics (Logistic Regression, XGBoost, ensembles) surfaced via Tableau &amp; Power BI.</li>
-            <li style="position:relative;padding-left:22px;font-size:13.5px;line-height:1.6;color:#c3c8ba"><span style="position:absolute;left:0;top:1px;color:var(--acc)">▹</span>Enterprise (NTT DATA &amp; Indigo Paints): built an AI recruiting platform (Azure OpenAI + AI Search) with JD-to-candidate matching &amp; AI-avatar interviews — reducing recruiter screening time by 60%.</li>
-            <li style="position:relative;padding-left:22px;font-size:13.5px;line-height:1.6;color:#c3c8ba"><span style="position:absolute;left:0;top:1px;color:var(--acc)">▹</span>Team collaboration with NTT DATA &amp; Indigo Paints across Indian and Japanese teams.</li>
-          </ul>
-        </div>
-
-        <div class="reveal" style="position:relative;padding-bottom:48px">
-          <span style="position:absolute;left:-37px;top:4px;width:13px;height:13px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 4px var(--bg),0 0 14px var(--acc)"></span>
-          <div class="mono" style="font-size:11.5px;color:var(--acc);letter-spacing:.05em">JAN 2025 — MAY 2025</div>
-          <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin-top:8px">
-            <span style="font:700 22px 'Space Grotesk',sans-serif">Data Science Consultant</span>
-            <span class="mono" style="font-size:13px;color:var(--mut)">@ AlgoAnalytics, Pune</span>
-          </div>
-          <ul class="mono" style="margin:16px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px">
-            <li style="position:relative;padding-left:22px;font-size:13.5px;line-height:1.6;color:#c3c8ba"><span style="position:absolute;left:0;top:1px;color:var(--acc)">▹</span>Built an automated extraction pipeline for Japanese .docx/.xlsx files (PaddleOCR + LangChain + GPT-4o) for NTT DATA, deployed as a FastAPI microservice on AWS App Runner — 500+ documents per batch.</li>
-            <li style="position:relative;padding-left:22px;font-size:13.5px;line-height:1.6;color:#c3c8ba"><span style="position:absolute;left:0;top:1px;color:var(--acc)">▹</span>Developed intelligent slide retrieval across thousands of presentations via ChromaDB multi-query semantic search with PDF/PPTX export — cutting search time from hours to seconds.</li>
-          </ul>
-        </div>
-
-        <div class="reveal" style="position:relative;padding-bottom:48px">
-          <span style="position:absolute;left:-37px;top:4px;width:13px;height:13px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 4px var(--bg),0 0 14px var(--acc)"></span>
-          <div class="mono" style="font-size:11.5px;color:var(--acc);letter-spacing:.05em">MAR 2024 — JUL 2024</div>
-          <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin-top:8px">
-            <span style="font:700 22px 'Space Grotesk',sans-serif">Assistant Data Scientist</span>
-            <span class="mono" style="font-size:13px;color:var(--mut)">@ MIT-WPU, Pune</span>
-          </div>
-          <ul class="mono" style="margin:16px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px">
-            <li style="position:relative;padding-left:22px;font-size:13.5px;line-height:1.6;color:#c3c8ba"><span style="position:absolute;left:0;top:1px;color:var(--acc)">▹</span>Trained &amp; benchmarked YOLOv8n and YOLOv9c for real-time plant-disease detection in hydroponics — 95.93% precision and 88.38% mAP50-95 with YOLOv9.</li>
-            <li style="position:relative;padding-left:22px;font-size:13.5px;line-height:1.6;color:#c3c8ba"><span style="position:absolute;left:0;top:1px;color:var(--acc)">▹</span>Converted YOLOv8 to TensorFlow Lite for Android production deployment used in live research trials.</li>
-            <li style="position:relative;padding-left:22px;font-size:13.5px;line-height:1.6;color:#c3c8ba"><span style="position:absolute;left:0;top:1px;color:var(--acc)">▹</span>Published peer-reviewed findings in Engineering, Technology &amp; Applied Science Research (ETASR).</li>
-          </ul>
-        </div>
-
+    <!-- In[2]/Out[2] — Impact -->
+    <div class="cell-row reveal-target gap-top">
+      <div class="prompt-in">In [2]:</div>
+      <div class="in-code">
+        <span class="prompt-label in-lbl">In [2]:</span>
+        <span class="gt">&gt;&gt;&gt; </span>me.impact.sort_values(<span class="str">"delta"</span>, ascending=False)
       </div>
     </div>
-  </section>
+    <div class="cell-row reveal-target">
+      <div class="prompt-out">Out[2]:</div>
+      <div class="out-content">
+        <span class="prompt-label out-lbl">Out[2]:</span>
+        <div class="impact-table">
+          <div class="impact-head"><span>#</span><span>system</span><span>domain</span><span style="text-align:right">delta</span></div>
+          <div class="impact-row"><span class="impact-num">0</span><span class="impact-sys">AlgoCreator</span><span class="impact-domain">GenAI · RAG</span><span class="impact-delta delta-down">−70%</span></div>
+          <div class="impact-row"><span class="impact-num">1</span><span class="impact-sys">AI Recruiting Platform</span><span class="impact-domain">Azure · Agents</span><span class="impact-delta delta-down">−60%</span></div>
+          <div class="impact-row"><span class="impact-num">2</span><span class="impact-sys">Slide retrieval</span><span class="impact-domain">ChromaDB</span><span class="impact-delta delta-up">+35%</span></div>
+          <div class="impact-row"><span class="impact-num">3</span><span class="impact-sys">YOLOv9 plant disease</span><span class="impact-domain">Computer Vision</span><span class="impact-delta delta-up">95.93%</span></div>
+          <div class="impact-row"><span class="impact-num">4</span><span class="impact-sys">JP Doc Intelligence</span><span class="impact-domain">OCR · Pipeline</span><span class="impact-delta delta-up">500+/batch</span></div>
+        </div>
+      </div>
+    </div>
 
-  <!-- PROJECTS -->
-  <section id="projects" style="padding:56px 0 40px">
-    <div class="section">
-      <div class="eyebrow reveal">// featured_work</div>
-      <h2 class="h2 reveal">Products &amp; systems</h2>
-      <div style="margin-top:44px;display:grid;grid-template-columns:1fr 1fr;gap:22px">
-
-        <div class="pcard reveal" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 26px;display:flex;flex-direction:column;gap:16px">
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px">
+    <!-- In[3]/Out[3] — Experience -->
+    <div class="cell-row reveal-target gap-top" id="experience">
+      <div class="prompt-in">In [3]:</div>
+      <div class="in-code">
+        <span class="prompt-label in-lbl">In [3]:</span>
+        <span class="gt">&gt;&gt;&gt; </span>me.experience.describe(verbose=True)
+      </div>
+    </div>
+    <div class="cell-row reveal-target">
+      <div class="prompt-out">Out[3]:</div>
+      <div class="out-content">
+        <span class="prompt-label out-lbl">Out[3]:</span>
+        <h2 class="section-h2">Where I've shipped</h2>
+        <div class="exp-list">
+          <div class="exp-row">
             <div>
-              <div class="mono" style="font-size:10.5px;color:var(--mut);letter-spacing:.06em">GENAI · RAG</div>
-              <h3 style="margin:8px 0 0;font:700 21px 'Space Grotesk',sans-serif">AlgoCreator</h3>
+              <div class="current-pill"><span class="pulse-dot-sm"></span>CURRENT</div>
+              <div class="exp-date">JUN 2025 —<br>PRESENT</div>
             </div>
-            <div class="mono" style="text-align:right;flex:none">
-              <div style="font-weight:800;font-size:26px;color:var(--acc);line-height:1">~70%</div>
-              <div style="font-size:9.5px;color:var(--mut);margin-top:4px">effort saved</div>
-            </div>
-          </div>
-          <p class="mono" style="margin:0;font-size:13px;line-height:1.65;color:#c3c8ba">RAG-powered generator that auto-builds branded PPTX decks from a 1,000+ slide corpus using GPT-4o + LangChain + ChromaDB.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:auto">
-            <span class="chip">GPT-4o</span><span class="chip">LangChain</span><span class="chip">ChromaDB</span><span class="chip">python-pptx</span><span class="chip">RAG</span>
-          </div>
-        </div>
-
-        <div class="pcard reveal" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 26px;display:flex;flex-direction:column;gap:16px">
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px">
             <div>
-              <div class="mono" style="font-size:10.5px;color:var(--mut);letter-spacing:.06em">ML · ANALYTICS</div>
-              <h3 style="margin:8px 0 0;font:700 21px 'Space Grotesk',sans-serif">OneStopAI</h3>
-            </div>
-            <div class="mono" style="text-align:right;flex:none">
-              <div style="font-weight:800;font-size:26px;color:var(--acc);line-height:1">4–6</div>
-              <div style="font-size:9.5px;color:var(--mut);margin-top:4px">team led</div>
+              <div class="role-title">Associate Data Scientist <span class="role-company">@ AlgoAnalytics, Pune</span></div>
+              <div class="bullet-list">
+                <div><span class="tri">▹</span> <b>AlgoCreator:</b> architected an end-to-end GenAI product auto-generating branded PPTX decks from historical slide repositories with RAG + GPT-4o — cutting manual presentation effort by ~70%. Led a team of 6–8 interns and Associate Data Scientists.</div>
+                <div><span class="tri">▹</span> Built a multi-modal extraction pipeline (python-pptx) for text, tables &amp; images across 1,000+ slides; vectorized into ChromaDB with LangChain orchestration; EDA lifted retrieval accuracy by 35%.</div>
+                <div><span class="tri">▹</span> <b>OneStopAI (Team Lead):</b> led 4–6 interns and Associate Data Scientists through the full ML lifecycle across manufacturing &amp; finance — churn/retention analytics (Logistic Regression, XGBoost, ensembles) surfaced via Tableau &amp; Power BI.</div>
+                <div><span class="tri">▹</span> <b>Enterprise (NTT DATA &amp; Indigo Paints):</b> built an AI recruiting platform (Azure OpenAI + AI Search) with JD-to-candidate matching &amp; AI-avatar interviews — reducing recruiter screening time by 60%.</div>
+                <div><span class="tri">▹</span> Team collaboration with NTT DATA &amp; Indigo Paints across Indian and Japanese teams.</div>
+              </div>
             </div>
           </div>
-          <p class="mono" style="margin:0;font-size:13px;line-height:1.65;color:#c3c8ba">Multi-domain ML platform spanning manufacturing &amp; finance — churn/retention modeling plus a personalized recommendation engine, communicated via BI dashboards.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:auto">
-            <span class="chip">XGBoost</span><span class="chip">Logistic Reg.</span><span class="chip">Tableau</span><span class="chip">Power BI</span>
-          </div>
-        </div>
-
-        <div class="pcard reveal" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 26px;display:flex;flex-direction:column;gap:16px">
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px">
+          <div class="exp-row">
+            <div class="exp-date no-pill">JAN 2025 —<br>MAY 2025</div>
             <div>
-              <div class="mono" style="font-size:10.5px;color:var(--mut);letter-spacing:.06em">AZURE · AGENTS</div>
-              <h3 style="margin:8px 0 0;font:700 21px 'Space Grotesk',sans-serif">AI Recruiting Platform</h3>
-            </div>
-            <div class="mono" style="text-align:right;flex:none">
-              <div style="font-weight:800;font-size:26px;color:var(--acc);line-height:1">60%</div>
-              <div style="font-size:9.5px;color:var(--mut);margin-top:4px">screening cut</div>
+              <div class="role-title">Data Science Consultant <span class="role-company">@ AlgoAnalytics, Pune</span></div>
+              <div class="bullet-list">
+                <div><span class="tri">▹</span> Built an automated extraction pipeline for Japanese .docx/.xlsx files (PaddleOCR + LangChain + GPT-4o) for NTT DATA, deployed as a FastAPI microservice on AWS App Runner — 500+ documents per batch.</div>
+                <div><span class="tri">▹</span> Developed intelligent slide retrieval across thousands of presentations via ChromaDB multi-query semantic search with PDF/PPTX export — cutting search time from hours to seconds.</div>
+              </div>
             </div>
           </div>
-          <p class="mono" style="margin:0;font-size:13px;line-height:1.65;color:#c3c8ba">Automated JD-to-candidate matching, 24/7 AI-avatar interviews, and post-interview scorecards built on Azure OpenAI + AI Search.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:auto">
-            <span class="chip">Azure OpenAI</span><span class="chip">AI Search</span><span class="chip">AI Agents</span><span class="chip">FastAPI</span>
-          </div>
-        </div>
-
-        <div class="pcard reveal" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 26px;display:flex;flex-direction:column;gap:16px">
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px">
+          <div class="exp-row">
+            <div class="exp-date no-pill">MAR 2024 —<br>JUL 2024</div>
             <div>
-              <div class="mono" style="font-size:10.5px;color:var(--mut);letter-spacing:.06em">OCR · PIPELINE</div>
-              <h3 style="margin:8px 0 0;font:700 21px 'Space Grotesk',sans-serif">JP Document Intelligence</h3>
+              <div class="role-title">Assistant Data Scientist <span class="role-company">@ MIT-WPU, Pune</span></div>
+              <div class="bullet-list">
+                <div><span class="tri">▹</span> Trained &amp; benchmarked YOLOv8n and YOLOv9c for real-time plant-disease detection in hydroponics — 95.93% precision and 88.38% mAP50-95 with YOLOv9.</div>
+                <div><span class="tri">▹</span> Converted YOLOv8 to TensorFlow Lite for Android production deployment used in live research trials.</div>
+                <div><span class="tri">▹</span> Published peer-reviewed findings in Engineering, Technology &amp; Applied Science Research (ETASR).</div>
+              </div>
             </div>
-            <div class="mono" style="text-align:right;flex:none">
-              <div style="font-weight:800;font-size:26px;color:var(--acc);line-height:1">500+</div>
-              <div style="font-size:9.5px;color:var(--mut);margin-top:4px">docs / batch</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- In[4]/Out[4] — Products & systems -->
+    <div class="cell-row reveal-target gap-top" id="projects">
+      <div class="prompt-in">In [4]:</div>
+      <div class="in-code">
+        <span class="prompt-label in-lbl">In [4]:</span>
+        <span class="gt">&gt;&gt;&gt; </span>me.systems.plot(kind=<span class="str">"cards"</span>)
+      </div>
+    </div>
+    <div class="cell-row reveal-target">
+      <div class="prompt-out">Out[4]:</div>
+      <div class="out-content">
+        <span class="prompt-label out-lbl">Out[4]:</span>
+        <h2 class="section-h2">Products &amp; systems</h2>
+        <div class="card-grid">
+          <div class="pcard">
+            <div class="pcard-top"><span class="pcard-label">GENAI · RAG</span><div class="pcard-metric"><div class="pcard-metric-num">~70%</div><div class="pcard-metric-cap">effort saved</div></div></div>
+            <div class="pcard-title">AlgoCreator</div>
+            <p class="pcard-desc">RAG-powered generator that auto-builds branded PPTX decks from a 1,000+ slide corpus using GPT-4o + LangChain + ChromaDB.</p>
+            <div class="chip-row"><span class="chip">GPT-4o</span><span class="chip">LangChain</span><span class="chip">ChromaDB</span><span class="chip">python-pptx</span></div>
+          </div>
+          <div class="pcard">
+            <div class="pcard-top"><span class="pcard-label">ML · ANALYTICS</span><div class="pcard-metric"><div class="pcard-metric-num">4–6</div><div class="pcard-metric-cap">team led</div></div></div>
+            <div class="pcard-title">OneStopAI</div>
+            <p class="pcard-desc">Multi-domain ML platform spanning manufacturing &amp; finance — churn/retention modeling plus a personalized recommendation engine, communicated via BI dashboards.</p>
+            <div class="chip-row"><span class="chip">XGBoost</span><span class="chip">Logistic Reg.</span><span class="chip">Tableau</span><span class="chip">Power BI</span></div>
+          </div>
+          <div class="pcard">
+            <div class="pcard-top"><span class="pcard-label">AZURE · AGENTS</span><div class="pcard-metric"><div class="pcard-metric-num">60%</div><div class="pcard-metric-cap">screening cut</div></div></div>
+            <div class="pcard-title">AI Recruiting Platform</div>
+            <p class="pcard-desc">Automated JD-to-candidate matching, 24/7 AI-avatar interviews, and post-interview scorecards built on Azure OpenAI + AI Search.</p>
+            <div class="chip-row"><span class="chip">Azure OpenAI</span><span class="chip">AI Search</span><span class="chip">AI Agents</span><span class="chip">FastAPI</span></div>
+          </div>
+          <div class="pcard">
+            <div class="pcard-top"><span class="pcard-label">OCR · PIPELINE</span><div class="pcard-metric"><div class="pcard-metric-num">500+</div><div class="pcard-metric-cap">docs / batch</div></div></div>
+            <div class="pcard-title">JP Document Intelligence</div>
+            <p class="pcard-desc">Japanese-language .docx/.xlsx extraction pipeline (PaddleOCR + GPT-4o) deployed as a FastAPI microservice on AWS App Runner.</p>
+            <div class="chip-row"><span class="chip">PaddleOCR</span><span class="chip">GPT-4o</span><span class="chip">FastAPI</span><span class="chip">AWS App Runner</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- In[5]/Out[5] — System detail -->
+    <div class="cell-row reveal-target gap-top" id="detail">
+      <div class="prompt-in">In [5]:</div>
+      <div class="in-code">
+        <span class="prompt-label in-lbl">In [5]:</span>
+        <span class="gt">&gt;&gt;&gt; </span>for s in me.systems: s.detail()
+      </div>
+    </div>
+    <div class="cell-row reveal-target">
+      <div class="prompt-out">Out[5]:</div>
+      <div class="detail-list">
+        <span class="prompt-label out-lbl">Out[5]:</span>
+
+        <div class="detail-card">
+          <div class="detail-flex">
+            <div class="detail-text">
+              <div class="detail-cat">01 · GENAI · RAG · ALGOANALYTICS</div>
+              <h3 class="detail-h3">AlgoCreator</h3>
+              <p class="detail-desc">RAG-powered generator that auto-builds branded PPTX decks from a 1,000+ slide corpus using GPT-4o + LangChain + ChromaDB.</p>
+              <div class="pipeline-row">
+                <span class="pipe-chip">ingest 1,000+ slides</span>
+                <span class="pipe-chip">python-pptx extract</span>
+                <span class="pipe-chip">vectorize → ChromaDB</span>
+                <span class="pipe-chip hi">GPT-4o generate</span>
+                <span class="pipe-chip">branded PPTX out</span>
+              </div>
+              <div class="built-label">WHAT I BUILT</div>
+              <div class="built-grid">
+                <div><span class="tri">▹</span> Architected the end-to-end product: ingestion, retrieval, generation, branded export.</div>
+                <div><span class="tri">▹</span> Multi-modal extraction (python-pptx) for text, tables and images across 1,000+ slides.</div>
+                <div><span class="tri">▹</span> Vectorized into ChromaDB with LangChain orchestration; EDA lifted retrieval accuracy 35%.</div>
+                <div><span class="tri">▹</span> Led a team of 6–8 interns and Associate Data Scientists to delivery.</div>
+              </div>
+            </div>
+            <div class="detail-metrics">
+              <div><div class="metric-big">~70%</div><div class="metric-cap">MANUAL EFFORT CUT</div></div>
+              <div class="metrics-hr"></div>
+              <div><div class="metric-small">+35%</div><div class="metric-cap">RETRIEVAL ACCURACY</div></div>
+              <div><div class="metric-small">1,000+</div><div class="metric-cap">SLIDES INDEXED</div></div>
+              <div><div class="metric-small">6–8</div><div class="metric-cap">TEAM LED</div></div>
+              <div class="metrics-hr"></div>
+              <div class="chip-row" style="margin-top:0"><span class="chip">GPT-4o</span><span class="chip">LangChain</span><span class="chip">ChromaDB</span><span class="chip">python-pptx</span><span class="chip">RAG</span></div>
             </div>
           </div>
-          <p class="mono" style="margin:0;font-size:13px;line-height:1.65;color:#c3c8ba">Japanese-language .docx/.xlsx extraction pipeline (PaddleOCR + GPT-4o) deployed as a FastAPI microservice on AWS App Runner.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:auto">
-            <span class="chip">PaddleOCR</span><span class="chip">GPT-4o</span><span class="chip">FastAPI</span><span class="chip">AWS App Runner</span>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-flex">
+            <div class="detail-text">
+              <div class="detail-cat">02 · ML · ANALYTICS · ALGOANALYTICS</div>
+              <h3 class="detail-h3">OneStopAI</h3>
+              <p class="detail-desc">Multi-domain ML platform spanning manufacturing &amp; finance — churn/retention modeling plus a personalized recommendation engine, communicated via BI dashboards.</p>
+              <div class="pipeline-row">
+                <span class="pipe-chip">frame the question</span>
+                <span class="pipe-chip">EDA</span>
+                <span class="pipe-chip">LogReg · XGBoost · ensembles</span>
+                <span class="pipe-chip">Tableau · Power BI</span>
+              </div>
+              <div class="built-label">WHAT I BUILT</div>
+              <div class="built-grid">
+                <div><span class="tri">▹</span> Led 4–6 interns and Associate Data Scientists through the full ML lifecycle as Team Lead.</div>
+                <div><span class="tri">▹</span> Churn/retention analytics across manufacturing &amp; finance with Logistic Regression, XGBoost and ensembles.</div>
+                <div><span class="tri">▹</span> Personalized recommendation engine for the platform's second domain.</div>
+                <div><span class="tri">▹</span> Surfaced results to stakeholders through Tableau &amp; Power BI dashboards.</div>
+              </div>
+            </div>
+            <div class="detail-metrics">
+              <div><div class="metric-big">4–6</div><div class="metric-cap">TEAM LED</div></div>
+              <div class="metrics-hr"></div>
+              <div><div class="metric-small">2</div><div class="metric-cap">DOMAINS COVERED</div></div>
+              <div><div class="metric-small">full</div><div class="metric-cap">ML LIFECYCLE</div></div>
+              <div class="metrics-hr"></div>
+              <div class="chip-row" style="margin-top:0"><span class="chip">XGBoost</span><span class="chip">Logistic Reg.</span><span class="chip">Tableau</span><span class="chip">Power BI</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-flex">
+            <div class="detail-text">
+              <div class="detail-cat">03 · AZURE · AGENTS · NTT DATA &amp; INDIGO PAINTS</div>
+              <h3 class="detail-h3">AI Recruiting Platform</h3>
+              <p class="detail-desc">Automated JD-to-candidate matching, 24/7 AI-avatar interviews, and post-interview scorecards built on Azure OpenAI + AI Search.</p>
+              <div class="pipeline-row">
+                <span class="pipe-chip">JD intake</span>
+                <span class="pipe-chip">AI Search match</span>
+                <span class="pipe-chip hi">AI-avatar interview</span>
+                <span class="pipe-chip">scorecard</span>
+              </div>
+              <div class="built-label">WHAT I BUILT</div>
+              <div class="built-grid">
+                <div><span class="tri">▹</span> JD-to-candidate matching on Azure OpenAI + AI Search, cutting recruiter screening time by 60%.</div>
+                <div><span class="tri">▹</span> 24/7 AI-avatar interviews with automated post-interview scorecards.</div>
+                <div><span class="tri">▹</span> Delivered as an enterprise engagement for NTT DATA and Indigo Paints.</div>
+                <div><span class="tri">▹</span> Collaborated across Indian and Japanese teams throughout delivery.</div>
+              </div>
+            </div>
+            <div class="detail-metrics">
+              <div><div class="metric-big">60%</div><div class="metric-cap">SCREENING TIME CUT</div></div>
+              <div class="metrics-hr"></div>
+              <div><div class="metric-small">24/7</div><div class="metric-cap">INTERVIEW AVAILABILITY</div></div>
+              <div><div class="metric-small">2</div><div class="metric-cap">ENTERPRISE CLIENTS</div></div>
+              <div class="metrics-hr"></div>
+              <div class="chip-row" style="margin-top:0"><span class="chip">Azure OpenAI</span><span class="chip">AI Search</span><span class="chip">AI Agents</span><span class="chip">FastAPI</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-flex">
+            <div class="detail-text">
+              <div class="detail-cat">04 · OCR · PIPELINE · NTT DATA</div>
+              <h3 class="detail-h3">JP Document Intelligence</h3>
+              <p class="detail-desc">Japanese-language .docx/.xlsx extraction pipeline (PaddleOCR + GPT-4o) deployed as a FastAPI microservice on AWS App Runner.</p>
+              <div class="pipeline-row">
+                <span class="pipe-chip">.docx / .xlsx in</span>
+                <span class="pipe-chip">PaddleOCR</span>
+                <span class="pipe-chip hi">LangChain + GPT-4o</span>
+                <span class="pipe-chip">FastAPI on App Runner</span>
+              </div>
+              <div class="built-label">WHAT I BUILT</div>
+              <div class="built-grid">
+                <div><span class="tri">▹</span> Automated extraction for Japanese .docx/.xlsx files handling 500+ documents per batch.</div>
+                <div><span class="tri">▹</span> Deployed as a FastAPI microservice on AWS App Runner.</div>
+                <div><span class="tri">▹</span> Intelligent slide retrieval across thousands of presentations via ChromaDB multi-query semantic search.</div>
+                <div><span class="tri">▹</span> PDF/PPTX export cut search time from hours to seconds.</div>
+              </div>
+            </div>
+            <div class="detail-metrics">
+              <div><div class="metric-big">500+</div><div class="metric-cap">DOCUMENTS PER BATCH</div></div>
+              <div class="metrics-hr"></div>
+              <div><div class="metric-small">hrs → s</div><div class="metric-cap">SEARCH TIME</div></div>
+              <div><div class="metric-small">JP</div><div class="metric-cap">LANGUAGE PIPELINE</div></div>
+              <div class="metrics-hr"></div>
+              <div class="chip-row" style="margin-top:0"><span class="chip">PaddleOCR</span><span class="chip">GPT-4o</span><span class="chip">FastAPI</span><span class="chip">AWS App Runner</span></div>
+            </div>
           </div>
         </div>
 
       </div>
     </div>
-  </section>
 
-  <!-- DEMO LAB -->
-  <section id="demo-lab" style="padding:56px 0 40px">
-    <div class="section">
-      <div class="eyebrow reveal">// side_projects</div>
-      <h2 class="h2 reveal">Demo lab</h2>
-      <p class="mono reveal" style="margin:14px 0 0;font-size:13px;line-height:1.7;color:#c3c8ba;max-width:66ch">A set of smaller EDA/ML projects. Six run for real in your browser — actual trained models, actual datasets, actual SQL — and the rest are pre-rendered from a real, executed notebook (no server required).</p>
-      <div style="margin-top:36px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
-
-        <a class="pcard reveal" href="demos/student-performance.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <div class="mono" style="font-size:10px;color:var(--acc);letter-spacing:.06em">ML · FLASK</div>
-            <span class="mono" style="font-size:9.5px;color:#0a0b0a;background:var(--acc);padding:2px 8px;border-radius:999px;font-weight:700">LIVE</span>
-          </div>
-          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">Student Performance Indicator</h3>
-          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">Predicts a student's math score live — the actual pickled LinearRegression model, running in your browser.</p>
-        </a>
-
-        <a class="pcard reveal" href="demos/retirement-age.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
-          <div class="mono" style="font-size:10px;color:var(--mut);letter-spacing:.06em">EDA · PANDAS</div>
-          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">Retirement Age Analysis</h3>
-          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">Effective retirement age across 53 countries and six decades, by gender.</p>
-        </a>
-
-        <a class="pcard reveal" href="demos/breast-cancer-svm.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <div class="mono" style="font-size:10px;color:var(--acc);letter-spacing:.06em">CLASSIFICATION · SVM</div>
-            <span class="mono" style="font-size:9.5px;color:#0a0b0a;background:var(--acc);padding:2px 8px;border-radius:999px;font-weight:700">LIVE</span>
-          </div>
-          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">Breast Cancer: SVM vs KNN</h3>
-          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">Classify a tumor live — real KNN vote &amp; real RBF-SVM decision function, running in your browser.</p>
-        </a>
-
-        <a class="pcard reveal" href="demos/diwali-sales.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <div class="mono" style="font-size:10px;color:var(--acc);letter-spacing:.06em">EDA · SEABORN</div>
-            <span class="mono" style="font-size:9.5px;color:#0a0b0a;background:var(--acc);padding:2px 8px;border-radius:999px;font-weight:700">LIVE</span>
-          </div>
-          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">Diwali Sales Analysis</h3>
-          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">Slice the real 11,251-transaction dataset live by gender, state, occupation &amp; more.</p>
-        </a>
-
-        <a class="pcard reveal" href="demos/ipl-score-prediction.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <div class="mono" style="font-size:10px;color:var(--acc);letter-spacing:.06em">REGRESSION · SPORTS</div>
-            <span class="mono" style="font-size:9.5px;color:#0a0b0a;background:var(--acc);padding:2px 8px;border-radius:999px;font-weight:700">LIVE</span>
-          </div>
-          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">IPL Score Prediction</h3>
-          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">Pick two teams &amp; a match state — the real trained Ridge model predicts the score live.</p>
-        </a>
-
-        <a class="pcard reveal" href="demos/rice-grain-classification.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
-          <div class="mono" style="font-size:10px;color:var(--mut);letter-spacing:.06em">COMPUTER VISION · CNN</div>
-          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">Rice Grain Classification</h3>
-          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">7 CNN backbones benchmarked; MobileNet hits 99.97% on 5 rice varieties.</p>
-        </a>
-
-        <a class="pcard reveal" href="demos/topic-modeling.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
-          <div class="mono" style="font-size:10px;color:var(--mut);letter-spacing:.06em">NLP · LDA / BERTOPIC</div>
-          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">Topic Modeling</h3>
-          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">LDA, LSA &amp; BERTopic compared across two speeches nine years apart.</p>
-        </a>
-
-        <a class="pcard reveal" href="demos/weed-crop-classification.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <div class="mono" style="font-size:10px;color:var(--acc);letter-spacing:.06em">COMPUTER VISION · AGRITECH</div>
-            <span class="mono" style="font-size:9.5px;color:#0a0b0a;background:var(--acc);padding:2px 8px;border-radius:999px;font-weight:700">LIVE</span>
-          </div>
-          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">Weed vs Crop Classification</h3>
-          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">Pick a real test image &amp; see each model's real per-class accuracy on it.</p>
-        </a>
-
-        <a class="pcard reveal" href="demos/product-data-sql.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <div class="mono" style="font-size:10px;color:var(--acc);letter-spacing:.06em">SQL · RELATIONAL</div>
-            <span class="mono" style="font-size:9.5px;color:#0a0b0a;background:var(--acc);padding:2px 8px;border-radius:999px;font-weight:700">LIVE</span>
-          </div>
-          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">Product Data Analysis (SQL)</h3>
-          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">Run the actual 20 queries against a real in-browser SQLite database.</p>
-        </a>
-
-        <a class="pcard reveal" href="demos/resume-ats.html" style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;color:var(--ink)">
-          <div class="mono" style="font-size:10px;color:var(--mut);letter-spacing:.06em">GENAI · GEMINI PRO</div>
-          <h3 style="margin:0;font:700 16px 'Space Grotesk',sans-serif">Resume ATS Tracker</h3>
-          <p class="mono" style="margin:0;font-size:12px;line-height:1.6;color:#c3c8ba">Try the actual app UI &amp; prompt with 3 pre-generated sample scenarios (no live API key needed).</p>
-        </a>
-
+    <!-- In[6]/Out[6] — Demo lab -->
+    <div class="cell-row reveal-target gap-top" id="demos">
+      <div class="prompt-in">In [6]:</div>
+      <div class="in-code">
+        <span class="prompt-label in-lbl">In [6]:</span>
+        <span class="gt">&gt;&gt;&gt; </span>me.demo_lab.list(live_only=<span class="kw">False</span>)
       </div>
     </div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="skills" style="padding:56px 0 40px">
-    <div class="section">
-      <div class="eyebrow reveal">// tech_stack</div>
-      <h2 class="h2 reveal">Skills &amp; tooling</h2>
-      <div style="margin-top:44px;display:grid;grid-template-columns:1fr 1fr;gap:22px 40px">
-
-        <div class="reveal">
-          <div class="mono" style="font-size:11.5px;color:var(--acc);letter-spacing:.06em;margin-bottom:14px">LANGUAGES &amp; ANALYTICS</div>
-          <div style="display:flex;flex-wrap:wrap;gap:8px">
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Python</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">SQL</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">R</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">EDA</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Statistical Modeling</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Hypothesis Testing</span>
+    <div class="cell-row reveal-target">
+      <div class="prompt-out">Out[6]:</div>
+      <div class="out-content">
+        <span class="prompt-label out-lbl">Out[6]:</span>
+        <div class="demos-head">
+          <div class="demos-head-text">
+            <h2 class="section-h2">Demo lab</h2>
+            <p class="demos-desc">A set of smaller EDA/ML projects. Six run for real in your browser — actual trained models, actual datasets, actual SQL — and the rest are pre-rendered from a real, executed notebook (no server required).</p>
           </div>
+          <div class="live-pill"><span class="pulse-dot"></span>6 LIVE · NO SERVER</div>
         </div>
-
-        <div class="reveal">
-          <div class="mono" style="font-size:11.5px;color:var(--acc);letter-spacing:.06em;margin-bottom:14px">ML &amp; STATISTICS</div>
-          <div style="display:flex;flex-wrap:wrap;gap:8px">
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Regression</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Classification</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">XGBoost</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Neural Networks</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">NLP</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">YOLOv8/v9</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">A/B Testing</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Forecasting</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Recommenders</span>
-          </div>
-        </div>
-
-        <div class="reveal">
-          <div class="mono" style="font-size:11.5px;color:var(--acc);letter-spacing:.06em;margin-bottom:14px">GENAI &amp; LLMS</div>
-          <div style="display:flex;flex-wrap:wrap;gap:8px">
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">GPT-4o</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Azure OpenAI</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Gemini Pro</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">LangChain</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">LangGraph</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">RAG</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Prompt Engineering</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">AI Agents</span>
-          </div>
-        </div>
-
-        <div class="reveal">
-          <div class="mono" style="font-size:11.5px;color:var(--acc);letter-spacing:.06em;margin-bottom:14px">CLOUD &amp; DATABASES</div>
-          <div style="display:flex;flex-wrap:wrap;gap:8px">
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">AWS (S3, ECR, Bedrock)</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Azure</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">GCP / Vertex AI</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Snowflake</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">PostgreSQL</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">MySQL</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">ChromaDB</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">FAISS</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Pinecone</span>
-          </div>
-        </div>
-
-        <div class="reveal">
-          <div class="mono" style="font-size:11.5px;color:var(--acc);letter-spacing:.06em;margin-bottom:14px">VISUALIZATION &amp; BI</div>
-          <div style="display:flex;flex-wrap:wrap;gap:8px">
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Tableau</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Power BI</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Matplotlib</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Seaborn</span>
-          </div>
-        </div>
-
-        <div class="reveal">
-          <div class="mono" style="font-size:11.5px;color:var(--acc);letter-spacing:.06em;margin-bottom:14px">FRAMEWORKS &amp; TOOLS</div>
-          <div style="display:flex;flex-wrap:wrap;gap:8px">
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">FastAPI</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Streamlit</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Docker</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">python-pptx</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">PaddleOCR</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">TesseractOCR</span>
-            <span class="chip" style="color:var(--mut);background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.09)">Git</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- PUBLICATION -->
-  <section id="publication" style="padding:56px 0 40px">
-    <div class="section">
-      <div class="eyebrow reveal">// research</div>
-      <div class="reveal" style="margin-top:24px;background:linear-gradient(135deg,#111311,#0f120c);border:1px solid rgba(201,242,78,.2);border-radius:16px;padding:38px 36px;position:relative;overflow:hidden">
-        <div style="position:absolute;top:-40px;right:-20px;font:800 160px 'JetBrains Mono',monospace;color:rgba(201,242,78,.05);line-height:1;pointer-events:none">{ }</div>
-        <div class="mono" style="font-size:11px;color:var(--acc);letter-spacing:.08em">PEER-REVIEWED · ETASR · VOL 14, NO 5, 2024</div>
-        <h3 style="margin:16px 0 0;font:700 27px/1.25 'Space Grotesk',sans-serif;max-width:760px;text-wrap:pretty">Comparative Analysis of YOLOv8 and YOLOv9 Models for Real-Time Plant Disease Detection in Hydroponics</h3>
-        <p class="mono" style="margin:16px 0 0;font-size:13px;color:var(--mut)">Tripathi, A., Gohokar, V., &amp; Kute, R. (2024). pp. 17269–17275.</p>
-        <div style="display:flex;flex-wrap:wrap;gap:34px;margin-top:26px">
-          <div><div class="mono" style="font-weight:800;font-size:30px;color:var(--acc)"><span class="counter" data-to="95.93" data-dec="2">0</span>%</div><div class="mono" style="font-size:10.5px;color:var(--mut);margin-top:5px">precision (YOLOv9)</div></div>
-          <div><div class="mono" style="font-weight:800;font-size:30px;color:var(--acc)"><span class="counter" data-to="88.38" data-dec="2">0</span></div><div class="mono" style="font-size:10.5px;color:var(--mut);margin-top:5px">mAP50-95</div></div>
-          <div><div class="mono" style="font-weight:800;font-size:30px;color:var(--acc)">TFLite</div><div class="mono" style="font-size:10.5px;color:var(--mut);margin-top:5px">Android deployment</div></div>
-        </div>
-        <a class="btn-o" style="margin-top:28px" href="https://doi.org/10.48084/etasr.8301" target="_blank" rel="noopener">READ PAPER — DOI: 10.48084/etasr.8301 →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- EDUCATION + CERTS -->
-  <section id="education" style="padding:56px 0 40px">
-    <div class="section" style="display:grid;grid-template-columns:1fr 1fr;gap:40px">
-      <div>
-        <div class="eyebrow reveal">// education</div>
-        <div style="margin-top:26px;display:flex;flex-direction:column;gap:22px">
-          <div class="reveal" style="border-left:2px solid var(--acc);padding-left:18px">
-            <div style="font:700 18px 'Space Grotesk',sans-serif">PG Diploma in AI &amp; Machine Learning</div>
-            <div class="mono" style="font-size:12.5px;color:var(--mut);margin-top:5px">MIT-WPU, Pune · Aug 2023 – Jun 2024</div>
-            <div class="mono" style="font-size:12.5px;color:var(--acc);margin-top:6px">CGPA 9.0 / 10</div>
-          </div>
-          <div class="reveal" style="border-left:2px solid rgba(255,255,255,.14);padding-left:18px">
-            <div style="font:700 18px 'Space Grotesk',sans-serif">B.Sc. Mathematics</div>
-            <div class="mono" style="font-size:12.5px;color:var(--mut);margin-top:5px">CSJMU, Kanpur · 2020 – 2023</div>
-            <div class="mono" style="font-size:12.5px;color:var(--mut);margin-top:6px">Foundation in probability, statistics &amp; mathematical modeling</div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="eyebrow reveal">// certifications</div>
-        <div style="margin-top:26px;display:flex;flex-direction:column;gap:10px">
-          <div class="reveal mono" style="display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:13px 16px;font-size:12.5px;color:#c3c8ba"><span style="color:var(--acc)">✓</span>Introduction to AI &amp; ML — Google Cloud</div>
-          <div class="reveal mono" style="display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:13px 16px;font-size:12.5px;color:#c3c8ba"><span style="color:var(--acc)">✓</span>Introduction to Generative AI — Google Cloud</div>
-          <div class="reveal mono" style="display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:13px 16px;font-size:12.5px;color:#c3c8ba"><span style="color:var(--acc)">✓</span>Data Analytics Essentials — Cisco</div>
-          <div class="reveal mono" style="display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:13px 16px;font-size:12.5px;color:#c3c8ba"><span style="color:var(--acc)">✓</span>Python &amp; SQL — HackerRank</div>
-          <div class="reveal mono" style="display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:13px 16px;font-size:12.5px;color:#c3c8ba"><span style="color:var(--acc)">✓</span>Foundations: Data, Data, Everywhere — Coursera</div>
+        <div class="demo-table">
+          <div class="demo-head-row"><span></span><span>NAME</span><span>DESCRIPTION</span><span style="text-align:right">STATE</span></div>
+          <a class="demo-row" href="demos/student-performance.html"><span class="glyph-live">●</span><span class="demo-name">student-performance</span><span class="demo-desc">Predicts a student's math score live — the actual pickled LinearRegression model, running in your browser.</span><span class="state-live">LIVE</span></a>
+          <a class="demo-row" href="demos/retirement-age.html"><span class="glyph-static">○</span><span class="demo-name">retirement-age</span><span class="demo-desc">Effective retirement age across 53 countries and six decades, by gender.</span><span class="state-static">STATIC</span></a>
+          <a class="demo-row" href="demos/breast-cancer-svm.html"><span class="glyph-live">●</span><span class="demo-name">breast-cancer-svm</span><span class="demo-desc">Classify a tumor live — real KNN vote &amp; real RBF-SVM decision function, running in your browser.</span><span class="state-live">LIVE</span></a>
+          <a class="demo-row" href="demos/diwali-sales.html"><span class="glyph-live">●</span><span class="demo-name">diwali-sales</span><span class="demo-desc">Slice the real 11,251-transaction dataset live by gender, state, occupation &amp; more.</span><span class="state-live">LIVE</span></a>
+          <a class="demo-row" href="demos/ipl-score-prediction.html"><span class="glyph-live">●</span><span class="demo-name">ipl-score-prediction</span><span class="demo-desc">Pick two teams &amp; a match state — the real trained Ridge model predicts the score live.</span><span class="state-live">LIVE</span></a>
+          <a class="demo-row" href="demos/rice-grain-classification.html"><span class="glyph-static">○</span><span class="demo-name">rice-grain-classification</span><span class="demo-desc">7 CNN backbones benchmarked; MobileNet hits 99.97% on 5 rice varieties.</span><span class="state-static">STATIC</span></a>
+          <a class="demo-row" href="demos/topic-modeling.html"><span class="glyph-static">○</span><span class="demo-name">topic-modeling</span><span class="demo-desc">LDA, LSA &amp; BERTopic compared across two speeches nine years apart.</span><span class="state-static">STATIC</span></a>
+          <a class="demo-row" href="demos/weed-crop-classification.html"><span class="glyph-live">●</span><span class="demo-name">weed-crop-classification</span><span class="demo-desc">Pick a real test image &amp; see each model's real per-class accuracy on it.</span><span class="state-live">LIVE</span></a>
+          <a class="demo-row" href="demos/product-data-sql.html"><span class="glyph-live">●</span><span class="demo-name">product-data-sql</span><span class="demo-desc">Run the actual 20 queries against a real in-browser SQLite database.</span><span class="state-live">LIVE</span></a>
+          <a class="demo-row" href="demos/resume-ats.html"><span class="glyph-static">○</span><span class="demo-name">resume-ats</span><span class="demo-desc">Try the actual app UI &amp; prompt with 3 pre-generated sample scenarios (no live API key needed).</span><span class="state-static">STATIC</span></a>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- CONTACT -->
-  <section id="contact" style="padding:70px 0 0">
-    <div class="section" style="text-align:center;max-width:720px">
-      <div class="eyebrow reveal">// let's_talk</div>
-      <h2 class="h2 reveal" style="font-size:52px;margin-top:16px">Let's build something<br>with <span style="color:var(--acc)">measurable</span> impact.</h2>
-      <p class="reveal mono" style="font-size:14px;color:var(--mut);margin:20px 0 0">Open to Associate / Data Scientist roles. Fastest reply via email or LinkedIn.</p>
-      <div class="reveal" style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:32px">
-        <a class="btn-p" href="mailto:abhishek0akt@gmail.com">abhishek0akt@gmail.com</a>
-        <a class="btn-o" href="https://www.linkedin.com/in/abhishekab9873/" target="_blank" rel="noopener">LINKEDIN</a>
-        <a class="btn-o" href="tel:+917668617782">+91-7668617782</a>
-        <a class="btn-o" href="/resume.pdf" target="_blank" rel="noopener">DOWNLOAD RESUME</a>
+    <!-- In[7]/Out[7] — Skills -->
+    <div class="cell-row reveal-target gap-top" id="skills">
+      <div class="prompt-in">In [7]:</div>
+      <div class="in-code">
+        <span class="prompt-label in-lbl">In [7]:</span>
+        <span class="gt">&gt;&gt;&gt; </span>me.stack.groupby(<span class="str">"category"</span>).apply(list)
       </div>
     </div>
-    <footer style="margin-top:72px;border-top:1px solid var(--line);padding:24px 40px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px">
-      <span class="mono" style="font-size:11px;color:var(--mut)">© 2026 Abhishek Tripathi · Pune, Maharashtra, IN</span>
-      <span class="mono" style="font-size:11px;color:var(--mut)">Built with anime.js · design inspired by animejs.com</span>
-    </footer>
-  </section>
+    <div class="cell-row reveal-target">
+      <div class="prompt-out">Out[7]:</div>
+      <div class="out-content">
+        <span class="prompt-label out-lbl">Out[7]:</span>
+        <h2 class="section-h2">Skills &amp; tooling</h2>
+        <div class="skills-grid">
+          <div class="skill-label">LANGUAGES</div>
+          <div class="skill-chips"><span class="skill-chip">Python</span><span class="skill-chip">SQL</span><span class="skill-chip">R</span><span class="skill-chip">EDA</span><span class="skill-chip">Statistical Modeling</span><span class="skill-chip">Hypothesis Testing</span></div>
+          <div class="skill-label">ML &amp; STATISTICS</div>
+          <div class="skill-chips"><span class="skill-chip">Regression</span><span class="skill-chip">Classification</span><span class="skill-chip">XGBoost</span><span class="skill-chip">Neural Networks</span><span class="skill-chip">NLP</span><span class="skill-chip">YOLOv8/v9</span><span class="skill-chip">A/B Testing</span><span class="skill-chip">Forecasting</span><span class="skill-chip">Recommenders</span></div>
+          <div class="skill-label hi">GENAI &amp; LLMS</div>
+          <div class="skill-chips"><span class="skill-chip hi">GPT-4o</span><span class="skill-chip hi">Azure OpenAI</span><span class="skill-chip hi">Gemini Pro</span><span class="skill-chip hi">LangChain</span><span class="skill-chip hi">LangGraph</span><span class="skill-chip hi">RAG</span><span class="skill-chip hi">Prompt Engineering</span><span class="skill-chip hi">AI Agents</span></div>
+          <div class="skill-label">CLOUD &amp; DATABASES</div>
+          <div class="skill-chips"><span class="skill-chip">AWS (S3, ECR, Bedrock)</span><span class="skill-chip">Azure</span><span class="skill-chip">GCP / Vertex AI</span><span class="skill-chip">Snowflake</span><span class="skill-chip">PostgreSQL</span><span class="skill-chip">MySQL</span><span class="skill-chip">ChromaDB</span><span class="skill-chip">FAISS</span><span class="skill-chip">Pinecone</span></div>
+          <div class="skill-label">VISUALIZATION &amp; BI</div>
+          <div class="skill-chips"><span class="skill-chip">Tableau</span><span class="skill-chip">Power BI</span><span class="skill-chip">Matplotlib</span><span class="skill-chip">Seaborn</span></div>
+          <div class="skill-label">FRAMEWORKS &amp; TOOLS</div>
+          <div class="skill-chips"><span class="skill-chip">FastAPI</span><span class="skill-chip">Streamlit</span><span class="skill-chip">Docker</span><span class="skill-chip">python-pptx</span><span class="skill-chip">PaddleOCR</span><span class="skill-chip">TesseractOCR</span><span class="skill-chip">Git</span></div>
+        </div>
+      </div>
+    </div>
 
+    <!-- In[8]/Out[8] — Research -->
+    <div class="cell-row reveal-target gap-top" id="research">
+      <div class="prompt-in">In [8]:</div>
+      <div class="in-code">
+        <span class="prompt-label in-lbl">In [8]:</span>
+        <span class="gt">&gt;&gt;&gt; </span>me.publications[<span class="str">0</span>].cite()
+      </div>
+    </div>
+    <div class="cell-row reveal-target">
+      <div class="prompt-out">Out[8]:</div>
+      <div class="out-content">
+        <span class="prompt-label out-lbl">Out[8]:</span>
+        <div class="research-card">
+          <div class="research-top">
+            <div class="badge">PEER-REVIEWED · ETASR · VOL 14, NO 5, 2024</div>
+            <h2 class="research-title">Comparative Analysis of YOLOv8 and YOLOv9 Models for Real-Time Plant Disease Detection in Hydroponics</h2>
+            <p class="research-cite">Tripathi, A., Gohokar, V., &amp; Kute, R. (2024). pp. 17269–17275.</p>
+            <a href="https://doi.org/10.48084/etasr.8301" class="research-cta">READ PAPER — DOI: 10.48084/etasr.8301 →</a>
+          </div>
+          <div class="research-metrics">
+            <div class="rm-cell">
+              <div class="rm-num accent">95.93%</div>
+              <div class="rm-cap">PRECISION (YOLOV9)</div>
+              <div class="progress-bar"><div class="progress-bar-fill"></div></div>
+            </div>
+            <div class="rm-cell"><div class="rm-num">88.38</div><div class="rm-cap">mAP50-95</div></div>
+            <div class="rm-cell"><div class="rm-num">TFLite</div><div class="rm-cap">ANDROID DEPLOYMENT</div></div>
+          </div>
+        </div>
+        <div class="edu-cert-grid">
+          <div>
+            <div class="edu-cert-label">EDUCATION</div>
+            <div class="edu-title">PG Diploma in AI &amp; Machine Learning</div>
+            <div class="edu-sub">MIT-WPU, Pune · Aug 2023 – Jun 2024 · CGPA 9.0 / 10</div>
+            <div class="edu-title spaced">B.Sc. Mathematics</div>
+            <div class="edu-sub">CSJMU, Kanpur · 2020 – 2023 · Foundation in probability, statistics &amp; mathematical modeling</div>
+          </div>
+          <div>
+            <div class="edu-cert-label">CERTIFICATIONS</div>
+            <div class="cert-list">
+              <div><span class="ck">✓</span> Introduction to AI &amp; ML — Google Cloud</div>
+              <div><span class="ck">✓</span> Introduction to Generative AI — Google Cloud</div>
+              <div><span class="ck">✓</span> Data Analytics Essentials — Cisco</div>
+              <div><span class="ck">✓</span> Python &amp; SQL — HackerRank</div>
+              <div><span class="ck">✓</span> Foundations: Data, Data, Everywhere — Coursera</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- In[9]/Out[9] — Contact -->
+    <div class="cell-row reveal-target gap-top" id="contact">
+      <div class="prompt-in">In [9]:</div>
+      <div class="in-code contact-in">
+        <span class="prompt-label in-lbl">In [9]:</span>
+        <span class="gt">&gt;&gt;&gt; </span>me.contact()<span class="caret-block"></span>
+      </div>
+    </div>
+    <div class="cell-row reveal-target">
+      <div class="prompt-out">Out[9]:</div>
+      <div class="out-content">
+        <span class="prompt-label out-lbl">Out[9]:</span>
+        <h2 class="contact-h2">Let's build something with measurable impact.</h2>
+        <p class="contact-lead">Open to Associate / Data Scientist roles. Fastest reply via email or LinkedIn.</p>
+        <div class="contact-tiles">
+          <a href="mailto:abhishek0akt@gmail.com" class="c-tile"><div class="c-tile-label">EMAIL</div><div class="c-tile-value">abhishek0akt@gmail.com</div></a>
+          <a href="https://www.linkedin.com/in/abhishekab9873/" class="c-tile"><div class="c-tile-label">LINKEDIN</div><div class="c-tile-value">/in/abhishekab9873</div></a>
+          <a href="tel:+917668617782" class="c-tile"><div class="c-tile-label">PHONE</div><div class="c-tile-value">+91-7668617782</div></a>
+          <a href="/resume.pdf" class="c-tile c-tile-solid"><div class="c-tile-label">PDF · 1 PAGE</div><div class="c-tile-value">Download résumé →</div></a>
+        </div>
+        <div class="contact-footer">
+          <span>© 2026 Abhishek Tripathi · Pune, Maharashtra, IN</span>
+          <span class="available-line"><span class="available-dot"></span>AVAILABLE FOR NEW ROLES</span>
+        </div>
+        <div class="credit-line"><span class="gt">&gt;&gt;&gt;</span> this site was designed <b class="credit-amp">&amp;</b> developed by Abhishek Tripathi<span class="blink-caret"></span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="toc-rail" id="toc-rail">
+    <div class="rail-label">TABLE OF CONTENTS</div>
+    <div class="toc-links" id="toc-links">
+      <a href="#top">1 · Summary</a>
+      <a href="#experience">2 · Experience</a>
+      <a href="#projects">3 · Products &amp; systems</a>
+      <a href="#detail">4 · System detail</a>
+      <a href="#demos">5 · Demo lab</a>
+      <a href="#skills">6 · Skills &amp; tooling</a>
+      <a href="#research">7 · Research</a>
+      <a href="#contact">8 · Contact</a>
+    </div>
+    <div class="rail-hr"></div>
+    <div class="rail-label">KERNEL VARS</div>
+    <div class="kernel-vars">years_exp = <b>1.5</b><br>demos_live = <b>6</b><br>papers = <b>1</b><br>team_max = <b>8</b><br>base = <b>"Pune, IN"</b></div>
+    <div class="rail-hr"></div>
+    <div class="rail-label">CLIENTS</div>
+    <div class="clients-list">NTT DATA<br>Indigo Paints<br>AlgoAnalytics<br>MIT-WPU</div>
+    <div class="rail-spacer"></div>
+    <a href="#top" class="run-all">RUN ALL CELLS ▶</a>
+    <a href="/resume.pdf" class="dl-resume">DOWNLOAD RÉSUMÉ</a>
+  </div>
+</div>
+
+<div id="nb-cursor-ring"></div>
+<div id="nb-cursor-dot"></div>
+
+<div id="nb-pet">
+  <div id="nb-pet-body">
+    <span class="halo"></span>
+    <span class="eye"></span>
+    <span class="eye"></span>
+  </div>
+  <div id="nb-pet-bubble">
+    <div class="pet-tag">MINI-GUIDE</div>
+    <div id="nb-pet-text">Hi — I'm Mini-Guide. I narrate the notebook as you scroll. Click me to mute.</div>
+  </div>
 </div>
 
 <script>
 (function(){
-  // build hero cell grid (336 cells)
-  var grid = document.getElementById('cellgrid');
-  var frag = document.createDocumentFragment();
-  for (var i = 0; i < 336; i++) {
-    var d = document.createElement('div');
-    d.className = 'cell';
-    frag.appendChild(d);
-  }
-  grid.appendChild(frag);
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var coarsePointer = window.matchMedia('(pointer: coarse)').matches;
 
-  function wait(){
-    if (window.anime) { init(); } else { setTimeout(wait, 60); }
-  }
-
-  function init(){
-    var A = window.anime;
-
-    // hero grid ripple
-    A({targets:'#home .cell',
-      scale:[{value:.35},{value:1}],
-      opacity:[{value:.1},{value:1}],
-      backgroundColor:[{value:'rgba(201,242,78,0.05)'},{value:'rgba(201,242,78,0.45)'}],
-      delay:A.stagger(60,{grid:[28,12],from:'center'}),
-      duration:1300,easing:'easeInOutQuad',loop:true,direction:'alternate'});
-
-    // hero intro
-    A({targets:['#hb1','#hb2','#hb3','#hb4','#hb5'],opacity:[0,1],translateY:[18,0],
-      delay:A.stagger(120,{start:150}),duration:700,easing:'easeOutExpo'});
-
-    // reveals
-    var reveals = [].slice.call(document.querySelectorAll('.reveal'));
+  // --- Scroll reveal ---
+  if (!reduceMotion) {
+    var targets = Array.prototype.slice.call(document.querySelectorAll('.reveal-target'));
     var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if (e.isIntersecting) {
-          A({targets:e.target,opacity:[0,1],translateY:[22,0],duration:650,easing:'easeOutExpo'});
-          io.unobserve(e.target);
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          var idx = targets.indexOf(entry.target);
+          var delay = Math.min(idx, 3) * 0.04;
+          entry.target.style.transitionDelay = delay + 's';
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
         }
       });
-    }, {threshold:.15});
-    reveals.forEach(function(el){ io.observe(el); });
-
-    // counters
-    var counters = [].slice.call(document.querySelectorAll('.counter'));
-    var started = new Set();
-    var cio = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if (e.isIntersecting && !started.has(e.target)) {
-          started.add(e.target);
-          var el = e.target, to = parseFloat(el.dataset.to), dec = parseInt(el.dataset.dec || '0', 10), o = {v:0};
-          A({targets:o, v:to, duration:1700, easing:'easeOutExpo',
-            update:function(){ el.textContent = dec ? o.v.toFixed(dec) : Math.round(o.v).toLocaleString(); }});
-          cio.unobserve(el);
-        }
-      });
-    }, {threshold:.4});
-    counters.forEach(function(el){ cio.observe(el); });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.04 });
+    targets.forEach(function(t){ io.observe(t); });
+  } else {
+    document.querySelectorAll('.reveal-target').forEach(function(t){ t.classList.add('in-view'); });
   }
 
-  wait();
+  // --- Custom cursor ---
+  if (!coarsePointer && !reduceMotion) {
+    document.body.style.cursor = 'none';
+    var dot = document.getElementById('nb-cursor-dot');
+    var ring = document.getElementById('nb-cursor-ring');
+    var tx = 0, ty = 0, rx = 0, ry = 0;
+    var active = false;
+
+    document.addEventListener('mousemove', function(e){
+      tx = e.clientX; ty = e.clientY;
+      dot.style.left = tx + 'px'; dot.style.top = ty + 'px';
+      dot.style.opacity = '1'; ring.style.opacity = '1';
+      if (!active) { active = true; requestAnimationFrame(raf); }
+      var el = e.target;
+      var interactive = el.closest && el.closest('a, button, [role="button"], #nb-pet-body');
+      if (interactive) {
+        dot.style.width = '6px'; dot.style.height = '6px'; dot.style.borderRadius = '50%'; dot.style.margin = '-3px 0 0 -3px';
+        ring.style.width = '46px'; ring.style.height = '46px'; ring.style.margin = '-23px 0 0 -23px'; ring.style.backgroundColor = 'rgba(179,57,46,.12)';
+      } else if (el.closest && el.closest('p,h1,h2,h3,span,div')) {
+        dot.style.width = '3px'; dot.style.height = '18px'; dot.style.borderRadius = '0'; dot.style.margin = '-9px 0 0 -1.5px';
+        ring.style.width = '30px'; ring.style.height = '30px'; ring.style.margin = '-15px 0 0 -15px'; ring.style.backgroundColor = 'transparent';
+      }
+    });
+    document.addEventListener('mousedown', function(){
+      ring.style.width = '22px'; ring.style.height = '22px'; ring.style.margin = '-11px 0 0 -11px';
+    });
+    document.addEventListener('mouseleave', function(){ dot.style.opacity = '0'; ring.style.opacity = '0'; });
+
+    function raf(){
+      rx += (tx - rx) * 0.18;
+      ry += (ty - ry) * 0.18;
+      ring.style.transform = 'translate(' + (rx - tx) + 'px,' + (ry - ty) + 'px)';
+      ring.style.left = tx + 'px'; ring.style.top = ty + 'px';
+      requestAnimationFrame(raf);
+    }
+  }
+
+  // --- TOC active link + mobile drawer ---
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('#toc-links a'));
+  var sectionIds = ['top','experience','projects','detail','demos','skills','research','contact'];
+  var sections = sectionIds.map(function(id){ return document.getElementById(id); }).filter(Boolean);
+
+  var tocToggle = document.getElementById('toc-toggle-btn');
+  var tocRail = document.getElementById('toc-rail');
+  if (tocToggle) {
+    tocToggle.addEventListener('click', function(){
+      tocRail.classList.toggle('open');
+    });
+    tocLinks.forEach(function(a){
+      a.addEventListener('click', function(){ tocRail.classList.remove('open'); });
+    });
+  }
+
+  // --- Mini-Guide narration ---
+  var narration = {
+    'top': "Cell 1 is the summary — 1.5+ years turning business questions into shipped AI systems.",
+    'experience': "Three roles, newest first. The green dot marks the one that's still running.",
+    'projects': "Four systems shipped. Each card carries the number that mattered to the client.",
+    'detail': "Scroll a card for the pipeline: ingest, extract, vectorize, generate.",
+    'demos': "Six of these ten run for real in your browser — no server, actual trained models.",
+    'skills': "Highlighted in red is where most of the recent work sits: GenAI and LLMs.",
+    'research': "Peer-reviewed in ETASR, 2024. 95.93% precision with YOLOv9.",
+    'contact': "End of notebook. Email gets the fastest reply."
+  };
+
+  var petBody = document.getElementById('nb-pet-body');
+  var petBubble = document.getElementById('nb-pet-bubble');
+  var petText = document.getElementById('nb-pet-text');
+  var muted = false;
+  var currentSection = '';
+  var hideTimer = null;
+
+  function setBubbleText(text, cb){
+    petBubble.classList.remove('show');
+    setTimeout(function(){
+      petText.textContent = text;
+      if (!muted) petBubble.classList.add('show');
+      if (cb) cb();
+    }, 180);
+  }
+
+  function showFor(ms){
+    clearTimeout(hideTimer);
+    if (!muted) {
+      hideTimer = setTimeout(function(){ petBubble.classList.remove('show'); }, ms);
+    }
+  }
+
+  setTimeout(function(){
+    if (!muted) petBubble.classList.add('show');
+    showFor(6000);
+  }, 300);
+
+  var secObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        if (id && id !== currentSection && narration[id]) {
+          currentSection = id;
+          setBubbleText(narration[id], function(){ showFor(6500); });
+          tocLinks.forEach(function(a){
+            a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+          });
+        }
+      }
+    });
+  }, { rootMargin: '-25% 0px -45% 0px', threshold: [0, 0.15, 0.5] });
+  sections.forEach(function(s){ secObserver.observe(s); });
+
+  petBody.addEventListener('mouseenter', function(){
+    clearTimeout(hideTimer);
+    if (!muted) petBubble.classList.add('show');
+  });
+  petBody.addEventListener('mouseleave', function(){
+    showFor(1400);
+  });
+  petBody.addEventListener('click', function(){
+    muted = !muted;
+    petBody.classList.toggle('muted', muted);
+    if (muted) {
+      petBubble.classList.remove('show');
+    } else {
+      setBubbleText("Back. I'll keep narrating.", function(){ showFor(4000); });
+    }
+  });
 })();
 </script>
+
 </body>
 </html>
