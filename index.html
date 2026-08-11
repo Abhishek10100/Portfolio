@@ -230,7 +230,7 @@ h2.contact-h2{margin:0;font-variation-settings:'wdth' 100,'wght' 700;font-size:c
 #nb-pet-body.muted{border-color:var(--rule-3)}
 #nb-pet-body .halo{position:absolute;inset:-7px;border:1px dashed rgba(179,57,46,.5);border-radius:50%;animation:nbSpin 9s linear infinite}
 #nb-pet-body .eye{width:7px;height:9px;border-radius:3px;background:var(--paper);animation:nbBlink 5s ease-in-out infinite}
-#nb-pet-bubble{max-width:290px;background:var(--paper);border:1px solid var(--ink);border-radius:4px;padding:12px 14px;box-shadow:0 6px 18px rgba(28,27,25,.14);pointer-events:none;opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s}
+#nb-pet-bubble{max-width:min(290px,calc(100vw - 110px));background:var(--paper);border:1px solid var(--ink);border-radius:4px;padding:12px 14px;box-shadow:0 6px 18px rgba(28,27,25,.14);pointer-events:none;opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s}
 #nb-pet-bubble.show{opacity:1;transform:none}
 .pet-tag{font:600 9.5px var(--mono);letter-spacing:.14em;color:var(--accent)}
 #nb-pet-text{margin-top:6px;font:400 12.5px/1.55 var(--sans);color:var(--ink)}
@@ -875,10 +875,17 @@ h2.contact-h2{margin:0;font-variation-settings:'wdth' 100,'wght' 700;font-size:c
     }
   }
 
-  setTimeout(function(){
-    if (!muted) petBubble.classList.add('show');
-    showFor(6000);
-  }, 300);
+  // On touch devices, auto-popping the bubble covers page content the user is
+  // trying to read — only reveal it on an explicit tap there (README: "Mini-Guide
+  // either off or repositioned so it never overlaps the CTAs").
+  var autoNarrate = !coarsePointer;
+
+  if (autoNarrate) {
+    setTimeout(function(){
+      if (!muted) petBubble.classList.add('show');
+      showFor(6000);
+    }, 300);
+  }
 
   var secObserver = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
@@ -886,7 +893,11 @@ h2.contact-h2{margin:0;font-variation-settings:'wdth' 100,'wght' 700;font-size:c
         var id = entry.target.id;
         if (id && id !== currentSection && narration[id]) {
           currentSection = id;
-          setBubbleText(narration[id], function(){ showFor(6500); });
+          if (autoNarrate) {
+            setBubbleText(narration[id], function(){ showFor(6500); });
+          } else {
+            petText.textContent = narration[id];
+          }
           tocLinks.forEach(function(a){
             a.classList.toggle('active', a.getAttribute('href') === '#' + id);
           });
@@ -896,22 +907,36 @@ h2.contact-h2{margin:0;font-variation-settings:'wdth' 100,'wght' 700;font-size:c
   }, { rootMargin: '-25% 0px -45% 0px', threshold: [0, 0.15, 0.5] });
   sections.forEach(function(s){ secObserver.observe(s); });
 
-  petBody.addEventListener('mouseenter', function(){
-    clearTimeout(hideTimer);
-    if (!muted) petBubble.classList.add('show');
-  });
-  petBody.addEventListener('mouseleave', function(){
-    showFor(1400);
-  });
-  petBody.addEventListener('click', function(){
-    muted = !muted;
-    petBody.classList.toggle('muted', muted);
-    if (muted) {
-      petBubble.classList.remove('show');
-    } else {
-      setBubbleText("Back. I'll keep narrating.", function(){ showFor(4000); });
-    }
-  });
+  if (autoNarrate) {
+    petBody.addEventListener('mouseenter', function(){
+      clearTimeout(hideTimer);
+      if (!muted) petBubble.classList.add('show');
+    });
+    petBody.addEventListener('mouseleave', function(){
+      showFor(1400);
+    });
+    petBody.addEventListener('click', function(){
+      muted = !muted;
+      petBody.classList.toggle('muted', muted);
+      if (muted) {
+        petBubble.classList.remove('show');
+      } else {
+        setBubbleText("Back. I'll keep narrating.", function(){ showFor(4000); });
+      }
+    });
+  } else {
+    petText.textContent = narration.top;
+    petBody.addEventListener('click', function(){
+      var isShown = petBubble.classList.contains('show');
+      clearTimeout(hideTimer);
+      if (isShown) {
+        petBubble.classList.remove('show');
+      } else {
+        petBubble.classList.add('show');
+        hideTimer = setTimeout(function(){ petBubble.classList.remove('show'); }, 4000);
+      }
+    });
+  }
 })();
 </script>
 
