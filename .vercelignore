@@ -3,3 +3,6 @@
 *.md
 .editorconfig
 .gitattributes
+demo-apps
+docs
+src

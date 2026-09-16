@@ -2,9 +2,9 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "portfolio-static",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", ".", "-l", "5177"],
+      "name": "portfolio-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--", "--port", "5177", "--strictPort"],
       "port": 5177
     }
   ]

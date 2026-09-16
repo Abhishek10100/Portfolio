@@ -2,15 +2,31 @@
   "name": "abhishek-tripathi-portfolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Personal portfolio site — Associate Data Scientist. Static HTML/CSS/JS, notebook-themed design.",
+  "type": "module",
+  "description": "Personal portfolio — GenAI Engineer & Data Scientist. React, Tailwind CSS and Framer Motion.",
   "scripts": {
-    "dev": "npx serve .",
-    "start": "npx serve ."
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "brands": "node scripts/build-brands.mjs"
   },
   "author": "Abhishek Tripathi",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/<your-username>/<your-repo>.git"
+    "url": "https://github.com/Abhishek10100/Portfolio.git"
+  },
+  "dependencies": {
+    "framer-motion": "^13.3.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-react": "^6.1.1",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.0",
+    "simple-icons": "^16.31.0",
+    "devicon": "^2.17.0"
   }
 }

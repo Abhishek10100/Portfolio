@@ -1,82 +1,108 @@
 # Abhishek Tripathi — Portfolio
 
-A single-page, static portfolio site (anime.js hero/scroll animations, JetBrains Mono + Space Grotesk).
+GenAI Engineer & Data Scientist portfolio. Built from the design in
+`docs/complete-layout.png` with React, Tailwind CSS and Framer Motion, bundled
+by Vite and deployed as static output on Vercel.
 
-## What changed to make this Vercel-ready
+## Stack
 
-The original export (`Portfolio.dc.html` + `support.js`) was built with a proprietary
-design-preview runtime (`<x-dc>`, `sc-for` template loops, `DCLogic` components). That
-runtime isn't meant for production hosting, so this repo replaces it with a single
-plain, dependency-free `index.html`:
+| Layer     | Choice                                        |
+| --------- | --------------------------------------------- |
+| UI        | React 19                                      |
+| Styling   | Tailwind CSS 4 (CSS-first `@theme` tokens)    |
+| Motion    | Framer Motion 13                              |
+| Bundler   | Vite 8                                        |
+| Hosting   | Vercel (static `dist/` output)                |
 
-- All `sc-for` template loops (stats, jobs, projects, skills, certs) are expanded into
-  static HTML.
-- The `DCLogic` component class is replaced with plain vanilla JS that does the same
-  three things: builds the 336-cell hero grid, runs the anime.js entrance/grid/counter
-  animations, and reveals sections on scroll via `IntersectionObserver`.
-- `anime.js` is still loaded from the jsDelivr CDN, exactly as in the original.
-- `support.js` and the `.dc.html` files are no longer needed at runtime and are not part
-  of the deployed site.
-- The resume PDF now lives at the project root as `resume.pdf` and is linked from the
-  nav bar and the contact section.
-
-No build step, no `package.json`, no framework — it's one static HTML file, so Vercel's
-zero-config static deployment handles it as-is.
-
-## Push to GitHub
+## Local development
 
 ```bash
-git init
-git add .
-git commit -m "Initial commit: portfolio site"
-git branch -M main
-git remote add origin https://github.com/<your-username>/<your-repo>.git
-git push -u origin main
-```
-
-Then import the repo in Vercel (see below) — every push to `main` will auto-deploy.
-
-## Deploy to Vercel
-
-**Option A — Vercel CLI**
-```bash
-npm i -g vercel
-vercel        # first deploy / preview
-vercel --prod # promote to production
-```
-
-**Option B — Git**
-1. Push this folder to a GitHub/GitLab/Bitbucket repo (see above).
-2. In the Vercel dashboard: **Add New… → Project → Import** the repo.
-3. Framework preset: **Other** (no build command / output directory needed).
-4. Deploy.
-
-## Local preview
-
-```bash
+npm install
 npm run dev
-# or
-python3 -m http.server 8000
 ```
+
+The dev server runs on <http://localhost:5177>. `npm run build` writes production
+output to `dist/`, and `npm run preview` serves that build locally.
 
 ## Project structure
 
 ```
 .
-├── index.html         # the entire site
-├── resume.pdf          # downloadable resume, served at /resume.pdf
-├── vercel.json          # static hosting config (security headers, clean URLs)
-├── package.json           # metadata + local dev script (no build step, no deps)
-├── LICENSE                 # MIT
-├── .gitattributes           # consistent line endings / binary file handling
-├── .editorconfig              # consistent editor formatting
-├── .gitignore                  # git-ignored files
-├── .vercelignore                 # files excluded from Vercel deployments
-└── README.md
+├── index.html                  # Vite entry; <head>, fonts, pre-paint theme script
+├── src/
+│   ├── main.jsx                # React root
+│   ├── App.jsx                 # section order + theme controller
+│   ├── index.css               # design tokens (light/dark), base layer, motion prefs
+│   ├── data/site.js            # ALL page copy — edit content here, not in components
+│   └── components/
+│       ├── ui.jsx              # Reveal/RevealGroup, Counter, SectionLabel, icons
+│       ├── Preloader.jsx       # branded hold, hands off to the hero entrance
+│       ├── Nav.jsx             # sticky nav, scroll-spy, theme toggle, mobile menu
+│       ├── Hero.jsx            # hero + stat counters + trusted technologies
+│       ├── About.jsx           # about panel + "What I Do" grid
+│       ├── Projects.jsx        # featured projects carousel
+│       ├── ProjectArt.jsx      # per-project inline SVG artwork
+│       ├── Process.jsx         # build process rail + filterable tech stack
+│       ├── Journey.jsx         # experience / research / education band
+│       ├── DemoLab.jsx         # links into the standalone demo pages
+│       └── Contact.jsx         # contact panel + footer
+├── public/                     # copied to the deploy root verbatim
+│   ├── demos/                  # 10 standalone demo pages (plain HTML, no build)
+│   ├── assets/demos/           # images + manifests those demo pages load
+│   ├── images/                 # optimised WebP renditions used by the site
+│   └── resume.pdf              # served at /resume.pdf
+├── docs/                       # design reference — excluded from the deploy
+│   ├── complete-layout.png     # the layout this design implements
+│   ├── source-assets/          # full-resolution source PNGs
+│   └── GenAI_Portfolio_*.md    # image + animation prompt packs
+├── demo-apps/                  # Python source behind one demo (not deployed)
+└── legacy-notebook-site.html   # the previous notebook-themed site, kept for reference
 ```
 
 ## Editing content
 
-All copy (stats, experience, projects, skills, certifications, contact info) lives
-directly in `index.html`. There's no templating layer — search for the section you want
-to change (`<!-- EXPERIENCE -->`, `<!-- PROJECTS -->`, etc.) and edit the HTML directly.
+Every string on the page lives in [`src/data/site.js`](src/data/site.js) — copy,
+metrics, nav labels, project cards, experience, certifications and contact details.
+Components read from it, so content changes rarely need a component edit.
+
+## Design tokens
+
+Colours are CSS custom properties on `:root` with a `.dark` override in
+[`src/index.css`](src/index.css), surfaced to Tailwind through `@theme inline`.
+That means a single token edit restyles both themes, and the theme toggle can
+transition colours smoothly rather than snapping. Theme choice persists in
+`localStorage` and is applied before first paint by an inline script in
+`index.html`, so there's no flash of the wrong theme.
+
+## Motion
+
+Follows `docs/GenAI_Portfolio_Animation_Prompts.md`: one shared reveal recipe
+(opacity, 24px rise, 0.98→1 scale) with staggered children, spring-based hover
+lifts, viewport-triggered counters, and a condensing nav. Every component checks
+`useReducedMotion()`, and `prefers-reduced-motion` also strips transitions in CSS.
+
+## Images
+
+Source renders live in `docs/source-assets/` (~5 MB of PNG). The site serves
+resized WebP renditions from `public/images/` instead — 84 KB total. If you
+replace a source image, regenerate its rendition:
+
+```bash
+npx sharp-cli -i docs/source-assets/hero.png -o public/images/hero.webp resize 1400 --format webp
+```
+
+## Demo pages
+
+The 10 demo pages under `public/demos/` are standalone HTML and are *not* part of
+the React app. Vite copies `public/` verbatim, so they keep their existing URLs
+(`/demos/student-performance.html`) and their relative asset paths still resolve.
+
+## Deploy
+
+Vercel reads `vercel.json`: build with `npm run build`, serve `dist/`. Pushes to
+the connected branch auto-deploy.
+
+```bash
+npm i -g vercel
+vercel --prod
+```
