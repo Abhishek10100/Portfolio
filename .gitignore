@@ -2,3 +2,6 @@
 .DS_Store
 node_modules
 dist
+
+# graphify output (regenerate with: graphify update .)
+graphify-out/
