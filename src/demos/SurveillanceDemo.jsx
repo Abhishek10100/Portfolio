@@ -1,12 +1,12 @@
 import { useRef, useState, useEffect } from 'react'
 import { AGENTS, ANSWERS, EXAMPLES, LANGUAGES } from './data/agents'
 
-const MARATHI_MARKERS = ['à¤†à¤¹à¥‡', 'à¤†à¤¹à¥‡à¤¤', 'à¤•à¤¾à¤¯', 'à¤¦à¤¾à¤–à¤µà¤¾', 'à¤†à¤œà¤šà¤¾', 'à¤®à¤²à¤¾', 'à¤à¤¾à¤²à¥‡', 'à¤•à¤°à¤¾', 'à¤šà¥à¤¯à¤¾', 'à¤•à¤¸à¥‡']
-const HINDI_MARKERS = ['à¤¹à¥ˆ', 'à¤¹à¥ˆà¤‚', 'à¤•à¥à¤¯à¤¾', 'à¤¦à¤¿à¤–à¤¾à¤“', 'à¤¦à¤¿à¤–à¤¾à¤à¤‚', 'à¤®à¥à¤à¥‡', 'à¤†à¤œ', 'à¤•à¥Œà¤¨', 'à¤®à¥‡à¤‚', 'à¤•à¥à¤¯à¥‹à¤‚', 'à¤•à¥ˆà¤¸à¥‡']
+const MARATHI_MARKERS = ['आहे', 'आहेत', 'काय', 'दाखवा', 'आजचा', 'मला', 'झाले', 'करा', 'च्या', 'कसे']
+const HINDI_MARKERS = ['है', 'हैं', 'क्या', 'दिखाओ', 'दिखाएं', 'मुझे', 'आज', 'कौन', 'में', 'क्यों', 'कैसे']
 
 function detectLanguage(text) {
-  if (/[ã€-ãƒ¿ä¸€-é¿¿]/.test(text)) return 'ja'
-  if (/[à¤€-à¥¿]/.test(text)) {
+  if (/[぀-ヿ一-鿿]/.test(text)) return 'ja'
+  if (/[ऀ-ॿ]/.test(text)) {
     const mr = MARATHI_MARKERS.filter((m) => text.includes(m)).length
     const hi = HINDI_MARKERS.filter((m) => text.includes(m)).length
     return mr > hi ? 'mr' : 'hi'
@@ -150,7 +150,7 @@ export default function SurveillanceDemo() {
             id="sv-input"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask in English, à¤¹à¤¿à¤¨à¥à¤¦à¥€, à¤®à¤°à¤¾à¤ à¥€ or æ—¥æœ¬èªž"
+            placeholder="Ask in English, हिन्दी, मराठी or 日本語"
             className="min-w-0 flex-1 rounded-full border border-line-2 bg-white px-5 py-3 text-[14px] outline-none focus:border-brand"
           />
           <button type="submit" className="rounded-full bg-ink px-6 py-3 text-[13.5px] font-semibold text-white">
@@ -164,7 +164,7 @@ export default function SurveillanceDemo() {
         {last && (
           <>
             <p className="mt-3 text-[13px] text-ink-2">
-              Language: <strong className="text-ink">{LANGUAGES[last.lang]}</strong> Â· Routed to{' '}
+              Language: <strong className="text-ink">{LANGUAGES[last.lang]}</strong> · Routed to{' '}
               <strong className="text-ink">{last.chosen.agent.name}</strong>
               {last.fallback && ' (fallback)'}
             </p>

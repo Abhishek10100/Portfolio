@@ -79,7 +79,7 @@ function Interview({ skills, onClose }) {
     <section className="rounded-3xl border border-line bg-surface p-5 shadow-card md:p-7" aria-live="polite">
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-[12px] font-bold tracking-[0.14em] text-violet-text">
-          AI INTERVIEW {done ? 'Â· SCORECARD' : `Â· QUESTION ${step + 1} OF ${questions.length}`}
+          AI INTERVIEW {done ? '· SCORECARD' : `· QUESTION ${step + 1} OF ${questions.length}`}
         </h2>
         <button type="button" onClick={onClose} className="text-[12.5px] font-semibold text-ink-3">
           Close
@@ -121,7 +121,7 @@ function Interview({ skills, onClose }) {
                 <ul className="mt-2 grid gap-1 text-[12.5px]">
                   {r.concepts.map((c) => (
                     <li key={c.label} className={c.hit ? 'text-emerald-700' : 'text-ink-3'}>
-                      {c.hit ? 'âœ“' : 'â—‹'} {c.label}
+                      {c.hit ? '✓' : '○'} {c.label}
                     </li>
                   ))}
                 </ul>
@@ -204,7 +204,7 @@ export default function RecruitingDemo() {
                       {c.name}
                     </p>
                     <p className="text-[12px] text-ink-3">
-                      {c.title} Â· {c.years} yrs
+                      {c.title} · {c.years} yrs
                     </p>
                   </div>
                   <p className="text-[20px] font-extrabold tabular-nums text-ink">{Math.round(score * 100)}%</p>

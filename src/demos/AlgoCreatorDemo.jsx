@@ -224,7 +224,7 @@ export default function AlgoCreatorDemo() {
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
           <section aria-live="polite" className="rounded-3xl border border-line bg-surface p-5 shadow-card md:p-7">
             <h2 className="text-[12px] font-bold tracking-[0.14em] text-violet-text">
-              1 Â· MULTI-QUERY EXPANSION
+              1 · MULTI-QUERY EXPANSION
             </h2>
             <ul className="mt-3 grid gap-2">
               {result.queries.map((q, i) => (
@@ -241,7 +241,7 @@ export default function AlgoCreatorDemo() {
             </ul>
 
             <h2 className="mt-6 text-[12px] font-bold tracking-[0.14em] text-violet-text">
-              2 Â· RANK FUSION ({slides.length} slides searched in {result.ms} ms)
+              2 · RANK FUSION ({slides.length} slides searched in {result.ms} ms)
             </h2>
             {result.fused.length === 0 ? (
               <p className="mt-3 rounded-xl bg-white p-4 text-[13.5px] text-ink-2 ring-1 ring-line">
@@ -263,7 +263,7 @@ export default function AlgoCreatorDemo() {
                       )}
                     </div>
                     <p className="mt-0.5 text-[11.5px] text-ink-3">
-                      {r.doc.deck} Â· found by {r.hits} of {result.queries.length} queries
+                      {r.doc.deck} · found by {r.hits} of {result.queries.length} queries
                     </p>
                     <div className="mt-2 h-1.5 rounded-full bg-brand-wash">
                       <div
@@ -280,7 +280,7 @@ export default function AlgoCreatorDemo() {
           <section className="rounded-3xl border border-line bg-surface p-5 shadow-card md:p-7">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-[12px] font-bold tracking-[0.14em] text-violet-text">
-                3 Â· GENERATED OUTLINE
+                3 · GENERATED OUTLINE
               </h2>
               {deckSlides.length > 0 && (
                 <button

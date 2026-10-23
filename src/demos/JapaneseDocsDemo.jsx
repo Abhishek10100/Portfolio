@@ -4,39 +4,39 @@ const SAMPLES = {
   clean: {
     label: 'Clean invoice',
     number: 'INV-2026-0417',
-    issued: '2026å¹´4æœˆ17æ—¥',
-    due: '2026å¹´5æœˆ31æ—¥',
-    buyer: 'æ ªå¼ä¼šç¤¾ã‚µãƒ³ãƒ—ãƒ«å•†äº‹',
-    seller: 'ã‚¢ãƒ«ãƒ•ã‚¡ãƒ»ãƒ‡ãƒ¼ã‚¿æ ªå¼ä¼šç¤¾',
+    issued: '2026年4月17日',
+    due: '2026年5月31日',
+    buyer: '株式会社サンプル商事',
+    seller: 'アルファ・データ株式会社',
     items: [
-      ['ã‚¯ãƒ©ã‚¦ãƒ‰åˆ©ç”¨æ–™ï¼ˆ4æœˆåˆ†ï¼‰', '1', 'Â¥120,000', 'Â¥120,000'],
-      ['ä¿å®ˆã‚µãƒãƒ¼ãƒˆè²»ç”¨', '2', 'Â¥45,000', 'Â¥90,000'],
-      ['ãƒ‡ãƒ¼ã‚¿ç§»è¡Œä½œæ¥­', '3', 'Â¥30,000', 'Â¥90,000'],
+      ['クラウド利用料（4月分）', '1', '¥120,000', '¥120,000'],
+      ['保守サポート費用', '2', '¥45,000', '¥90,000'],
+      ['データ移行作業', '3', '¥30,000', '¥90,000'],
     ],
-    subtotal: 'Â¥300,000',
-    tax: 'Â¥30,000',
-    total: 'Â¥330,000',
+    subtotal: '¥300,000',
+    tax: '¥30,000',
+    total: '¥330,000',
   },
   error: {
     label: 'Invoice with a totals error',
     number: 'INV-2026-0418',
-    issued: '2026å¹´4æœˆ18æ—¥',
-    due: '2026å¹´5æœˆ31æ—¥',
-    buyer: 'æ±æ—¥æœ¬ãƒ­ã‚¸ã‚¹ãƒ†ã‚£ã‚¯ã‚¹æ ªå¼ä¼šç¤¾',
-    seller: 'ã‚¢ãƒ«ãƒ•ã‚¡ãƒ»ãƒ‡ãƒ¼ã‚¿æ ªå¼ä¼šç¤¾',
+    issued: '2026年4月18日',
+    due: '2026年5月31日',
+    buyer: '東日本ロジスティクス株式会社',
+    seller: 'アルファ・データ株式会社',
     items: [
-      ['APIåˆ©ç”¨æ–™', '1', 'Â¥80,000', 'Â¥80,000'],
-      ['é‹ç”¨ç›£è¦–ã‚µãƒ¼ãƒ“ã‚¹', '2', 'Â¥60,000', 'Â¥120,000'],
+      ['API利用料', '1', '¥80,000', '¥80,000'],
+      ['運用監視サービス', '2', '¥60,000', '¥120,000'],
     ],
-    subtotal: 'Â¥200,000',
-    tax: 'Â¥20,000',
-    total: 'Â¥240,000',
+    subtotal: '¥200,000',
+    tax: '¥20,000',
+    total: '¥240,000',
   },
 }
 
 const STEPS = ['Scan', 'OCR', 'Extract', 'Validate']
 const num = (t) => Number(String(t).replace(/[^\d]/g, ''))
-const yen = (n) => `Â¥${n.toLocaleString('en-US')}`
+const yen = (n) => `¥${n.toLocaleString('en-US')}`
 const confidence = (text) => {
   let h = 0
   for (const ch of text) h = (h * 31 + ch.codePointAt(0)) % 97
@@ -44,7 +44,7 @@ const confidence = (text) => {
 }
 
 function isoDate(jp) {
-  const m = jp.match(/(\d{4})å¹´(\d{1,2})æœˆ(\d{1,2})æ—¥/)
+  const m = jp.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/)
   return m ? `${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}` : null
 }
 
@@ -79,9 +79,9 @@ function validate(d) {
   const checks = []
   d.line_items.forEach((i, n) =>
     checks.push({
-      label: `Line ${n + 1}: quantity Ã— unit price`,
+      label: `Line ${n + 1}: quantity × unit price`,
       ok: i.quantity * i.unit_price === i.amount,
-      detail: `${i.quantity} Ã— ${yen(i.unit_price)} = ${yen(i.quantity * i.unit_price)}, found ${yen(i.amount)}`,
+      detail: `${i.quantity} × ${yen(i.unit_price)} = ${yen(i.quantity * i.unit_price)}, found ${yen(i.amount)}`,
     }),
   )
   checks.push({
@@ -109,7 +109,7 @@ function validate(d) {
   checks.push({
     label: 'Dates valid and due on or after issue',
     ok: Boolean(d.issue_date && d.due_date && d.due_date >= d.issue_date),
-    detail: `${d.issue_date} â†’ ${d.due_date}`,
+    detail: `${d.issue_date} → ${d.due_date}`,
   })
   return checks
 }
@@ -223,23 +223,23 @@ export default function JapaneseDocsDemo() {
             style={{ fontFamily: jp, transform: step >= 1 ? 'rotate(-0.5deg)' : undefined, transition: 'transform .5s' }}
           >
             <h3 className="text-center text-[22px] font-bold tracking-[0.5em] text-ink" data-ocr="title">
-              è«‹æ±‚æ›¸
+              請求書
             </h3>
             <dl className="mt-5 grid gap-1.5 text-[12.5px] text-ink">
-              <div className="flex gap-2"><dt className="w-20 shrink-0 text-ink-3">è«‹æ±‚ç•ªå·</dt><dd data-ocr="number">{sample.number}</dd></div>
-              <div className="flex gap-2"><dt className="w-20 shrink-0 text-ink-3">ç™ºè¡Œæ—¥</dt><dd data-ocr="issued">{sample.issued}</dd></div>
-              <div className="flex gap-2"><dt className="w-20 shrink-0 text-ink-3">æ”¯æ‰•æœŸé™</dt><dd data-ocr="due">{sample.due}</dd></div>
-              <div className="flex gap-2"><dt className="w-20 shrink-0 text-ink-3">è«‹æ±‚å…ˆ</dt><dd><span data-ocr="buyer">{sample.buyer}</span> å¾¡ä¸­</dd></div>
-              <div className="flex gap-2"><dt className="w-20 shrink-0 text-ink-3">ç™ºè¡Œå…ƒ</dt><dd data-ocr="seller">{sample.seller}</dd></div>
+              <div className="flex gap-2"><dt className="w-20 shrink-0 text-ink-3">請求番号</dt><dd data-ocr="number">{sample.number}</dd></div>
+              <div className="flex gap-2"><dt className="w-20 shrink-0 text-ink-3">発行日</dt><dd data-ocr="issued">{sample.issued}</dd></div>
+              <div className="flex gap-2"><dt className="w-20 shrink-0 text-ink-3">支払期限</dt><dd data-ocr="due">{sample.due}</dd></div>
+              <div className="flex gap-2"><dt className="w-20 shrink-0 text-ink-3">請求先</dt><dd><span data-ocr="buyer">{sample.buyer}</span> 御中</dd></div>
+              <div className="flex gap-2"><dt className="w-20 shrink-0 text-ink-3">発行元</dt><dd data-ocr="seller">{sample.seller}</dd></div>
             </dl>
 
             <table className="mt-5 w-full border-collapse text-[12px]">
               <thead>
                 <tr className="border-b border-ink/40 text-left text-ink-3">
-                  <th className="py-1.5 font-medium">å“å</th>
-                  <th className="py-1.5 text-right font-medium">æ•°é‡</th>
-                  <th className="py-1.5 text-right font-medium">å˜ä¾¡</th>
-                  <th className="py-1.5 text-right font-medium">é‡‘é¡</th>
+                  <th className="py-1.5 font-medium">品名</th>
+                  <th className="py-1.5 text-right font-medium">数量</th>
+                  <th className="py-1.5 text-right font-medium">単価</th>
+                  <th className="py-1.5 text-right font-medium">金額</th>
                 </tr>
               </thead>
               <tbody>
@@ -255,10 +255,10 @@ export default function JapaneseDocsDemo() {
             </table>
 
             <dl className="ml-auto mt-4 grid w-52 gap-1 text-[12.5px]">
-              <div className="flex justify-between"><dt className="text-ink-3">å°è¨ˆ</dt><dd data-ocr="subtotal">{sample.subtotal}</dd></div>
-              <div className="flex justify-between"><dt className="text-ink-3">æ¶ˆè²»ç¨Žï¼ˆ10%ï¼‰</dt><dd data-ocr="tax">{sample.tax}</dd></div>
+              <div className="flex justify-between"><dt className="text-ink-3">小計</dt><dd data-ocr="subtotal">{sample.subtotal}</dd></div>
+              <div className="flex justify-between"><dt className="text-ink-3">消費税（10%）</dt><dd data-ocr="tax">{sample.tax}</dd></div>
               <div className="flex justify-between border-t border-ink/40 pt-1 text-[14px] font-bold">
-                <dt>åˆè¨ˆé‡‘é¡</dt><dd data-ocr="total">{sample.total}</dd>
+                <dt>合計金額</dt><dd data-ocr="total">{sample.total}</dd>
               </div>
             </dl>
 
@@ -298,7 +298,7 @@ export default function JapaneseDocsDemo() {
                   step > i ? 'bg-emerald-500/12 text-emerald-700' : 'bg-brand-wash text-ink-3'
                 }`}
               >
-                {step > i ? 'âœ“ ' : ''}{s}
+                {step > i ? '✓ ' : ''}{s}
               </li>
             ))}
           </ol>
@@ -359,7 +359,7 @@ export default function JapaneseDocsDemo() {
         {checks && (
           <>
             <h3 className="mt-5 text-[12px] font-bold tracking-[0.14em] text-ink-3">
-              VALIDATION Â·{' '}
+              VALIDATION ·{' '}
               <span className={failed ? 'text-rose-700' : 'text-emerald-700'}>
                 {failed ? `${failed} CHECK${failed > 1 ? 'S' : ''} FAILED, ROUTED TO REVIEW` : 'ALL CHECKS PASSED'}
               </span>
@@ -368,7 +368,7 @@ export default function JapaneseDocsDemo() {
               {checks.map((c) => (
                 <li key={c.label} className={`rounded-lg px-3 py-2 text-[12.5px] ring-1 ${c.ok ? 'bg-white ring-line' : 'bg-rose-50 ring-rose-200'}`}>
                   <p className={`font-semibold ${c.ok ? 'text-ink' : 'text-rose-800'}`}>
-                    {c.ok ? 'âœ“' : 'âœ—'} {c.label}
+                    {c.ok ? '✓' : '✗'} {c.label}
                   </p>
                   <p className="mt-0.5 text-ink-3">{c.detail}</p>
                 </li>

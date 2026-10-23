@@ -152,9 +152,17 @@ at the top of the script and run `npm run brands`.
 `/demo/enterprise-rag`, `/demo/japanese-docs`) are React pages in `src/demos/`. They run
 entirely in the browser on synthetic data. The retrieval, scoring, routing and validation
 logic is real; there is no LLM and no API key, and each page says what the production
-system adds. `vercel.json` rewrites `/demo/:slug` to `index.html`, and `main.jsx` loads the
-demo code on demand so the portfolio page never downloads it. To add one, create the
-component, register it in `DemoRoute.jsx` and add a card to `demoLab` in `site.js`.
+system adds. Each demo has its own static page, `demo/<slug>.html`, listed as a build input
+in `vite.config.js`; Vercel's clean URLs serve it at `/demo/<slug>`. (An earlier version used
+a `vercel.json` rewrite to `index.html`, which returned 404 in production, so don't reintroduce
+it.) `main.jsx` loads the demo code on demand so the portfolio page never downloads it.
+To add a demo: create the component, register it in `DemoRoute.jsx`, add `demo/<slug>.html`
+(copy an existing one), add the slug to `DEMOS` in `vite.config.js`, and add a card to
+`demoLab` in `site.js`.
+
+**Encoding warning:** these files contain Japanese, Hindi and Marathi text. Never rewrite
+them with Windows PowerShell 5.1 `Get-Content`/`Set-Content` (it silently turns UTF-8 into
+mojibake); use an editor or a script with explicit `encoding='utf-8'`.
 
 **Earlier work** under `public/demos/` is standalone HTML, not part of the React app. Vite
 copies `public/` verbatim, so those pages keep their URLs (`/demos/resume-ats.html`). Seven

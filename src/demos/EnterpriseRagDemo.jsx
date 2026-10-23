@@ -13,7 +13,7 @@ function Passage({ hit, terms, n }) {
           </span>
         )}
         <span>
-          {hit.doc.code} Â· {hit.doc.docTitle} Â· Â§{hit.doc.section}
+          {hit.doc.code} · {hit.doc.docTitle} · §{hit.doc.section}
         </span>
         <span className="ml-auto font-semibold tabular-nums text-ink-3">score {hit.score.toFixed(1)}</span>
       </p>
@@ -115,7 +115,7 @@ export default function EnterpriseRagDemo() {
                     <ul className="mt-2 flex flex-wrap gap-2 text-[11.5px] text-ink-3">
                       {t.sources.map((s, k) => (
                         <li key={s.id}>
-                          [{k + 1}] {s.code} Â· {s.docTitle}
+                          [{k + 1}] {s.code} · {s.docTitle}
                         </li>
                       ))}
                     </ul>
@@ -180,7 +180,7 @@ export default function EnterpriseRagDemo() {
             id="rag-input"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask about leave, expenses, security, vendorsâ€¦"
+            placeholder="Ask about leave, expenses, security, vendors…"
             className="min-w-0 flex-1 rounded-full border border-line-2 bg-white px-5 py-3 text-[14px] outline-none focus:border-brand"
           />
           <button type="submit" className="rounded-full bg-ink px-6 py-3 text-[13.5px] font-semibold text-white">
