@@ -1,68 +1,44 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
 /* ---------------------------------------------------------------
-   Semantic tokens. Light mode is the base; .dark overrides.
-   Everything colour-related goes through these so the theme
-   toggle can transition smoothly instead of hard-switching.
+   Semantic tokens. The site is light-only. Page, surface, border,
+   text and brand colours go through these, so one edit here
+   restyles them everywhere. Illustrations, brand logos and the
+   per-step accent hues keep their own fixed colours.
 ---------------------------------------------------------------- */
 :root {
+  color-scheme: light;
+
   --page: #f6f6fb;
-  --surface: #ffffff;
-  --surface-2: #fbfbfe;
+  --surface: #fafbfe;
   --surface-3: #f2f2f9;
   --border: #e8e8f2;
   --border-2: #dedeee;
 
-  --text: #14142b;
-  --text-2: #55556e;
-  --text-3: #8b8ba7;
+  --text: #02021a;
+  --text-2: #4c5073;
+  --text-3: #656a8a;
 
-  --brand: #5b5bd6;
-  --brand-2: #7c6cf0;
-  --brand-ink: #4a44c4;
-  --brand-wash: #eeedfd;
-  --violet: #a855f7;
+  --brand: #6079fb;
+  --brand-ink: #2e2dae;
+  --brand-wash: #e7edfe;
+  --violet: #9957fc;
 
-  --glow-a: rgba(124, 108, 240, 0.16);
-  --glow-b: rgba(168, 85, 247, 0.1);
+  /* Fills, dots and gradients use --brand / --violet as measured from the
+     layout; those fail AA as small text, so text gets its own darker pair. */
+  --brand-text: #4457d8;
+  --violet-text: #7c3aed;
 
-  --shadow-sm: 0 1px 2px rgba(20, 20, 43, 0.04);
+  --glow-a: rgba(96, 121, 251, 0.16);
+  --glow-b: rgba(153, 87, 252, 0.1);
+
   --shadow-md: 0 4px 14px rgba(20, 20, 43, 0.06);
   --shadow-lg: 0 18px 44px rgba(20, 20, 43, 0.1);
-}
-
-.dark {
-  --page: #0a0a14;
-  --surface: #12121f;
-  --surface-2: #16162a;
-  --surface-3: #1c1c33;
-  --border: #262640;
-  --border-2: #32324f;
-
-  --text: #f2f2f8;
-  --text-2: #a9a9c4;
-  --text-3: #74748f;
-
-  --brand: #8b83f5;
-  --brand-2: #a78bfa;
-  --brand-ink: #b4adfb;
-  --brand-wash: #1e1b3d;
-  --violet: #c084fc;
-
-  --glow-a: rgba(124, 108, 240, 0.22);
-  --glow-b: rgba(168, 85, 247, 0.14);
-
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 18px 44px rgba(0, 0, 0, 0.55);
 }
 
 @theme inline {
   --color-page: var(--page);
   --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
   --color-surface-3: var(--surface-3);
   --color-line: var(--border);
   --color-line-2: var(--border-2);
@@ -72,10 +48,11 @@
   --color-ink-3: var(--text-3);
 
   --color-brand: var(--brand);
-  --color-brand-2: var(--brand-2);
   --color-brand-ink: var(--brand-ink);
   --color-brand-wash: var(--brand-wash);
   --color-violet: var(--violet);
+  --color-brand-text: var(--brand-text);
+  --color-violet-text: var(--violet-text);
 
   --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
   --font-hand: Caveat, ui-serif, cursive;
@@ -101,7 +78,6 @@
     color: var(--text);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-    transition: background-color 0.4s ease, color 0.4s ease;
   }
 
   h1,
@@ -128,47 +104,11 @@
 }
 
 @layer components {
-  /* Card surfaces transition with the theme rather than snapping. */
-  .theme-tx {
-    transition: background-color 0.4s ease, border-color 0.4s ease,
-      color 0.4s ease, box-shadow 0.4s ease;
-  }
-
   .shell {
     width: 100%;
     max-width: 1200px;
     margin-inline: auto;
     padding-inline: 20px;
-  }
-
-  /* The hero render has a baked-in near-white studio background. Feathering
-     its edges lets it sit on the page instead of reading as a pasted box —
-     in light mode it disappears into the wash, in dark mode it reads as a
-     lit vignette. */
-  .hero-img {
-    -webkit-mask-image: radial-gradient(
-      ellipse 66% 68% at 54% 50%,
-      #000 40%,
-      transparent 96%
-    );
-    mask-image: radial-gradient(
-      ellipse 66% 68% at 54% 50%,
-      #000 40%,
-      transparent 96%
-    );
-  }
-
-  .dark .hero-img {
-    -webkit-mask-image: radial-gradient(
-      ellipse 56% 60% at 52% 50%,
-      #000 26%,
-      transparent 92%
-    );
-    mask-image: radial-gradient(
-      ellipse 56% 60% at 52% 50%,
-      #000 26%,
-      transparent 92%
-    );
   }
 
   @media (min-width: 768px) {

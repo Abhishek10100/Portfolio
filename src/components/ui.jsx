@@ -5,7 +5,7 @@ import { motion, useInView, useReducedMotion, animate } from 'framer-motion'
    opacity 0→1, y 24→0, scale .98→1, 0.5–0.8s, children staggered 0.05–0.12s. */
 export const EASE = [0.22, 0.8, 0.28, 1]
 
-export const revealVariants = {
+const revealVariants = {
   hidden: { opacity: 0, y: 24, scale: 0.98 },
   show: {
     opacity: 1,
@@ -15,7 +15,7 @@ export const revealVariants = {
   },
 }
 
-export const staggerParent = (stagger = 0.08, delay = 0) => ({
+const staggerParent = (stagger = 0.08, delay = 0) => ({
   hidden: {},
   show: { transition: { staggerChildren: stagger, delayChildren: delay } },
 })
@@ -123,12 +123,19 @@ export function Counter({ value, suffix = '', duration = 1.4 }) {
 }
 
 /** Small violet-dot eyebrow used above every section heading. */
-export function SectionLabel({ children, className = '' }) {
+const labelTones = {
+  violet: { text: 'text-violet-text', dot: 'bg-violet' },
+  brand: { text: 'text-brand-text', dot: 'bg-brand' },
+}
+
+/** `tone` follows the layout: violet eyebrows for most sections, periwinkle for the stack/journey cards. */
+export function SectionLabel({ children, className = '', tone = 'violet' }) {
+  const t = labelTones[tone] ?? labelTones.violet
   return (
     <div
-      className={`flex items-center gap-2 text-[11px] font-semibold tracking-[0.14em] text-ink-3 ${className}`}
+      className={`flex items-center gap-2 text-[11px] font-semibold tracking-[0.14em] ${t.text} ${className}`}
     >
-      <span className="size-1.5 rounded-full bg-violet" />
+      <span className={`size-1.5 rounded-full ${t.dot}`} />
       {children}
     </div>
   )
@@ -167,8 +174,6 @@ const paths = {
     'M14 3c3.3 0 6 2.7 6 6 0 3.6-2.6 7-6.4 9.6a1 1 0 01-1.2 0C8.6 16 6 12.6 6 9c0-3.3 2.7-6 6-6h2zm-1 4.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM7 19c0 1.7-1 3-3 3 0-2 1.3-3 3-3z',
   gauge:
     'M12 4a9 9 0 018.1 12.9 1 1 0 01-.9.6H4.8a1 1 0 01-.9-.6A9 9 0 0112 4zm0 2a7 7 0 00-6.2 9.5h12.4A7 7 0 0012 6zm3.6 2.9a1 1 0 01.2 1.4l-2.6 3.4a1.6 1.6 0 11-1.6-1.2l2.6-3.4a1 1 0 011.4-.2z',
-  sun: 'M12 17a5 5 0 110-10 5 5 0 010 10zm0-2a3 3 0 100-6 3 3 0 000 6zm0-12a1 1 0 011 1v1a1 1 0 11-2 0V4a1 1 0 011-1zm0 16a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM4 11h1a1 1 0 110 2H4a1 1 0 110-2zm15 0h1a1 1 0 110 2h-1a1 1 0 110-2zM5.6 4.2l.7.7a1 1 0 01-1.4 1.4l-.7-.7a1 1 0 011.4-1.4zm12.1 12.1l.7.7a1 1 0 01-1.4 1.4l-.7-.7a1 1 0 011.4-1.4zm.7-12.1a1 1 0 010 1.4l-.7.7a1 1 0 11-1.4-1.4l.7-.7a1 1 0 011.4 0zM6.3 16.3a1 1 0 010 1.4l-.7.7a1 1 0 01-1.4-1.4l.7-.7a1 1 0 011.4 0z',
-  moon: 'M12.3 3a1 1 0 01.4 1.4A6.5 6.5 0 0019.6 14a1 1 0 011.2 1.4A9 9 0 118.6 3.2a1 1 0 011.4.4 1 1 0 01.1.2c.7-.4 1.4-.6 2.2-.8z',
   arrow: 'M5 12h12.2l-4.9-4.9a1 1 0 011.4-1.4l6.6 6.6a1 1 0 010 1.4l-6.6 6.6a1 1 0 01-1.4-1.4l4.9-4.9H5a1 1 0 110-2z',
   arrowUpRight: 'M8 6h9a1 1 0 011 1v9a1 1 0 11-2 0V9.4l-9.3 9.3a1 1 0 01-1.4-1.4L14.6 8H8a1 1 0 110-2z',
   download:
@@ -178,11 +183,9 @@ const paths = {
     'M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3V9zm6 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.3-.02-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9V21H9V9z',
   github:
     'M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48l-.01-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.84.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85l-.01 2.75c0 .27.18.58.69.48A10 10 0 0012 2z',
-  check: 'M20.3 6.3a1 1 0 010 1.4l-9.6 9.6a1 1 0 01-1.4 0l-4.6-4.6a1 1 0 111.4-1.4l3.9 3.9 8.9-8.9a1 1 0 011.4 0z',
   book: 'M4 4.5A2.5 2.5 0 016.5 2H19a1 1 0 011 1v15a1 1 0 01-1 1H6.5a.5.5 0 000 1H19a1 1 0 110 2H6.5A2.5 2.5 0 014 19.5v-15zm2.5-.5a.5.5 0 00-.5.5V17h12V4H6.5z',
   award:
     'M12 2a6 6 0 013.3 11l1.6 7.2a1 1 0 01-1.5 1.1L12 19.2 8.6 21.3a1 1 0 01-1.5-1.1L8.7 13A6 6 0 0112 2zm0 2a4 4 0 100 8 4 4 0 000-8z',
-  spark: 'M12 2l1.5 5.2L18.7 9l-5.2 1.8L12 16l-1.5-5.2L5.3 9l5.2-1.8L12 2z',
   play: 'M8 5.1a1 1 0 011.5-.9l9 6.9a1 1 0 010 1.8l-9 6.9A1 1 0 018 19V5.1z',
 }
 

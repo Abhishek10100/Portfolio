@@ -9,27 +9,10 @@ import Journey from './components/Journey'
 import DemoLab from './components/DemoLab'
 import { Contact, Footer } from './components/Contact'
 
-/** Theme lives on <html>; the inline script in index.html sets it pre-paint. */
-function useTheme() {
-  const [dark, setDark] = useState(
-    () => typeof document !== 'undefined' && document.documentElement.classList.contains('dark'),
-  )
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', dark)
-    try {
-      localStorage.setItem('theme', dark ? 'dark' : 'light')
-    } catch {
-      /* private mode — fall back to session-only theming */
-    }
-  }, [dark])
-
-  return [dark, useCallback(() => setDark((v) => !v), [])]
-}
-
 export default function App() {
-  const [dark, toggleTheme] = useTheme()
   const [ready, setReady] = useState(false)
+  // Stable identity: the preloader restarts its timer if this changes.
+  const handleDone = useCallback(() => setReady(true), [])
 
   // Hold the page still until the preloader hands over.
   useEffect(() => {
@@ -41,7 +24,7 @@ export default function App() {
 
   return (
     <>
-      <Preloader onDone={() => setReady(true)} />
+      <Preloader onDone={handleDone} />
 
       <a
         href="#home"
@@ -50,7 +33,7 @@ export default function App() {
         Skip to content
       </a>
 
-      <Nav dark={dark} onToggleTheme={toggleTheme} />
+      <Nav />
 
       <main>
         <Hero ready={ready} />

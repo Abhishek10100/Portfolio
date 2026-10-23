@@ -6,24 +6,48 @@ import { EASE } from './ui'
  * Brief branded hold while fonts and the hero image settle.
  * Dots converge into the monogram, then the whole thing lifts away.
  */
+const SEEN_KEY = 'preloader-seen'
+
+// Shown once per browser session: a returning visitor mid-session goes
+// straight to the page instead of waiting behind it again.
+const alreadySeen = () => {
+  try {
+    return sessionStorage.getItem(SEEN_KEY) === '1'
+  } catch {
+    return false
+  }
+}
+
 export default function Preloader({ onDone }) {
   const reduced = useReducedMotion()
-  const [show, setShow] = useState(true)
+  const [skip] = useState(alreadySeen)
+  const [show, setShow] = useState(!skip)
 
   useEffect(() => {
-    const ms = reduced ? 220 : 1500
+    if (skip) {
+      onDone?.()
+      return
+    }
+    const ms = reduced ? 220 : 1100
     const t = setTimeout(() => {
+      try {
+        sessionStorage.setItem(SEEN_KEY, '1')
+      } catch {
+        /* storage unavailable: the preloader just shows again next load */
+      }
       setShow(false)
       onDone?.()
     }, ms)
     return () => clearTimeout(t)
-  }, [reduced, onDone])
+  }, [skip, reduced, onDone])
 
   return (
     <AnimatePresence>
       {show && (
         <motion.div
           key="preloader"
+          aria-hidden="true"
+          inert
           className="fixed inset-0 z-[100] grid place-items-center bg-page"
           exit={{ opacity: 0, transition: { duration: 0.5, ease: EASE } }}
         >
@@ -52,7 +76,7 @@ export default function Preloader({ onDone }) {
                   }}
                   animate={{ x: 0, y: 0, opacity: [0, 1, 0] }}
                   transition={{
-                    duration: 1.3,
+                    duration: 1.0,
                     delay: i * 0.1,
                     ease: EASE,
                   }}
@@ -80,7 +104,7 @@ export default function Preloader({ onDone }) {
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               style={{ originX: 0 }}
-              transition={{ duration: reduced ? 0.2 : 1.4, ease: EASE }}
+              transition={{ duration: reduced ? 0.2 : 1.0, ease: EASE }}
             />
           </motion.div>
         </motion.div>

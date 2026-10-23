@@ -1,52 +1,52 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { projects } from '../data/site'
-import { Icon, Reveal, SectionLabel } from './ui'
+import { projects, profile } from '../data/site'
+import { Icon, Reveal, RevealGroup, RevealItem, SectionLabel } from './ui'
 import ProjectArt from './ProjectArt'
+
+// Long text metrics ("Multi-source") need a smaller face than short numbers ("70%").
+const metricSize = (value) => (value.length > 7 ? 'text-[15px] font-bold' : 'text-[20px] font-extrabold')
 
 function ProjectCard({ item }) {
   const reduced = useReducedMotion()
 
   return (
     <motion.article
-      whileHover={reduced ? {} : { y: -6 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 26 }}
-      className="theme-tx group flex h-full snap-start flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-sm hover:border-brand/35 hover:shadow-float"
+      whileHover={reduced ? undefined : { y: -6 }}
+      transition={{ type: 'spring', stiffness: 320, damping: 26 }}
+      className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-3 shadow-card transition-shadow duration-300 hover:shadow-float"
     >
-      <div className="relative aspect-[320/170] overflow-hidden border-b border-line bg-surface-3">
-        <div className="size-full transition-transform duration-500 group-hover:scale-[1.03]">
+      <div className="relative isolate aspect-video overflow-hidden rounded-xl bg-brand-wash ring-1 ring-inset ring-brand-ink/5">
+        <div className="size-full origin-center transition-transform duration-500 ease-out group-hover:scale-[1.03] motion-reduce:group-hover:scale-100">
           <ProjectArt kind={item.art} />
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col p-5">
-        <h3 className="text-[16.5px] font-bold leading-tight text-ink">
+      <div className="flex flex-1 flex-col px-2 pb-2 pt-4">
+        <h3 className="text-[17px] font-bold leading-tight text-ink">
           {item.title}
         </h3>
-        <p className="mt-1 text-[12.5px] font-medium text-ink-3">
-          {item.subtitle}
-        </p>
+        <p className="mt-1 text-[13px] text-ink-3">{item.subtitle}</p>
+        <p className="sr-only">{item.body}</p>
 
-        <p className="mt-3 text-[13px] leading-[1.6] text-ink-2">{item.body}</p>
-
-        <ul className="mt-4 flex flex-wrap gap-1.5">
+        <ul className="mt-4 flex flex-wrap gap-2">
           {item.tags.map((t) => (
             <li
               key={t}
-              className="theme-tx rounded-full border border-line bg-surface-2 px-2.5 py-1 text-[11px] font-medium text-ink-2"
+              className="rounded-full bg-brand-wash px-3 py-1 text-[11.5px] font-medium text-brand-ink"
             >
               {t}
             </li>
           ))}
         </ul>
 
-        <dl className="mt-auto grid grid-cols-2 gap-3 border-t border-line pt-4 [margin-block-start:1.25rem]">
-          {item.metrics.map((m) => (
-            <div key={m.label}>
-              <dt className="text-[15px] font-extrabold leading-tight text-ink">
+        <dl className="mt-auto grid grid-cols-2 pt-6">
+          {item.metrics.map((m, i) => (
+            <div key={m.label} className={i > 0 ? 'border-l border-line-2 pl-4' : 'pr-3'}>
+              <dt className={`leading-tight tracking-tight text-ink ${metricSize(m.value)}`}>
                 {m.value}
               </dt>
-              <dd className="mt-0.5 text-[11px] leading-tight text-ink-3">
+              <dd className="mt-1 text-[12px] leading-snug text-ink-3">
                 {m.label}
               </dd>
             </div>
@@ -61,12 +61,15 @@ export default function Projects() {
   const railRef = useRef(null)
   const [atStart, setAtStart] = useState(true)
   const [atEnd, setAtEnd] = useState(false)
+  // At lg+ all four cards fit, so there is nothing to scroll and no arrows to show.
+  const [overflowing, setOverflowing] = useState(false)
 
   const sync = useCallback(() => {
     const el = railRef.current
     if (!el) return
     setAtStart(el.scrollLeft <= 4)
     setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 4)
+    setOverflowing(el.scrollWidth > el.clientWidth + 4)
   }, [])
 
   useEffect(() => {
@@ -96,25 +99,28 @@ export default function Projects() {
         <Reveal className="flex flex-wrap items-end justify-between gap-5">
           <div>
             <SectionLabel>{projects.eyebrow}</SectionLabel>
-            <h2 className="mt-4 text-[clamp(1.75rem,3.8vw,2.5rem)] font-extrabold text-ink">
+            <h2 className="mt-4 text-[clamp(1.75rem,3.6vw,2.4rem)] font-extrabold leading-[1.1] text-ink">
               {projects.title}
             </h2>
             <p className="mt-2 text-[15px] text-ink-2">{projects.subtitle}</p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <a
-              href="#experience"
-              className="theme-tx group inline-flex items-center gap-1.5 rounded-full border border-line-2 bg-surface px-4 py-2.5 text-[13px] font-semibold text-ink"
+              href={profile.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 rounded-full border border-line bg-surface px-5 py-3 text-[13px] font-semibold text-ink shadow-card transition-shadow hover:shadow-float"
             >
               View All Projects
+              <span className="sr-only">(opens GitHub in a new tab)</span>
               <Icon
                 name="arrowUpRight"
                 className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
             </a>
 
-            <div className="hidden gap-1.5 md:flex">
+            <div className={`hidden gap-2 ${overflowing ? 'md:flex' : ''}`}>
               {[
                 { dir: -1, disabled: atStart, label: 'Previous projects', rot: 'rotate-180' },
                 { dir: 1, disabled: atEnd, label: 'Next projects', rot: '' },
@@ -125,7 +131,7 @@ export default function Projects() {
                   onClick={() => nudge(b.dir)}
                   disabled={b.disabled}
                   aria-label={b.label}
-                  className="theme-tx grid size-10 place-items-center rounded-full border border-line-2 bg-surface text-ink transition-opacity disabled:opacity-35"
+                  className="grid size-11 place-items-center rounded-full border border-line bg-surface text-ink shadow-card transition-[opacity,box-shadow] enabled:hover:shadow-float disabled:opacity-40"
                 >
                   <Icon name="arrow" className={`size-4 ${b.rot}`} />
                 </button>
@@ -134,25 +140,28 @@ export default function Projects() {
           </div>
         </Reveal>
 
-        <Reveal
-          delay={0.08}
-          className="-mx-5 mt-8 md:-mx-8"
-        >
-          <div
+        {/* Top and bottom padding keep the hover lift and the deeper shadow
+            from being clipped by the scroll container. */}
+        <div className="-mx-5 -mb-6 mt-5 md:-mx-8">
+          <RevealGroup
             ref={railRef}
-            className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-3 md:px-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            role="region"
+            aria-label="Featured projects"
+            tabIndex={0}
+            stagger={0.1}
+            className="flex snap-x snap-mandatory scroll-px-5 gap-4 overflow-x-auto px-5 pb-10 pt-4 md:scroll-px-8 md:px-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {projects.items.map((item) => (
-              <div
+              <RevealItem
                 key={item.title}
                 data-card
-                className="w-[min(85vw,20rem)] shrink-0 lg:w-[calc((100%-3rem)/4)]"
+                className="w-[min(85vw,20rem)] shrink-0 snap-start lg:w-[calc((100%-3rem)/4)]"
               >
                 <ProjectCard item={item} />
-              </div>
+              </RevealItem>
             ))}
-          </div>
-        </Reveal>
+          </RevealGroup>
+        </div>
       </div>
     </section>
   )

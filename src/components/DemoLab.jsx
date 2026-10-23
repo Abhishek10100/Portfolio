@@ -20,9 +20,11 @@ export default function DemoLab() {
             </p>
           </div>
 
-          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3.5 py-2 text-[11.5px] font-bold tracking-wide text-emerald-600 dark:text-emerald-400">
+          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3.5 py-2 text-[11.5px] font-bold tracking-wide text-emerald-700">
             <span className="relative flex size-1.5">
-              <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500/70" />
+              {!reduced && (
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500/70" />
+              )}
               <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
             </span>
             {liveCount} LIVE · NO SERVER
@@ -30,7 +32,7 @@ export default function DemoLab() {
         </Reveal>
 
         <RevealGroup
-          className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
+          className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
           stagger={0.05}
         >
           {demoLab.items.map((d) => (
@@ -39,7 +41,7 @@ export default function DemoLab() {
                 href={d.href}
                 whileHover={reduced ? {} : { y: -5 }}
                 transition={{ type: 'spring', stiffness: 320, damping: 24 }}
-                className="theme-tx group flex h-full flex-col rounded-2xl border border-line bg-surface p-5 hover:border-brand/35 hover:shadow-card"
+                className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-5 transition-[border-color,box-shadow] hover:border-brand/35 hover:shadow-card"
               >
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="text-[14.5px] font-bold leading-tight text-ink">
@@ -48,7 +50,7 @@ export default function DemoLab() {
                   <span
                     className={`shrink-0 rounded-full px-2 py-0.5 text-[9.5px] font-bold tracking-wider ${
                       d.live
-                        ? 'bg-emerald-500/12 text-emerald-600 dark:text-emerald-400'
+                        ? 'bg-emerald-500/12 text-emerald-700'
                         : 'bg-surface-3 text-ink-3'
                     }`}
                   >
@@ -60,7 +62,7 @@ export default function DemoLab() {
                   {d.body}
                 </p>
 
-                <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-[12px] font-semibold text-brand">
+                <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-[12px] font-semibold text-brand-text">
                   {d.live ? 'Run it' : 'Open'}
                   <Icon
                     name={d.live ? 'play' : 'arrowUpRight'}

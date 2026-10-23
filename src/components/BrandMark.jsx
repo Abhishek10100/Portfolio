@@ -1,4 +1,13 @@
+import { useId } from 'react'
 import { brands } from '../data/brands'
+
+/* Inlined devicon artwork ships its own gradient ids, and the same mark can sit
+   on the page more than once (Azure and Azure OpenAI share one file). Prefixing
+   per instance keeps every id in the document unique. */
+const scopeIds = (markup, prefix) =>
+  markup
+    .replace(/\bid="([^"]+)"/g, `id="${prefix}-$1"`)
+    .replace(/url\(#([^)]+)\)/g, `url(#${prefix}-$1)`)
 
 /**
  * Renders a brand logo in its official colour.
@@ -9,6 +18,7 @@ import { brands } from '../data/brands'
  *   mono — brands neither library ships; a monogram tile in the brand colour
  */
 export default function BrandMark({ name, className = 'size-6' }) {
+  const uid = useId().replace(/[^\w-]/g, '')
   const brand = brands[name]
   if (!brand) return null
 
@@ -34,7 +44,7 @@ export default function BrandMark({ name, className = 'size-6' }) {
         className={className}
         role="img"
         aria-label={name}
-        dangerouslySetInnerHTML={{ __html: brand.inner }}
+        dangerouslySetInnerHTML={{ __html: scopeIds(brand.inner, `bm${uid}`) }}
       />
     )
   }

@@ -3,58 +3,52 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-
 import { navLinks, profile } from '../data/site'
 import { Icon, EASE } from './ui'
 
-/** Highlights whichever section currently owns the viewport. */
+/**
+ * Highlights the last nav section whose top has passed the reading line.
+ * Sections that share a top edge (Experience and Research sit side by side)
+ * tie to the first in nav order, so the highlight never flickers between them.
+ */
 function useActiveSection() {
   const [active, setActive] = useState('#home')
 
   useEffect(() => {
-    const ids = navLinks.map((l) => l.href.slice(1))
-    const els = ids
-      .map((id) => document.getElementById(id))
+    const els = navLinks
+      .map((l) => document.getElementById(l.href.slice(1)))
       .filter(Boolean)
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
-        if (visible) setActive(`#${visible.target.id}`)
-      },
-      { rootMargin: '-45% 0px -50% 0px', threshold: [0, 0.2, 0.6] },
-    )
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const line = window.innerHeight * 0.4
+      let current = els[0]
+      let best = -Infinity
+      for (const el of els) {
+        const top = el.getBoundingClientRect().top
+        if (top <= line && top > best + 8) {
+          best = top
+          current = el
+        }
+      }
+      if (current) setActive(`#${current.id}`)
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
 
-    els.forEach((el) => io.observe(el))
-    return () => io.disconnect()
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
   }, [])
 
   return active
 }
 
-function ThemeToggle({ dark, onToggle }) {
-  return (
-    <button
-      type="button"
-      onClick={onToggle}
-      aria-label={dark ? 'Switch to light theme' : 'Switch to dark theme'}
-      className="theme-tx relative grid size-9 place-items-center rounded-full border border-line bg-surface text-ink-2 hover:text-ink"
-    >
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.span
-          key={dark ? 'moon' : 'sun'}
-          initial={{ opacity: 0, rotate: -70, scale: 0.6 }}
-          animate={{ opacity: 1, rotate: 0, scale: 1 }}
-          exit={{ opacity: 0, rotate: 70, scale: 0.6 }}
-          transition={{ duration: 0.32, ease: EASE }}
-          className="grid place-items-center"
-        >
-          <Icon name={dark ? 'moon' : 'sun'} className="size-[18px]" />
-        </motion.span>
-      </AnimatePresence>
-    </button>
-  )
-}
-
-export default function Nav({ dark, onToggleTheme }) {
+export default function Nav() {
   const active = useActiveSection()
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
@@ -68,30 +62,42 @@ export default function Nav({ dark, onToggleTheme }) {
     setHidden(y > prev && y > 320 && !menuOpen)
   })
 
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKey = (e) => e.key === 'Escape' && setMenuOpen(false)
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [menuOpen])
+
   return (
     <motion.header
       className="fixed inset-x-0 top-0 z-50"
       initial={{ opacity: 0, y: -14 }}
       animate={{ opacity: 1, y: hidden ? -100 : 0 }}
       transition={{ duration: 0.45, ease: EASE }}
+      // Tabbing into a bar that has slid away would leave focus on nothing visible.
+      onFocusCapture={() => setHidden(false)}
     >
       <div className="shell pt-3 md:pt-4">
+        {/* The bar is wider than the page content by its own padding, so the
+            logo lines up with the hero copy. */}
         <nav
-          className={`theme-tx flex items-center justify-between gap-4 rounded-2xl border px-4 md:px-5 ${
+          aria-label="Primary"
+          className={`-mx-2 flex items-center justify-between gap-4 rounded-2xl border border-line bg-white/85 px-3 py-3 backdrop-blur-xl transition-shadow duration-300 md:-mx-5 md:px-5 lg:grid lg:grid-cols-[1fr_auto_1fr] ${
             scrolled
-              ? 'border-line bg-surface/80 py-2.5 shadow-card backdrop-blur-xl'
-              : 'border-transparent bg-transparent py-3.5'
+              ? 'shadow-[0_12px_34px_-14px_rgba(20,20,43,0.24)]'
+              : 'shadow-card'
           }`}
         >
-          <a href="#home" className="flex items-center gap-2.5">
-            <span className="grid size-9 place-items-center rounded-xl bg-ink text-[13px] font-extrabold tracking-tight text-page">
+          <a href="#home" className="flex items-center gap-3 justify-self-start">
+            <span className="text-[30px] font-extrabold leading-none tracking-[-0.07em] text-ink">
               {profile.initials}
             </span>
             <span className="hidden leading-tight sm:block">
-              <span className="block text-[13.5px] font-bold text-ink">
+              <span className="block text-[14.5px] font-bold text-ink">
                 {profile.name}
               </span>
-              <span className="block text-[11px] text-ink-3">{profile.role}</span>
+              <span className="block text-[11.5px] text-ink-3">{profile.role}</span>
             </span>
           </a>
 
@@ -102,7 +108,7 @@ export default function Nav({ dark, onToggleTheme }) {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className={`relative inline-block rounded-full px-3.5 py-1.5 text-[13.5px] font-medium transition-colors ${
+                    className={`relative inline-block rounded-full px-4 py-2 text-[14px] font-medium transition-colors ${
                       isActive ? 'text-brand-ink' : 'text-ink-2 hover:text-ink'
                     }`}
                   >
@@ -120,17 +126,15 @@ export default function Nav({ dark, onToggleTheme }) {
             })}
           </ul>
 
-          <div className="flex items-center gap-2">
-            <ThemeToggle dark={dark} onToggle={onToggleTheme} />
-
+          <div className="flex items-center justify-end gap-2">
             <a
               href={`mailto:${profile.email}`}
-              className="group hidden items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-[13px] font-semibold text-page transition-transform hover:-translate-y-0.5 sm:inline-flex"
+              className="group hidden items-center gap-2 rounded-full bg-ink px-5 py-3 text-[13.5px] font-semibold text-white shadow-[0_12px_24px_-12px_rgba(2,2,26,0.6)] transition-transform hover:-translate-y-0.5 sm:inline-flex"
             >
               Let's Talk
               <Icon
                 name="arrowUpRight"
-                className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
             </a>
 
@@ -139,7 +143,8 @@ export default function Nav({ dark, onToggleTheme }) {
               onClick={() => setMenuOpen((v) => !v)}
               aria-label="Toggle menu"
               aria-expanded={menuOpen}
-              className="grid size-9 place-items-center rounded-full border border-line bg-surface lg:hidden"
+              aria-controls="mobile-menu"
+              className="grid size-10 place-items-center rounded-full border border-line bg-white lg:hidden"
             >
               <span className="grid gap-[5px]">
                 <span
@@ -164,14 +169,16 @@ export default function Nav({ dark, onToggleTheme }) {
 
         <AnimatePresence>
           {menuOpen && (
-            <motion.div
+            <motion.nav
+              id="mobile-menu"
+              aria-label="Primary mobile"
               initial={{ opacity: 0, y: -8, height: 0 }}
               animate={{ opacity: 1, y: 0, height: 'auto' }}
               exit={{ opacity: 0, y: -8, height: 0 }}
               transition={{ duration: 0.28, ease: EASE }}
-              className="overflow-hidden lg:hidden"
+              className="-mx-2 overflow-hidden pb-3 md:-mx-5 lg:hidden"
             >
-              <ul className="mt-2 grid gap-1 rounded-2xl border border-line bg-surface/95 p-2 shadow-card backdrop-blur-xl">
+              <ul className="mt-2 grid gap-1 rounded-2xl border border-line bg-white/95 p-2 shadow-card backdrop-blur-xl">
                 {navLinks.map((link) => (
                   <li key={link.href}>
                     <a
@@ -187,13 +194,13 @@ export default function Nav({ dark, onToggleTheme }) {
                   <a
                     href={`mailto:${profile.email}`}
                     onClick={() => setMenuOpen(false)}
-                    className="mt-1 block rounded-xl bg-ink px-3 py-2.5 text-center text-sm font-semibold text-page"
+                    className="mt-1 block rounded-xl bg-ink px-3 py-2.5 text-center text-sm font-semibold text-white"
                   >
                     Let's Talk
                   </a>
                 </li>
               </ul>
-            </motion.div>
+            </motion.nav>
           )}
         </AnimatePresence>
       </div>

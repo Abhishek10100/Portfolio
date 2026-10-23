@@ -30,14 +30,8 @@ const FROM_SIMPLE_ICONS = {
   Cisco: 'siCisco',
   HackerRank: 'siHackerrank',
   Coursera: 'siCoursera',
-  'Hugging Face': 'siHuggingface',
-  PyTorch: 'siPytorch',
   Git: 'siGit',
-  GitHub: 'siGithub',
-  pandas: 'siPandas',
   'Scikit-learn': 'siScikitlearn',
-  NumPy: 'siNumpy',
-  Kubernetes: 'siKubernetes',
 }
 
 /** name -> devicon folder + variant (covers AWS/Azure, dropped by simple-icons) */
