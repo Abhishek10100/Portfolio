@@ -14,7 +14,7 @@ function ProjectCard({ item }) {
     <motion.article
       whileHover={reduced ? undefined : { y: -6 }}
       transition={{ type: 'spring', stiffness: 320, damping: 26 }}
-      className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-3 shadow-card transition-shadow duration-300 hover:shadow-float"
+      className="group relative flex h-full flex-col rounded-2xl border border-line bg-surface p-3 shadow-card transition-shadow duration-300 hover:shadow-float"
     >
       <div className="relative isolate aspect-video overflow-hidden rounded-xl bg-brand-wash ring-1 ring-inset ring-brand-ink/5">
         <div className="size-full origin-center transition-transform duration-500 ease-out group-hover:scale-[1.03] motion-reduce:group-hover:scale-100">
@@ -52,6 +52,26 @@ function ProjectCard({ item }) {
             </div>
           ))}
         </dl>
+
+        <div className="mt-5 border-t border-line pt-4">
+          {item.demo ? (
+            <a
+              href={item.demo.href}
+              className="group/cta inline-flex items-center gap-2 text-[13px] font-semibold text-brand-text"
+            >
+              {item.demo.label}
+              <span className="sr-only">: {item.title}</span>
+              <Icon
+                name="arrow"
+                className="size-3.5 transition-transform group-hover/cta:translate-x-1"
+              />
+            </a>
+          ) : (
+            <span className="text-[13px] font-medium text-ink-3">
+              Client prototype · no public demo
+            </span>
+          )}
+        </div>
       </div>
     </motion.article>
   )

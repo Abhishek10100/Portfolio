@@ -4,6 +4,7 @@
   "outputDirectory": "dist",
   "cleanUrls": true,
   "trailingSlash": false,
+  "rewrites": [{ "source": "/demo/:slug", "destination": "/index.html" }],
   "headers": [
     {
       "source": "/(.*)",

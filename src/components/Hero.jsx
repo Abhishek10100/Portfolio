@@ -103,7 +103,7 @@ export default function Hero({ ready }) {
             </motion.p>
 
             <motion.h1
-              className="mt-3 text-[clamp(2.9rem,7vw,4.6rem)] font-extrabold leading-[0.98] tracking-[-0.035em] text-ink"
+              className="mt-3 text-[clamp(2.9rem,7vw,4.6rem)] font-extrabold leading-[0.98] tracking-[-0.035em] text-ink 2xl:text-[5.4rem]"
               {...seq(0.12)}
             >
               Abhishek
@@ -182,7 +182,7 @@ export default function Hero({ ready }) {
             and runs past the viewport edge so the character reads large; the
             width is capped so the cover crop never cuts the laptop off. */}
         <motion.div
-          className="relative mt-8 aspect-square w-full sm:aspect-[5/4] md:aspect-[8/5] lg:absolute lg:-bottom-10 lg:-right-10 lg:top-[88px] lg:mt-0 lg:aspect-auto lg:w-[clamp(640px,calc(100vw_-_max(0px,(100vw_-_1200px)/2)_-_497px),850px)]"
+          className="relative mt-8 aspect-square w-full sm:aspect-[5/4] md:aspect-[8/5] lg:absolute lg:-bottom-10 lg:-right-10 lg:top-[88px] lg:mt-0 lg:aspect-auto lg:w-[clamp(640px,calc(100vw_-_max(0px,(100vw_-_var(--shell))/2)_-_497px),var(--hero-art-max))]"
           initial={reduced ? false : { opacity: 0, scale: 0.97, y: 18 }}
           animate={ready || reduced ? { opacity: 1, scale: 1, y: 0 } : {}}
           transition={{ duration: 0.9, ease: EASE, delay: 0.4 }}

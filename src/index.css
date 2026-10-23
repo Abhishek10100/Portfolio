@@ -103,10 +103,32 @@
   }
 }
 
+/* Content column. It widens on big monitors so the page doesn't sit in a
+   narrow strip with empty margins; the hero art reads --shell and
+   --hero-art-max so it scales with the column. */
+:root {
+  --shell: 1200px;
+  --hero-art-max: 850px;
+}
+
+@media (min-width: 1536px) {
+  :root {
+    --shell: 1380px;
+    --hero-art-max: 980px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --shell: 1560px;
+    --hero-art-max: 1120px;
+  }
+}
+
 @layer components {
   .shell {
     width: 100%;
-    max-width: 1200px;
+    max-width: var(--shell);
     margin-inline: auto;
     padding-inline: 20px;
   }

@@ -21,6 +21,7 @@ const FROM_SIMPLE_ICONS = {
   Docker: 'siDocker',
   Snowflake: 'siSnowflake',
   'Google Cloud': 'siGooglecloud',
+  Google: 'siGoogle',
   Gemini: 'siGooglegemini',
   Streamlit: 'siStreamlit',
   Python: 'siPython',
@@ -32,6 +33,16 @@ const FROM_SIMPLE_ICONS = {
   Coursera: 'siCoursera',
   Git: 'siGit',
   'Scikit-learn': 'siScikitlearn',
+  PyTorch: 'siPytorch',
+  'TensorFlow Lite': 'siTensorflow',
+  Pandas: 'siPandas',
+  NumPy: 'siNumpy',
+  React: 'siReact',
+  TypeScript: 'siTypescript',
+  'Three.js': 'siThreedotjs',
+  MongoDB: 'siMongodb',
+  Redis: 'siRedis',
+  Kafka: 'siApachekafka',
 }
 
 /** name -> devicon folder + variant (covers AWS/Azure, dropped by simple-icons) */
@@ -39,6 +50,7 @@ const FROM_DEVICON = {
   AWS: ['amazonwebservices', 'amazonwebservices-original-wordmark'],
   Azure: ['azure', 'azure-original'],
   'Azure OpenAI': ['azure', 'azure-original'],
+  'AWS Academy': ['amazonwebservices', 'amazonwebservices-original-wordmark'],
 }
 
 /** Trademark-restricted or absent everywhere: monogram in the brand colour. */
@@ -55,6 +67,7 @@ const MONOGRAM = {
   PaddleOCR: { label: 'OCR', hex: '0F8FFF' },
   'python-pptx': { label: 'PX', hex: 'D24726' },
   SQL: { label: 'SQL', hex: '4479A1' },
+  'Microsoft & LinkedIn': { label: 'M', hex: '0A66C2' },
 }
 
 const brands = {}

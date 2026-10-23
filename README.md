@@ -41,12 +41,19 @@ output to `dist/`, and `npm run preview` serves that build locally.
 ├── package.json                # scripts and dependencies
 ├── vite.config.js              # React + Tailwind plugins; bundles go to dist/assets/build
 ├── vercel.json                 # build command, security headers, cache rules
-├── .vercelignore               # keeps docs, demo-apps and src out of the deploy upload
+├── .vercelignore               # keeps docs and demo-apps out of the upload. Never add src: Vercel builds from it
 ├── CLAUDE.md                   # short orientation notes for Claude Code
 ├── LICENSE
 ├── src/
-│   ├── main.jsx                # React root
+│   ├── main.jsx                # React root; routes /demo/<slug> to the lazy-loaded demos
 │   ├── App.jsx                 # section order + preloader hand-off
+│   ├── demos/                  # the five interactive GenAI demos (code-split, browser-only)
+│   │   ├── DemoRoute.jsx       # slug -> demo registry, with each demo's real-vs-production notes
+│   │   ├── DemoShell.jsx       # shared demo page chrome
+│   │   ├── AlgoCreatorDemo.jsx, SurveillanceDemo.jsx, RecruitingDemo.jsx,
+│   │   │   EnterpriseRagDemo.jsx, JapaneseDocsDemo.jsx
+│   │   ├── lib/                # search.js (BM25, rank fusion) and rag.js (chunk + cited answers)
+│   │   └── data/               # synthetic corpora: slides, agents, candidates, policies
 │   ├── index.css               # design tokens (light only), base layer, motion prefs
 │   ├── data/
 │   │   ├── site.js             # ALL page copy — edit content here, not in components
@@ -65,17 +72,19 @@ output to `dist/`, and `npm run preview` serves that build locally.
 │       │   ├── RecruitingArt.jsx
 │       │   ├── EnterpriseRagArt.jsx
 │       │   ├── JapaneseOcrArt.jsx
+│       │   ├── SurveillanceArt.jsx
+│       │   ├── PlantLiveArt.jsx
 │       │   └── shared.jsx      # palette, idle-float helper and Sparkle used by the above
 │       ├── Process.jsx         # build process rail + filterable tech stack
 │       ├── Journey.jsx         # experience / research / education band
-│       ├── DemoLab.jsx         # links into the standalone demo pages
+│       ├── DemoLab.jsx         # "Live demos" section, plus a collapsed list of earlier work
 │       └── Contact.jsx         # contact panel + footer
 ├── scripts/                    # Node scripts that generate committed assets
 │   ├── build-brands.mjs        # simple-icons / devicon -> src/data/brands.js
 │   ├── make-hero.mjs           # docs/source-assets/hero.png -> public/images/hero.webp
 │   └── make-cutout.mjs         # docs/source-assets/character.png -> public/images/character-cutout.webp
 ├── public/                     # copied to the deploy root verbatim
-│   ├── demos/                  # 10 standalone demo pages (plain HTML, no build)
+│   ├── demos/                  # 10 older standalone demo pages (plain HTML); 3 are still linked
 │   ├── assets/demos/           # images + manifests those demo pages load
 │   ├── images/                 # hero.webp, character-cutout.webp, character-sm.webp
 │   └── resume.pdf              # served at /resume.pdf
@@ -137,11 +146,19 @@ come from `src/data/brands.js`, which `scripts/build-brands.mjs` generates from
 package carries fall back to a monogram tile. To add or drop a logo, edit the maps
 at the top of the script and run `npm run brands`.
 
-## Demo pages
+## Demos
 
-The 10 demo pages under `public/demos/` are standalone HTML and are *not* part of
-the React app. Vite copies `public/` verbatim, so they keep their existing URLs
-(`/demos/student-performance.html`) and their relative asset paths still resolve.
+**GenAI demos** (`/demo/algocreator`, `/demo/surveillance-chatbot`, `/demo/ai-recruiting`,
+`/demo/enterprise-rag`, `/demo/japanese-docs`) are React pages in `src/demos/`. They run
+entirely in the browser on synthetic data. The retrieval, scoring, routing and validation
+logic is real; there is no LLM and no API key, and each page says what the production
+system adds. `vercel.json` rewrites `/demo/:slug` to `index.html`, and `main.jsx` loads the
+demo code on demand so the portfolio page never downloads it. To add one, create the
+component, register it in `DemoRoute.jsx` and add a card to `demoLab` in `site.js`.
+
+**Earlier work** under `public/demos/` is standalone HTML, not part of the React app. Vite
+copies `public/` verbatim, so those pages keep their URLs (`/demos/resume-ats.html`). Seven
+of them are no longer linked from the site but remain deployed.
 
 ## Deploy
 
