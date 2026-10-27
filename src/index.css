@@ -213,3 +213,22 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Ambient loops run on the compositor (transform/opacity only) and pause
+   when off-screen or under reduced motion, so they cost no scroll frames. */
+.amb { animation-play-state: paused; will-change: transform; }
+.amb[data-on='true'] { animation-play-state: running; }
+.amb-float { animation: amb-float 6s ease-in-out infinite; }
+.amb-glow { animation: amb-glow 7s ease-in-out infinite; will-change: opacity; }
+.amb-breathe { animation: amb-breathe 8s ease-in-out infinite; }
+.amb-bust { animation: amb-bust 6s ease-in-out infinite; transform-origin: bottom; }
+@keyframes amb-float { 50% { translate: 0 -10px; } }
+@keyframes amb-glow { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+@keyframes amb-breathe { 50% { scale: 1.035; } }
+@keyframes amb-bust { 50% { scale: 1 1.02; } }
+
+/* Below-the-fold sections skip layout and paint until they near the viewport. */
+main > section:not(#home) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}

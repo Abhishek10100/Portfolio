@@ -200,11 +200,10 @@ export default function Hero({ ready }) {
           transition={{ duration: 0.9, ease: EASE, delay: 0.4 }}
         >
           <motion.div
-            className="size-full origin-[75%_80%]"
+            className="amb amb-breathe size-full origin-[75%_80%]"
             ref={artRef}
+            data-on={artOn}
             style={{ x: artX, y: artY }}
-            animate={artOn ? { scale: [1, 1.012, 1] } : { scale: 1 }}
-            transition={artOn ? { duration: 9, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.3 }}
           >
             <img
               src="/images/hero.webp"

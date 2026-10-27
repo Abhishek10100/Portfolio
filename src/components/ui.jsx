@@ -6,11 +6,12 @@ import { motion, useInView, useReducedMotion, animate } from 'framer-motion'
 export const EASE = [0.22, 0.8, 0.28, 1]
 
 const revealVariants = {
-  hidden: { opacity: 0, y: 18 },
+  hidden: { opacity: 0, y: 28, scale: 0.97 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.65, ease: EASE },
+    scale: 1,
+    transition: { duration: 0.7, ease: EASE },
   },
 }
 

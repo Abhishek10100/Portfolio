@@ -91,8 +91,8 @@ function Portrait({ reduced }) {
     >
       <motion.div
         ref={floatRef}
-        animate={floatOn ? { y: [0, -5, 0] } : { y: 0 }}
-        transition={floatOn ? { duration: 7, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.3 }}
+        className="amb amb-float"
+        data-on={floatOn}
       >
         <img
           src="/images/character-cutout.webp"
@@ -170,11 +170,10 @@ export default function About() {
           <div className="relative px-7 pb-8 pt-14 md:px-9 lg:pointer-events-none lg:absolute lg:bottom-0 lg:right-0 lg:w-[42%] lg:p-0 lg:pb-24">
             <motion.div
               aria-hidden="true"
-              className="pointer-events-none absolute left-1/2 top-[2%] aspect-square w-[120%] -translate-x-1/2 rounded-full lg:top-[-2%]"
+              className="amb amb-glow pointer-events-none absolute left-1/2 top-[2%] aspect-square w-[120%] -translate-x-1/2 rounded-full lg:top-[-2%]"
               ref={glowRef}
+              data-on={glowOn}
               style={glowBg}
-              animate={glowOn ? { opacity: [0.8, 1, 0.8] } : { opacity: 1 }}
-              transition={glowOn ? { duration: 8, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.3 }}
             />
 
             <Portrait reduced={reduced} />

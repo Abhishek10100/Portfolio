@@ -93,11 +93,10 @@ export function Contact() {
           <div className="relative px-7 pt-14 lg:pointer-events-none lg:absolute lg:inset-y-0 lg:right-0 lg:w-[46%] lg:p-0">
             <motion.div
               aria-hidden="true"
-              className="pointer-events-none absolute left-1/2 top-[4%] aspect-square w-[min(24rem,96%)] -translate-x-1/2 rounded-full border border-card/70 shadow-[inset_0_0_70px_rgba(96,121,251,0.12)] lg:left-auto lg:right-[2%] lg:top-1/2 lg:h-[132%] lg:w-auto lg:translate-x-0 lg:-translate-y-[46%]"
+              className="amb amb-breathe pointer-events-none absolute left-1/2 top-[4%] aspect-square w-[min(24rem,96%)] -translate-x-1/2 rounded-full border border-card/70 shadow-[inset_0_0_70px_rgba(96,121,251,0.12)] lg:left-auto lg:right-[2%] lg:top-1/2 lg:h-[132%] lg:w-auto lg:translate-x-0 lg:-translate-y-[46%]"
               ref={discRef}
+              data-on={discOn}
               style={discBg}
-              animate={discOn ? { scale: [1, 1.025, 1] } : { scale: 1 }}
-              transition={discOn ? { duration: 9, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.3 }}
             />
 
             <div className="relative mx-auto w-[min(78%,19rem)] lg:mx-0 lg:h-full lg:w-full lg:max-w-none">
@@ -130,11 +129,9 @@ export function Contact() {
                   height="702"
                   loading="lazy"
                   decoding="async"
-                  className="block w-full select-none drop-shadow-[0_16px_24px_rgba(46,45,174,0.16)] lg:h-full lg:w-auto"
+                  className="amb amb-bust block w-full select-none drop-shadow-[0_16px_24px_rgba(46,45,174,0.16)] lg:h-full lg:w-auto"
                   ref={bustRef}
-                  style={{ originY: 1 }}
-                  animate={bustOn ? { scaleY: [1, 1.012, 1] } : { scaleY: 1 }}
-                  transition={bustOn ? { duration: 6.5, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.3 }}
+                  data-on={bustOn}
                 />
               </motion.div>
             </div>
