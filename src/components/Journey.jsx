@@ -24,7 +24,7 @@ const heading =
   'mt-3.5 text-2xl font-extrabold leading-[1.15] text-ink min-[1100px]:text-[clamp(1.35rem,1.9vw,1.55rem)]'
 
 const pill =
-  'group inline-flex items-center gap-3 rounded-full border border-line bg-white px-5 py-3 text-[13px] font-semibold text-ink shadow-card transition-[translate,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-float'
+  'group inline-flex items-center gap-3 rounded-full border border-line bg-card px-5 py-3 text-[13px] font-semibold text-ink shadow-card transition-[translate,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-float'
 
 /** In-place expand/collapse. The wrapper stays mounted so aria-controls always resolves. */
 function Collapse({ open, id, children }) {
@@ -450,7 +450,7 @@ function Research() {
         delay={0.06}
         className="mt-5 grid gap-3.5 @min-[330px]:grid-cols-[minmax(0,1fr)_auto]"
       >
-        <div className="flex flex-col rounded-2xl border border-line bg-white p-4 shadow-card">
+        <div className="flex flex-col rounded-2xl border border-line bg-card p-4 shadow-card">
           <h3 className="text-[14px] font-bold leading-[1.45] text-ink">
             {research.paper}
           </h3>
@@ -528,7 +528,7 @@ function Education() {
           const tone = degreeTones[i % degreeTones.length]
           return (
             <RevealItem key={d.title} className="@container flex">
-              <div className="flex flex-1 flex-col gap-3 rounded-2xl border border-line bg-white p-3.5 shadow-card @min-[250px]:flex-row @min-[250px]:gap-3.5">
+              <div className="flex flex-1 flex-col gap-3 rounded-2xl border border-line bg-card p-3.5 shadow-card @min-[250px]:flex-row @min-[250px]:gap-3.5">
                 <span
                   className={`grid size-9 shrink-0 place-items-center rounded-xl ring-1 ${tone.tile}`}
                 >
@@ -563,7 +563,7 @@ function Education() {
                 role="img"
                 aria-label={label}
                 title={label}
-                className="grid aspect-square place-items-center rounded-xl border border-line bg-white shadow-card transition-[translate,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-float"
+                className="grid aspect-square place-items-center rounded-xl border border-line bg-card shadow-card transition-[translate,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-float"
               >
                 {hasBrand(c.issuer) ? (
                   <BrandMark

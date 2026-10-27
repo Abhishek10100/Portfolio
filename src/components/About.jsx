@@ -21,7 +21,7 @@ const tones = {
 
 const panelBg = {
   background:
-    'linear-gradient(150deg, color-mix(in srgb, var(--brand) 8%, #fff), var(--surface) 52%, color-mix(in srgb, var(--violet) 6%, #fff))',
+    'linear-gradient(150deg, color-mix(in srgb, var(--brand) 8%, var(--card)), var(--surface) 52%, color-mix(in srgb, var(--violet) 6%, var(--card)))',
 }
 
 const glowBg = {
@@ -151,7 +151,7 @@ export default function About() {
                 href="#experience"
                 whileHover={reduced ? undefined : { y: -3 }}
                 transition={{ type: 'spring', stiffness: 320, damping: 24 }}
-                className="group inline-flex items-center gap-2.5 rounded-full border border-white bg-white px-5 py-3 text-[13.5px] font-semibold text-ink shadow-[0_10px_26px_-12px_rgba(46,45,174,0.35)] ring-1 ring-line/70 transition-shadow hover:shadow-[0_16px_30px_-12px_rgba(46,45,174,0.45)]"
+                className="group inline-flex items-center gap-2.5 rounded-full border border-card bg-card px-5 py-3 text-[13.5px] font-semibold text-ink shadow-[0_10px_26px_-12px_rgba(46,45,174,0.35)] ring-1 ring-line/70 transition-shadow hover:shadow-[0_16px_30px_-12px_rgba(46,45,174,0.45)]"
               >
                 {about.cta}
                 <Icon
@@ -177,7 +177,7 @@ export default function About() {
             <Reveal
               as="blockquote"
               delay={0.45}
-              className="relative z-10 mx-auto -mt-10 w-full max-w-[19rem] rounded-2xl border border-white/90 bg-white p-4 shadow-[0_18px_40px_-18px_rgba(46,45,174,0.38)] lg:pointer-events-auto lg:absolute lg:bottom-5 lg:right-5 lg:mx-0 lg:mt-0 lg:w-[76%] lg:max-w-none xl:w-[68%]"
+              className="relative z-10 mx-auto -mt-10 w-full max-w-[19rem] rounded-2xl border border-card/90 bg-card p-4 shadow-[0_18px_40px_-18px_rgba(46,45,174,0.38)] lg:pointer-events-auto lg:absolute lg:bottom-5 lg:right-5 lg:mx-0 lg:mt-0 lg:w-[76%] lg:max-w-none xl:w-[68%]"
             >
               <span
                 aria-hidden="true"
@@ -215,7 +215,7 @@ export default function About() {
                 <motion.article
                   whileHover={reduced ? undefined : { y: -5 }}
                   transition={{ type: 'spring', stiffness: 320, damping: 24 }}
-                  className="h-full rounded-2xl border border-line/70 bg-white/90 p-4 shadow-[0_10px_30px_-20px_rgba(46,45,174,0.3)] transition-shadow hover:shadow-[0_20px_36px_-16px_rgba(46,45,174,0.4)]"
+                  className="h-full rounded-2xl border border-line/70 bg-card/90 p-4 shadow-[0_10px_30px_-20px_rgba(46,45,174,0.3)] transition-shadow hover:shadow-[0_20px_36px_-16px_rgba(46,45,174,0.4)]"
                 >
                   <span
                     className={`grid size-11 place-items-center rounded-[14px] bg-linear-to-br shadow-[inset_0_0_0_1px_rgba(255,255,255,0.7),0_8px_16px_-10px_rgba(46,45,174,0.45)] ${

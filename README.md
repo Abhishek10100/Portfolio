@@ -2,8 +2,9 @@
 
 GenAI Engineer & Data Scientist portfolio. Built from the design in
 `docs/complete-layout.png` with React, Tailwind CSS and Framer Motion, bundled
-by Vite and deployed as static output on Vercel. The site is light-only; there
-is no dark theme or theme toggle.
+by Vite and deployed as static output on Vercel. It has a light and a dark theme
+with a toggle in the nav; the first visit follows the system setting and a choice
+is remembered.
 
 ## Stack
 
@@ -54,7 +55,7 @@ output to `dist/`, and `npm run preview` serves that build locally.
 │   │   │   EnterpriseRagDemo.jsx, JapaneseDocsDemo.jsx
 │   │   ├── lib/                # search.js (BM25, rank fusion) and rag.js (chunk + cited answers)
 │   │   └── data/               # synthetic corpora: slides, agents, candidates, policies
-│   ├── index.css               # design tokens (light only), base layer, motion prefs
+│   ├── index.css               # design tokens (light + .dark), base layer, motion prefs
 │   ├── data/
 │   │   ├── site.js             # ALL page copy — edit content here, not in components
 │   │   └── brands.js           # GENERATED logo marks — do not edit by hand
@@ -109,13 +110,19 @@ Components read from it, so content changes rarely need a component edit.
 
 ## Design tokens
 
-The site is light-only. Page, surface, border, text and brand colours are CSS
-custom properties on `:root` in [`src/index.css`](src/index.css), surfaced to
-Tailwind through `@theme inline` (`bg-surface`, `text-ink`, `border-line`,
-`text-brand` ...), so one token edit restyles them everywhere. The project
-illustrations, brand logos and the per-step accent hues keep their own fixed
-colours. `index.html` and `:root` both declare `color-scheme: light` so native
-controls and scrollbars match.
+Light is the base and a `.dark` class on `<html>` overrides the tokens. Page, surface,
+card, border, text and brand colours are CSS custom properties in
+[`src/index.css`](src/index.css), surfaced to Tailwind through `@theme inline`
+(`bg-card`, `text-ink`, `border-line`, `text-brand` ...), so one token edit restyles
+both themes. Use `bg-card` (not `bg-white`) for white surfaces and `bg-brand-solid`
+for filled buttons, so they stay correct in dark. The project illustrations and brand
+logos keep their own fixed colours.
+
+The theme is applied before first paint by a tiny inline script in every HTML entry
+(`index.html`, `demo/*.html`, `public/demos/*.html`), which reads `localStorage.theme`
+or the system preference, so there is no flash. `src/theme.js` holds the hook and
+`ThemeToggle.jsx` the switch. The hero photo has a baked-in white studio background,
+so `.dark .hero-art-img` swaps its edge fade for a vignette.
 
 ## Motion
 

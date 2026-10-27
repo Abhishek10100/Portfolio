@@ -97,12 +97,12 @@ function Interview({ skills, onClose }) {
             value={answers[step]}
             onChange={(e) => setAnswers((a) => a.map((v, i) => (i === step ? e.target.value : v)))}
             placeholder="Answer as you would in an interview. Specifics and numbers score higher."
-            className="mt-3 w-full resize-y rounded-2xl border border-line-2 bg-white p-4 text-[14px] leading-relaxed outline-none focus:border-brand"
+            className="mt-3 w-full resize-y rounded-2xl border border-line-2 bg-card p-4 text-[14px] leading-relaxed outline-none focus:border-brand"
           />
           <button
             type="button"
             onClick={() => setStep((s) => s + 1)}
-            className="mt-3 rounded-full bg-ink px-6 py-3 text-[13.5px] font-semibold text-white"
+            className="mt-3 rounded-full bg-ink px-6 py-3 text-[13.5px] font-semibold text-page"
           >
             {step === questions.length - 1 ? 'Finish and score' : 'Next question'}
           </button>
@@ -113,14 +113,14 @@ function Interview({ skills, onClose }) {
           <p className="text-[14px] font-semibold text-brand-text">{verdict}</p>
           <ul className="mt-4 grid gap-3">
             {results.map((r) => (
-              <li key={r.q.skill} className="rounded-2xl bg-white p-4 ring-1 ring-line">
+              <li key={r.q.skill} className="rounded-2xl bg-card p-4 ring-1 ring-line">
                 <div className="flex items-center justify-between gap-3">
                   <p className="text-[13.5px] font-bold text-ink">{r.q.skill}</p>
                   <p className="text-[13px] font-semibold tabular-nums text-ink-2">{Math.round(r.value * 100)}%</p>
                 </div>
                 <ul className="mt-2 grid gap-1 text-[12.5px]">
                   {r.concepts.map((c) => (
-                    <li key={c.label} className={c.hit ? 'text-emerald-700' : 'text-ink-3'}>
+                    <li key={c.label} className={c.hit ? 'text-emerald-700 dark:text-emerald-300' : 'text-ink-3'}>
                       {c.hit ? '✓' : '○'} {c.label}
                     </li>
                   ))}
@@ -131,7 +131,7 @@ function Interview({ skills, onClose }) {
           <button
             type="button"
             onClick={() => { setStep(0); setAnswers(questions.map(() => '')) }}
-            className="mt-4 rounded-full border border-line-2 bg-white px-5 py-2.5 text-[13px] font-semibold"
+            className="mt-4 rounded-full border border-line-2 bg-card px-5 py-2.5 text-[13px] font-semibold"
           >
             Retake
           </button>
@@ -158,7 +158,7 @@ export default function RecruitingDemo() {
             value={jd}
             onChange={(e) => setJd(e.target.value)}
             rows={11}
-            className="mt-2 w-full resize-y rounded-2xl border border-line-2 bg-white p-4 text-[14px] leading-relaxed outline-none focus:border-brand"
+            className="mt-2 w-full resize-y rounded-2xl border border-line-2 bg-card p-4 text-[14px] leading-relaxed outline-none focus:border-brand"
           />
           <h2 className="mt-5 text-[12px] font-bold tracking-[0.14em] text-ink-3">EXTRACTED REQUIREMENTS</h2>
           <ul className="mt-2 flex flex-wrap gap-2">
@@ -170,7 +170,7 @@ export default function RecruitingDemo() {
                 {s}
               </li>
             ))}
-            <li className="rounded-full border border-line-2 bg-white px-3 py-1 text-[12px] font-medium text-ink-2">
+            <li className="rounded-full border border-line-2 bg-card px-3 py-1 text-[12px] font-medium text-ink-2">
               {result.minYears}+ years
             </li>
           </ul>
@@ -178,7 +178,7 @@ export default function RecruitingDemo() {
             type="button"
             disabled={result.required.length === 0}
             onClick={() => setInterview(true)}
-            className="mt-5 rounded-full bg-ink px-6 py-3 text-[13.5px] font-semibold text-white disabled:opacity-40"
+            className="mt-5 rounded-full bg-ink px-6 py-3 text-[13.5px] font-semibold text-page disabled:opacity-40"
           >
             Take the AI interview yourself
           </button>
@@ -193,7 +193,7 @@ export default function RecruitingDemo() {
           </p>
           <ol className="mt-4 grid gap-3">
             {result.rows.map(({ c, matched, missing, score }, i) => (
-              <li key={c.id} className="rounded-2xl bg-white p-4 ring-1 ring-line">
+              <li key={c.id} className="rounded-2xl bg-card p-4 ring-1 ring-line">
                 <div className="flex items-center gap-3">
                   <span className="grid size-10 shrink-0 place-items-center rounded-full bg-brand-wash text-[13px] font-bold text-brand-ink">
                     {c.name.split(' ').map((p) => p[0]).join('')}
@@ -210,11 +210,11 @@ export default function RecruitingDemo() {
                   <p className="text-[20px] font-extrabold tabular-nums text-ink">{Math.round(score * 100)}%</p>
                 </div>
                 <div className="mt-3 h-1.5 rounded-full bg-brand-wash">
-                  <div className="h-full rounded-full bg-brand-text" style={{ width: `${Math.max(3, score * 100)}%` }} />
+                  <div className="h-full rounded-full bg-brand-solid" style={{ width: `${Math.max(3, score * 100)}%` }} />
                 </div>
                 <ul className="mt-3 flex flex-wrap gap-1.5">
                   {matched.map((s) => (
-                    <li key={s} className="rounded-full bg-emerald-500/12 px-2.5 py-0.5 text-[11.5px] font-semibold text-emerald-700">
+                    <li key={s} className="rounded-full bg-emerald-500/12 px-2.5 py-0.5 text-[11.5px] font-semibold text-emerald-700 dark:text-emerald-300">
                       {s}
                     </li>
                   ))}

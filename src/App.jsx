@@ -8,6 +8,7 @@ import Projects from './components/Projects'
 import Process from './components/Process'
 import Journey from './components/Journey'
 import DemoLab from './components/DemoLab'
+import Beyond from './components/Beyond'
 import { Contact, Footer } from './components/Contact'
 
 export default function App() {
@@ -43,6 +44,7 @@ export default function App() {
         <Process />
         <Journey />
         <DemoLab />
+        <Beyond />
         <Contact />
       </main>
 

@@ -19,12 +19,12 @@ const channels = [
 
 const panelBg = {
   background:
-    'linear-gradient(150deg, color-mix(in srgb, var(--brand) 8%, #fff), var(--surface) 52%, color-mix(in srgb, var(--violet) 6%, #fff))',
+    'linear-gradient(150deg, color-mix(in srgb, var(--brand) 8%, var(--card)), var(--surface) 52%, color-mix(in srgb, var(--violet) 6%, var(--card)))',
 }
 
 const discBg = {
   background:
-    'radial-gradient(circle at 50% 36%, rgba(255,255,255,0.85), color-mix(in srgb, var(--brand) 14%, transparent) 64%, color-mix(in srgb, var(--violet) 8%, transparent) 100%)',
+    'radial-gradient(circle at 50% 36%, color-mix(in srgb, var(--card) 85%, transparent), color-mix(in srgb, var(--brand) 14%, transparent) 64%, color-mix(in srgb, var(--violet) 8%, transparent) 100%)',
 }
 
 const viewport = { once: true, margin: '-60px' }
@@ -61,8 +61,8 @@ export function Contact() {
                     transition={{ type: 'spring', stiffness: 320, damping: 22 }}
                     className={`group inline-flex items-center gap-2.5 rounded-full px-6 py-3.5 text-[14px] font-semibold transition-shadow ${
                       c.solid
-                        ? 'bg-ink text-white shadow-[0_16px_28px_-14px_rgba(2,2,26,0.6)] hover:shadow-[0_22px_34px_-14px_rgba(2,2,26,0.7)]'
-                        : 'border border-white bg-white text-ink shadow-[0_10px_26px_-14px_rgba(46,45,174,0.35)] ring-1 ring-line/70 hover:shadow-[0_18px_32px_-14px_rgba(46,45,174,0.45)]'
+                        ? 'bg-ink text-page shadow-[0_16px_28px_-14px_rgba(2,2,26,0.6)] hover:shadow-[0_22px_34px_-14px_rgba(2,2,26,0.7)]'
+                        : 'border border-card bg-card text-ink shadow-[0_10px_26px_-14px_rgba(46,45,174,0.35)] ring-1 ring-line/70 hover:shadow-[0_18px_32px_-14px_rgba(46,45,174,0.45)]'
                     }`}
                   >
                     <Icon name={c.icon} className={`size-[18px] ${c.tint ?? ''}`} />
@@ -90,7 +90,7 @@ export function Contact() {
           <div className="relative px-7 pt-14 lg:pointer-events-none lg:absolute lg:inset-y-0 lg:right-0 lg:w-[46%] lg:p-0">
             <motion.div
               aria-hidden="true"
-              className="pointer-events-none absolute left-1/2 top-[4%] aspect-square w-[min(24rem,96%)] -translate-x-1/2 rounded-full border border-white/70 shadow-[inset_0_0_70px_rgba(96,121,251,0.12)] lg:left-auto lg:right-[2%] lg:top-1/2 lg:h-[132%] lg:w-auto lg:translate-x-0 lg:-translate-y-[46%]"
+              className="pointer-events-none absolute left-1/2 top-[4%] aspect-square w-[min(24rem,96%)] -translate-x-1/2 rounded-full border border-card/70 shadow-[inset_0_0_70px_rgba(96,121,251,0.12)] lg:left-auto lg:right-[2%] lg:top-1/2 lg:h-[132%] lg:w-auto lg:translate-x-0 lg:-translate-y-[46%]"
               style={discBg}
               animate={reduced ? undefined : { scale: [1, 1.025, 1] }}
               transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
@@ -185,7 +185,7 @@ export function Footer() {
                 aria-label={s.label}
                 target={s.icon === 'mail' ? undefined : '_blank'}
                 rel={s.icon === 'mail' ? undefined : 'noopener noreferrer'}
-                className="grid size-10 place-items-center rounded-full border border-white bg-white text-ink shadow-[0_8px_20px_-10px_rgba(46,45,174,0.4)] ring-1 ring-line/70 transition-[transform,box-shadow] hover:-translate-y-0.5 hover:shadow-[0_14px_24px_-10px_rgba(46,45,174,0.5)]"
+                className="grid size-10 place-items-center rounded-full border border-card bg-card text-ink shadow-[0_8px_20px_-10px_rgba(46,45,174,0.4)] ring-1 ring-line/70 transition-[transform,box-shadow] hover:-translate-y-0.5 hover:shadow-[0_14px_24px_-10px_rgba(46,45,174,0.5)]"
               >
                 <Icon name={s.icon} className="size-[18px]" />
               </a>

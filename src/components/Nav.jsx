@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-
 import { navLinks, profile } from '../data/site'
 import { Icon, EASE } from './ui'
 import { LogoMark } from './Logo'
+import ThemeToggle from './ThemeToggle'
 
 /**
  * Highlights the last nav section whose top has passed the reading line.
@@ -84,7 +85,7 @@ export default function Nav() {
             logo lines up with the hero copy. */}
         <nav
           aria-label="Primary"
-          className={`-mx-2 flex items-center justify-between gap-4 rounded-2xl border border-line bg-white/85 px-3 py-3 backdrop-blur-xl transition-shadow duration-300 md:-mx-5 md:px-5 lg:grid lg:grid-cols-[1fr_auto_1fr] ${
+          className={`-mx-2 flex items-center justify-between gap-4 rounded-2xl border border-line bg-card/85 px-3 py-3 backdrop-blur-xl transition-shadow duration-300 md:-mx-5 md:px-5 lg:grid lg:grid-cols-[1fr_auto_1fr] ${
             scrolled
               ? 'shadow-[0_12px_34px_-14px_rgba(20,20,43,0.24)]'
               : 'shadow-card'
@@ -130,9 +131,10 @@ export default function Nav() {
           </ul>
 
           <div className="flex items-center justify-end gap-2">
+            <ThemeToggle />
             <a
               href={`mailto:${profile.email}`}
-              className="group hidden items-center gap-2 rounded-full bg-ink px-5 py-3 text-[13.5px] font-semibold text-white shadow-[0_12px_24px_-12px_rgba(2,2,26,0.6)] transition-transform hover:-translate-y-0.5 sm:inline-flex"
+              className="group hidden items-center gap-2 rounded-full bg-ink px-5 py-3 text-[13.5px] font-semibold text-page shadow-[0_12px_24px_-12px_rgba(2,2,26,0.6)] transition-transform hover:-translate-y-0.5 sm:inline-flex"
             >
               Let's Talk
               <Icon
@@ -147,7 +149,7 @@ export default function Nav() {
               aria-label="Toggle menu"
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
-              className="grid size-10 place-items-center rounded-full border border-line bg-white lg:hidden"
+              className="grid size-10 place-items-center rounded-full border border-line bg-card lg:hidden"
             >
               <span className="grid gap-[5px]">
                 <span
@@ -181,7 +183,7 @@ export default function Nav() {
               transition={{ duration: 0.28, ease: EASE }}
               className="-mx-2 overflow-hidden pb-3 md:-mx-5 lg:hidden"
             >
-              <ul className="mt-2 grid gap-1 rounded-2xl border border-line bg-white/95 p-2 shadow-card backdrop-blur-xl">
+              <ul className="mt-2 grid gap-1 rounded-2xl border border-line bg-card/95 p-2 shadow-card backdrop-blur-xl">
                 {navLinks.map((link) => (
                   <li key={link.href}>
                     <a
@@ -197,7 +199,7 @@ export default function Nav() {
                   <a
                     href={`mailto:${profile.email}`}
                     onClick={() => setMenuOpen(false)}
-                    className="mt-1 block rounded-xl bg-ink px-3 py-2.5 text-center text-sm font-semibold text-white"
+                    className="mt-1 block rounded-xl bg-ink px-3 py-2.5 text-center text-sm font-semibold text-page"
                   >
                     Let's Talk
                   </a>

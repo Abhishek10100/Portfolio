@@ -54,7 +54,7 @@ export const trustedQuote =
 export const about = {
   eyebrow: 'ABOUT ME',
   title: ['Building with AI.', 'Solving for People.'],
-  body: 'Associate Data Scientist with 2+ years of experience in GenAI, machine learning, and AI solution development. I enjoy building products that are useful, intuitive and scalable — from RAG and AI agents to computer vision and predictive analytics.',
+  body: 'Associate Data Scientist with 2+ years of experience, now building production GenAI: stateful multi-agent systems in LangGraph, RAG pipelines and MCP integrations, served through FastAPI and Docker. I like products that are useful, intuitive and scalable — and I learn fastest by building them.',
   quote: 'A blend of analytical thinking and creative problem solving.',
   note: 'Continuous Learning Always!',
   cta: 'More About Me',
@@ -211,6 +211,7 @@ export const techStack = {
     { name: 'RAG', group: 'GenAI' },
     { name: 'AI Agents', group: 'GenAI' },
     { name: 'Multi-Agent Orchestration', group: 'GenAI' },
+    { name: 'MCP', group: 'GenAI' },
     { name: 'Evaluation Harnesses', group: 'GenAI' },
     { name: 'XGBoost', group: 'ML' },
     { name: 'Scikit-learn', group: 'ML' },
@@ -244,6 +245,7 @@ export const techStack = {
     { name: 'Python', group: 'Tools' },
     { name: 'SQL', group: 'Tools' },
     { name: 'FastAPI', group: 'Tools' },
+    { name: 'Pydantic', group: 'Tools' },
     { name: 'Docker', group: 'Tools' },
     { name: 'Streamlit', group: 'Tools' },
     { name: 'React', group: 'Tools' },
@@ -392,6 +394,39 @@ export const demoLab = {
       },
     ],
   },
+}
+
+export const beyond = {
+  eyebrow: 'BEYOND THE CODE',
+  title: 'Builder on and off the keyboard.',
+  subtitle:
+    'The habits behind the work: learn by doing, sweat the details, and stay grounded.',
+  items: [
+    {
+      icon: 'wrench',
+      tone: 'brand',
+      title: 'Tinkerer at heart',
+      body: 'I would rather get my hands dirty than read about it. Same instinct whether it is a multi-agent codebase or the Bajaj Avenger I maintain and customise myself.',
+    },
+    {
+      icon: 'mountain',
+      tone: 'teal',
+      title: 'Trails and miles',
+      body: 'Morning 5K road runs in Pune and weekend treks through the Sahyadri and Western Ghats. Endurance is how I stay steady through long builds.',
+    },
+    {
+      icon: 'aperture',
+      tone: 'violet',
+      title: 'A macro eye',
+      body: 'Years of macro photography, insects and flowers up close, trained me to notice small details. It shows up in careful prompts and clean systems.',
+    },
+    {
+      icon: 'sparkles',
+      tone: 'amber',
+      title: 'Lore-rich stories',
+      body: 'One Piece, Demon Slayer, The Originals. I like worlds with rules, stakes and characters who grow, which is not far from designing a good agent.',
+    },
+  ],
 }
 
 export const contact = {

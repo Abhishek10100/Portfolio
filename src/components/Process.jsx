@@ -86,7 +86,7 @@ function ProcessRail() {
             <motion.span
               whileHover={reduced ? {} : { y: -4, scale: 1.06 }}
               transition={{ type: 'spring', stiffness: 340, damping: 22 }}
-              className={`relative z-10 grid size-(--b) place-items-center rounded-full border border-white bg-linear-to-br ${
+              className={`relative z-10 grid size-(--b) place-items-center rounded-full border border-card bg-linear-to-br ${
                 stepTones[step.tone] ?? stepTones.indigo
               }`}
             >
@@ -170,7 +170,7 @@ function Tile({ item, ...motionProps }) {
   return (
     <motion.li
       {...motionProps}
-      className="flex h-[5.25rem] flex-col items-center justify-center gap-2 rounded-2xl border border-line bg-white px-1.5 text-center shadow-[0_1px_2px_rgba(20,20,43,0.04)] transition-[translate,border-color,box-shadow] duration-200 motion-safe:hover:-translate-y-1 hover:border-brand/35 hover:shadow-card"
+      className="flex h-[5.25rem] flex-col items-center justify-center gap-2 rounded-2xl border border-line bg-card px-1.5 text-center shadow-[0_1px_2px_rgba(20,20,43,0.04)] transition-[translate,border-color,box-shadow] duration-200 motion-safe:hover:-translate-y-1 hover:border-brand/35 hover:shadow-card"
     >
       <span aria-hidden="true" className="flex">
         <BrandMark name={item.name} className="size-7" />
@@ -256,7 +256,7 @@ function StackPanel() {
                 {active && (
                   <motion.span
                     layoutId="stack-tab"
-                    className="absolute inset-0 rounded-full bg-brand-text shadow-[0_8px_18px_-8px_rgba(68,87,216,0.75)]"
+                    className="absolute inset-0 rounded-full bg-brand-solid shadow-[0_8px_18px_-8px_rgba(68,87,216,0.75)]"
                     transition={
                       reduced
                         ? { duration: 0 }
@@ -305,7 +305,7 @@ function StackPanel() {
                     {chips.map((t) => (
                       <li
                         key={t.name}
-                        className="rounded-full border border-line bg-white px-3 py-1.5 text-[12px] font-medium text-ink-2"
+                        className="rounded-full border border-line bg-card px-3 py-1.5 text-[12px] font-medium text-ink-2"
                       >
                         {t.name}
                       </li>

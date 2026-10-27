@@ -128,7 +128,7 @@ export default function Hero({ ready }) {
             <motion.div className="mt-8 flex flex-wrap gap-3" {...seq(0.36)}>
               <a
                 href="#projects"
-                className="group inline-flex items-center gap-2.5 rounded-full bg-ink px-7 py-4 text-[14.5px] font-semibold text-white shadow-[0_14px_28px_-12px_rgba(2,2,26,0.6)] transition-transform hover:-translate-y-0.5"
+                className="group inline-flex items-center gap-2.5 rounded-full bg-ink px-7 py-4 text-[14.5px] font-semibold text-page shadow-[0_14px_28px_-12px_rgba(2,2,26,0.6)] transition-transform hover:-translate-y-0.5"
               >
                 View My Work
                 <Icon
@@ -139,7 +139,7 @@ export default function Hero({ ready }) {
               <a
                 href={profile.resume}
                 download
-                className="group inline-flex items-center gap-2.5 rounded-full border border-line bg-white/90 px-7 py-4 text-[14.5px] font-semibold text-ink shadow-card transition-transform hover:-translate-y-0.5"
+                className="group inline-flex items-center gap-2.5 rounded-full border border-line bg-card/90 px-7 py-4 text-[14.5px] font-semibold text-ink shadow-card transition-transform hover:-translate-y-0.5"
               >
                 Download Resume
                 <Icon
@@ -150,7 +150,7 @@ export default function Hero({ ready }) {
             </motion.div>
 
             <motion.p
-              className="mt-5 inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3.5 py-1.5 text-[12.5px] font-semibold text-emerald-800"
+              className="mt-5 inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3.5 py-1.5 text-[12.5px] font-semibold text-emerald-800 dark:text-emerald-300"
               {...seq(0.4)}
             >
               <span className="relative flex size-2">
@@ -162,7 +162,7 @@ export default function Hero({ ready }) {
 
             {/* ---------------- stats ---------------- */}
             <motion.dl
-              className="mt-6 grid grid-cols-2 gap-y-5 rounded-2xl border border-line bg-white/80 px-5 py-5 shadow-card backdrop-blur-md sm:grid-cols-4"
+              className="mt-6 grid grid-cols-2 gap-y-5 rounded-2xl border border-line bg-card/80 px-5 py-5 shadow-card backdrop-blur-md sm:grid-cols-4"
               {...seq(0.44)}
             >
               {heroStats.map((s, i) => (
@@ -212,7 +212,7 @@ export default function Hero({ ready }) {
               fetchPriority="high"
               decoding="async"
               draggable={false}
-              className="size-full max-w-none select-none object-cover object-[100%_30%]"
+              className="hero-art-img size-full max-w-none select-none object-cover object-[100%_30%]"
               style={heroMaskStyle}
             />
           </motion.div>
@@ -233,7 +233,7 @@ export default function Hero({ ready }) {
       {/* ---------------- trusted technologies ---------------- */}
       <div className="shell relative">
         <motion.div
-          className="mb-4 mt-10 rounded-2xl border border-line bg-white/80 px-5 py-5 shadow-card backdrop-blur-md md:px-7"
+          className="mb-4 mt-10 rounded-2xl border border-line bg-card/80 px-5 py-5 shadow-card backdrop-blur-md md:px-7"
           {...seq(0.56)}
         >
           <p className="text-[11px] font-semibold tracking-[0.16em] text-brand-text">

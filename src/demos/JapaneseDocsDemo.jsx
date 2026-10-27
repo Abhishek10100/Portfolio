@@ -207,7 +207,7 @@ export default function JapaneseDocsDemo() {
                 aria-pressed={sampleKey === k}
                 onClick={() => reset(k)}
                 className={`rounded-full px-3.5 py-1.5 text-[12px] font-semibold ${
-                  sampleKey === k ? 'bg-brand-text text-white' : 'bg-brand-wash text-ink-2'
+                  sampleKey === k ? 'bg-brand-solid text-white' : 'bg-brand-wash text-ink-2'
                 }`}
               >
                 {s.label}
@@ -274,11 +274,11 @@ export default function JapaneseDocsDemo() {
                 <span
                   key={b.key}
                   aria-hidden="true"
-                  className="pointer-events-none absolute rounded-[3px] border border-brand-text/70 bg-brand-text/10"
+                  className="pointer-events-none absolute rounded-[3px] border border-brand-text/70 bg-brand-solid/10"
                   style={{ left: b.x, top: b.y, width: b.w, height: b.h }}
                 >
                   {step === 2 && (
-                    <span className="absolute -top-3.5 left-0 rounded bg-brand-text px-1 text-[8.5px] font-bold leading-[13px] text-white">
+                    <span className="absolute -top-3.5 left-0 rounded bg-brand-solid px-1 text-[8.5px] font-bold leading-[13px] text-white">
                       {b.conf}
                     </span>
                   )}
@@ -295,7 +295,7 @@ export default function JapaneseDocsDemo() {
                 key={s}
                 aria-current={step === i + 1 ? 'step' : undefined}
                 className={`rounded-full px-3 py-1 text-[12px] font-semibold ${
-                  step > i ? 'bg-emerald-500/12 text-emerald-700' : 'bg-brand-wash text-ink-3'
+                  step > i ? 'bg-emerald-500/12 text-emerald-700 dark:text-emerald-300' : 'bg-brand-wash text-ink-3'
                 }`}
               >
                 {step > i ? '✓ ' : ''}{s}
@@ -303,17 +303,17 @@ export default function JapaneseDocsDemo() {
             ))}
           </ol>
           <div className="ml-auto flex gap-2">
-            <button type="button" onClick={() => reset()} className="rounded-full border border-line-2 bg-white px-4 py-2.5 text-[13px] font-semibold">
+            <button type="button" onClick={() => reset()} className="rounded-full border border-line-2 bg-card px-4 py-2.5 text-[13px] font-semibold">
               Reset
             </button>
-            <button type="button" onClick={runAll} className="rounded-full border border-line-2 bg-white px-4 py-2.5 text-[13px] font-semibold">
+            <button type="button" onClick={runAll} className="rounded-full border border-line-2 bg-card px-4 py-2.5 text-[13px] font-semibold">
               Run all
             </button>
             <button
               type="button"
               onClick={advance}
               disabled={busy || step >= STEPS.length}
-              className="rounded-full bg-ink px-5 py-2.5 text-[13px] font-semibold text-white disabled:opacity-40"
+              className="rounded-full bg-ink px-5 py-2.5 text-[13px] font-semibold text-page disabled:opacity-40"
             >
               {step >= STEPS.length ? 'Done' : `${busy ? 'Running' : 'Run'}: ${STEPS[step]}`}
             </button>
@@ -334,7 +334,7 @@ export default function JapaneseDocsDemo() {
         {step >= 2 && step < 3 && (
           <ul className="mt-4 grid max-h-96 gap-1.5 overflow-y-auto text-[12.5px]">
             {lines.map((l) => (
-              <li key={l.key} className="flex items-center justify-between gap-3 rounded-lg bg-white px-3 py-1.5 ring-1 ring-line">
+              <li key={l.key} className="flex items-center justify-between gap-3 rounded-lg bg-card px-3 py-1.5 ring-1 ring-line">
                 <span style={{ fontFamily: jp }} className="text-ink">{l.text}</span>
                 <span className="shrink-0 tabular-nums text-ink-3">{l.conf}</span>
               </li>
@@ -346,7 +346,7 @@ export default function JapaneseDocsDemo() {
           <>
             <div className="mt-4 flex items-center justify-between gap-3">
               <h3 className="text-[12px] font-bold tracking-[0.14em] text-ink-3">STRUCTURED OUTPUT</h3>
-              <button type="button" onClick={copy} className="rounded-full border border-line-2 bg-white px-3.5 py-1.5 text-[12px] font-semibold">
+              <button type="button" onClick={copy} className="rounded-full border border-line-2 bg-card px-3.5 py-1.5 text-[12px] font-semibold">
                 {copied ? 'Copied' : 'Copy JSON'}
               </button>
             </div>
@@ -360,14 +360,14 @@ export default function JapaneseDocsDemo() {
           <>
             <h3 className="mt-5 text-[12px] font-bold tracking-[0.14em] text-ink-3">
               VALIDATION ·{' '}
-              <span className={failed ? 'text-rose-700' : 'text-emerald-700'}>
+              <span className={failed ? 'text-rose-700' : 'text-emerald-700 dark:text-emerald-300'}>
                 {failed ? `${failed} CHECK${failed > 1 ? 'S' : ''} FAILED, ROUTED TO REVIEW` : 'ALL CHECKS PASSED'}
               </span>
             </h3>
             <ul className="mt-2 grid gap-1.5">
               {checks.map((c) => (
-                <li key={c.label} className={`rounded-lg px-3 py-2 text-[12.5px] ring-1 ${c.ok ? 'bg-white ring-line' : 'bg-rose-50 ring-rose-200'}`}>
-                  <p className={`font-semibold ${c.ok ? 'text-ink' : 'text-rose-800'}`}>
+                <li key={c.label} className={`rounded-lg px-3 py-2 text-[12.5px] ring-1 ${c.ok ? 'bg-card ring-line' : 'bg-rose-50 ring-rose-200'}`}>
+                  <p className={`font-semibold ${c.ok ? 'text-ink' : 'text-rose-800 dark:text-rose-300'}`}>
                     {c.ok ? '✓' : '✗'} {c.label}
                   </p>
                   <p className="mt-0.5 text-ink-3">{c.detail}</p>

@@ -38,7 +38,7 @@ function Actions({ actions, onScroll }) {
             key={a.label}
             type="button"
             onClick={() => onScroll(a.scrollTo)}
-            className="inline-flex min-h-9 items-center gap-1.5 rounded-full bg-brand-text px-3.5 py-1.5 text-[12.5px] font-semibold text-white"
+            className="inline-flex min-h-9 items-center gap-1.5 rounded-full bg-brand-solid px-3.5 py-1.5 text-[12.5px] font-semibold text-white"
           >
             {a.label}
             <Icon name="arrow" className="size-3" />
@@ -49,7 +49,7 @@ function Actions({ actions, onScroll }) {
             href={a.href}
             target={/^https?:/.test(a.href) ? '_blank' : undefined}
             rel={/^https?:/.test(a.href) ? 'noopener noreferrer' : undefined}
-            className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-line-2 bg-white px-3.5 py-1.5 text-[12.5px] font-semibold text-ink"
+            className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-line-2 bg-card px-3.5 py-1.5 text-[12.5px] font-semibold text-ink"
           >
             {a.label}
             <Icon name="arrowUpRight" className="size-3" />
@@ -221,7 +221,7 @@ export default function GuideWidget({ ready = true }) {
               exit={{ opacity: 0, y: 6 }}
               transition={{ duration: 0.3, ease: EASE }}
               onClick={() => setOpen(true)}
-              className="max-w-[16rem] rounded-2xl rounded-br-md border border-line bg-white px-4 py-3 text-left text-[13px] font-medium leading-snug text-ink shadow-float"
+              className="max-w-[16rem] rounded-2xl rounded-br-md border border-line bg-card px-4 py-3 text-left text-[13px] font-medium leading-snug text-ink shadow-float"
             >
               New here? I can give you a 1-minute tour of this portfolio.
             </motion.button>
@@ -239,7 +239,7 @@ export default function GuideWidget({ ready = true }) {
             animate={{ opacity: 1, scale: 1 }}
             whileHover={reduced ? undefined : { y: -3 }}
             transition={{ type: 'spring', stiffness: 320, damping: 24 }}
-            className="group flex items-center gap-2.5 rounded-full bg-ink py-2.5 pl-2.5 pr-5 text-[13.5px] font-semibold text-white shadow-[0_16px_34px_-12px_rgba(2,2,26,0.6)]"
+            className="group flex items-center gap-2.5 rounded-full bg-ink py-2.5 pl-2.5 pr-5 text-[13.5px] font-semibold text-page shadow-[0_16px_34px_-12px_rgba(2,2,26,0.6)]"
           >
             <span className="relative">
               <LogoMark className="size-8" />
@@ -259,7 +259,7 @@ export default function GuideWidget({ ready = true }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduced ? undefined : { opacity: 0, y: 16, scale: 0.98 }}
             transition={{ duration: 0.28, ease: EASE }}
-            className={`fixed inset-x-3 bottom-3 z-[60] flex flex-col overflow-hidden rounded-3xl border border-line bg-white shadow-[0_30px_70px_-20px_rgba(20,20,60,0.45)] sm:inset-x-auto sm:bottom-6 sm:right-6 sm:w-[24.5rem] sm:max-h-[min(40rem,calc(100dvh-3rem))] ${
+            className={`fixed inset-x-3 bottom-3 z-[60] flex flex-col overflow-hidden rounded-3xl border border-line bg-card shadow-[0_30px_70px_-20px_rgba(20,20,60,0.45)] sm:inset-x-auto sm:bottom-6 sm:right-6 sm:w-[24.5rem] sm:max-h-[min(40rem,calc(100dvh-3rem))] ${
               compact ? 'max-h-[44dvh]' : 'max-h-[80dvh]'
             }`}
             style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
@@ -286,7 +286,7 @@ export default function GuideWidget({ ready = true }) {
               {messages.map((m) =>
                 m.role === 'user' ? (
                   <div key={m.id} className="flex justify-end">
-                    <p className="max-w-[85%] rounded-2xl rounded-br-md bg-brand-text px-3.5 py-2 text-[13.5px] text-white">{m.text}</p>
+                    <p className="max-w-[85%] rounded-2xl rounded-br-md bg-brand-solid px-3.5 py-2 text-[13.5px] text-white">{m.text}</p>
                   </div>
                 ) : (
                   <div key={m.id} className="max-w-[94%] rounded-2xl rounded-bl-md bg-surface-3 px-3.5 py-3">
@@ -305,7 +305,7 @@ export default function GuideWidget({ ready = true }) {
               )}
             </div>
 
-            <div className="border-t border-line bg-white px-4 pb-3 pt-3">
+            <div className="border-t border-line bg-card px-4 pb-3 pt-3">
               {touring ? (
                 <div className="flex items-center gap-2">
                   <button type="button" disabled={tourIdx === 0} onClick={() => showStep(tourIdx - 1)} className="min-h-10 rounded-full border border-line-2 px-4 text-[13px] font-semibold text-ink disabled:opacity-40">
@@ -314,7 +314,7 @@ export default function GuideWidget({ ready = true }) {
                   <button
                     type="button"
                     onClick={() => (tourIdx === TOUR.length - 1 ? endTour(true) : showStep(tourIdx + 1))}
-                    className="min-h-10 flex-1 rounded-full bg-ink px-4 text-[13px] font-semibold text-white"
+                    className="min-h-10 flex-1 rounded-full bg-ink px-4 text-[13px] font-semibold text-page"
                   >
                     {tourIdx === TOUR.length - 1 ? 'Finish tour' : `Next: ${TOUR[tourIdx + 1].title}`}
                   </button>
@@ -345,9 +345,9 @@ export default function GuideWidget({ ready = true }) {
                       placeholder="Ask about projects, skills, experience…"
                       autoComplete="off"
                       enterKeyHint="send"
-                      className="min-h-11 min-w-0 flex-1 rounded-full border border-line-2 bg-white px-4 text-[16px] outline-none focus:border-brand sm:text-[14px]"
+                      className="min-h-11 min-w-0 flex-1 rounded-full border border-line-2 bg-card px-4 text-[16px] outline-none focus:border-brand sm:text-[14px]"
                     />
-                    <button type="submit" aria-label="Send" className="grid size-11 shrink-0 place-items-center rounded-full bg-ink text-white">
+                    <button type="submit" aria-label="Send" className="grid size-11 shrink-0 place-items-center rounded-full bg-ink text-page">
                       <Icon name="arrowUpRight" className="size-4" />
                     </button>
                   </form>

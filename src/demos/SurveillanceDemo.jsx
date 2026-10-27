@@ -92,11 +92,11 @@ export default function SurveillanceDemo() {
             return (
               <div key={`${i}-${t.text}`} className="space-y-2">
                 <div className="flex justify-end">
-                  <p className="max-w-[85%] rounded-2xl rounded-br-md bg-brand-text px-4 py-2.5 text-[14px] text-white">
+                  <p className="max-w-[85%] rounded-2xl rounded-br-md bg-brand-solid px-4 py-2.5 text-[14px] text-white">
                     {t.text}
                   </p>
                 </div>
-                <div className="max-w-[92%] rounded-2xl rounded-bl-md bg-white p-4 ring-1 ring-line">
+                <div className="max-w-[92%] rounded-2xl rounded-bl-md bg-card p-4 ring-1 ring-line">
                   <p className="flex flex-wrap items-center gap-2 text-[11px] font-bold tracking-wide text-ink-3">
                     <span className="rounded-full bg-brand-wash px-2 py-0.5 text-brand-ink">
                       {t.chosen.agent.name}
@@ -151,9 +151,9 @@ export default function SurveillanceDemo() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask in English, हिन्दी, मराठी or 日本語"
-            className="min-w-0 flex-1 rounded-full border border-line-2 bg-white px-5 py-3 text-[14px] outline-none focus:border-brand"
+            className="min-w-0 flex-1 rounded-full border border-line-2 bg-card px-5 py-3 text-[14px] outline-none focus:border-brand"
           />
-          <button type="submit" className="rounded-full bg-ink px-6 py-3 text-[13.5px] font-semibold text-white">
+          <button type="submit" className="rounded-full bg-ink px-6 py-3 text-[13.5px] font-semibold text-page">
             Send
           </button>
         </form>
@@ -179,7 +179,7 @@ export default function SurveillanceDemo() {
                     </span>
                     <span className="h-2 overflow-hidden rounded-full bg-brand-wash">
                       <span
-                        className={`block h-full rounded-full ${isChosen ? 'bg-brand-text' : 'bg-line-2'}`}
+                        className={`block h-full rounded-full ${isChosen ? 'bg-brand-solid' : 'bg-line-2'}`}
                         style={{ width: `${(r.score / maxScore) * 100}%` }}
                       />
                     </span>

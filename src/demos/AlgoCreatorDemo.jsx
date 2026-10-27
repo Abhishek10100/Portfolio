@@ -78,7 +78,7 @@ function SlideView({ slide, theme, n, total, title }) {
     )
   }
   return (
-    <div className="relative flex aspect-video flex-col overflow-hidden rounded-xl border border-line bg-white p-[5%]">
+    <div className="relative flex aspect-video flex-col overflow-hidden rounded-xl border border-line bg-card p-[5%]">
       <div className="absolute inset-y-0 left-0 w-[1.6%]" style={{ background: t.a }} />
       <p className="text-[clamp(9px,1vw,11px)] font-bold tracking-[0.14em]" style={{ color: t.a }}>
         {slide.deck.toUpperCase()}
@@ -153,7 +153,7 @@ export default function AlgoCreatorDemo() {
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           rows={2}
-          className="mt-2 w-full resize-none rounded-2xl border border-line-2 bg-white p-4 text-[15px] leading-relaxed text-ink outline-none focus:border-brand"
+          className="mt-2 w-full resize-none rounded-2xl border border-line-2 bg-card p-4 text-[15px] leading-relaxed text-ink outline-none focus:border-brand"
         />
         <div className="mt-3 flex flex-wrap gap-2">
           {examples.map((ex) => (
@@ -185,7 +185,7 @@ export default function AlgoCreatorDemo() {
                   run(prompt, n)
                 }}
                 className={`size-8 rounded-full text-[13px] font-semibold ${
-                  count === n ? 'bg-brand-text text-white' : 'bg-brand-wash text-ink-2'
+                  count === n ? 'bg-brand-solid text-white' : 'bg-brand-wash text-ink-2'
                 }`}
               >
                 {n}
@@ -202,7 +202,7 @@ export default function AlgoCreatorDemo() {
                 aria-pressed={theme === name}
                 onClick={() => setTheme(name)}
                 className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-[12.5px] font-semibold ${
-                  theme === name ? 'border-ink bg-white text-ink' : 'border-line bg-white text-ink-2'
+                  theme === name ? 'border-ink bg-card text-ink' : 'border-line bg-card text-ink-2'
                 }`}
               >
                 <span className="size-3 rounded-full" style={{ background: `linear-gradient(135deg, ${t.a}, ${t.b})` }} />
@@ -213,7 +213,7 @@ export default function AlgoCreatorDemo() {
           <button
             type="button"
             onClick={() => run()}
-            className="ml-auto rounded-full bg-ink px-6 py-3 text-[13.5px] font-semibold text-white"
+            className="ml-auto rounded-full bg-ink px-6 py-3 text-[13.5px] font-semibold text-page"
           >
             Generate deck
           </button>
@@ -228,7 +228,7 @@ export default function AlgoCreatorDemo() {
             </h2>
             <ul className="mt-3 grid gap-2">
               {result.queries.map((q, i) => (
-                <li key={q} className="flex items-center justify-between gap-3 rounded-xl bg-white px-3 py-2 text-[13px] ring-1 ring-line">
+                <li key={q} className="flex items-center justify-between gap-3 rounded-xl bg-card px-3 py-2 text-[13px] ring-1 ring-line">
                   <span className="text-ink">
                     <span className="mr-2 font-bold text-ink-3">{i === 0 ? 'full' : `sub ${i}`}</span>
                     {q}
@@ -244,20 +244,20 @@ export default function AlgoCreatorDemo() {
               2 · RANK FUSION ({slides.length} slides searched in {result.ms} ms)
             </h2>
             {result.fused.length === 0 ? (
-              <p className="mt-3 rounded-xl bg-white p-4 text-[13.5px] text-ink-2 ring-1 ring-line">
+              <p className="mt-3 rounded-xl bg-card p-4 text-[13.5px] text-ink-2 ring-1 ring-line">
                 No slide matched. Try words like sales, roadmap, onboarding, security, AI, cost or market.
               </p>
             ) : (
               <ol className="mt-3 grid gap-2">
                 {result.fused.map((r, i) => (
-                  <li key={r.doc.id} className="rounded-xl bg-white p-3 ring-1 ring-line">
+                  <li key={r.doc.id} className="rounded-xl bg-card p-3 ring-1 ring-line">
                     <div className="flex items-start justify-between gap-2">
                       <p className="text-[13px] font-semibold text-ink">
                         <span className="mr-1.5 text-ink-3">{i + 1}.</span>
                         {r.doc.title}
                       </p>
                       {chosenIds.has(r.doc.id) && (
-                        <span className="shrink-0 rounded-full bg-emerald-500/12 px-2 py-0.5 text-[10.5px] font-bold text-emerald-700">
+                        <span className="shrink-0 rounded-full bg-emerald-500/12 px-2 py-0.5 text-[10.5px] font-bold text-emerald-700 dark:text-emerald-300">
                           IN DECK
                         </span>
                       )}
@@ -267,7 +267,7 @@ export default function AlgoCreatorDemo() {
                     </p>
                     <div className="mt-2 h-1.5 rounded-full bg-brand-wash">
                       <div
-                        className="h-full rounded-full bg-brand-text"
+                        className="h-full rounded-full bg-brand-solid"
                         style={{ width: `${Math.max(6, (r.score / maxScore) * 100)}%` }}
                       />
                     </div>
@@ -286,7 +286,7 @@ export default function AlgoCreatorDemo() {
                 <button
                   type="button"
                   onClick={copyOutline}
-                  className="rounded-full border border-line-2 bg-white px-4 py-2 text-[12.5px] font-semibold"
+                  className="rounded-full border border-line-2 bg-card px-4 py-2 text-[12.5px] font-semibold"
                 >
                   {copied ? 'Copied' : 'Copy as Markdown'}
                 </button>

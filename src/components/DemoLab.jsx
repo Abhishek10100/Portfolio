@@ -22,7 +22,7 @@ export default function DemoLab() {
             </p>
           </div>
 
-          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3.5 py-2 text-[11.5px] font-bold tracking-wide text-emerald-700">
+          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3.5 py-2 text-[11.5px] font-bold tracking-wide text-emerald-700 dark:text-emerald-300">
             <span className="relative flex size-1.5">
               {!reduced && (
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500/70" />

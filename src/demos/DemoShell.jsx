@@ -2,6 +2,7 @@ import { profile } from '../data/site'
 import { Icon } from '../components/ui'
 import { LogoMark } from '../components/Logo'
 import GuideWidget from '../guide/GuideWidget'
+import ThemeToggle from '../components/ThemeToggle'
 
 /** Page chrome shared by every demo: header, intro, the demo itself, and an honest note on what is real. */
 export default function DemoShell({ meta, children }) {
@@ -10,7 +11,7 @@ export default function DemoShell({ meta, children }) {
       <header className="shell pt-4">
         <nav
           aria-label="Demo"
-          className="flex items-center justify-between rounded-2xl border border-line bg-white/85 px-4 py-3 shadow-card backdrop-blur-xl md:px-5"
+          className="flex items-center justify-between rounded-2xl border border-line bg-card/85 px-4 py-3 shadow-card backdrop-blur-xl md:px-5"
         >
           <a href="/" aria-label={`${profile.name}, portfolio home`} className="flex items-center gap-3">
             <LogoMark className="size-10 shrink-0 drop-shadow-[0_6px_14px_rgba(79,107,245,0.35)]" />
@@ -19,13 +20,16 @@ export default function DemoShell({ meta, children }) {
               <span className="block text-[11.5px] text-ink-3">{profile.role}</span>
             </span>
           </a>
+          <div className="flex items-center gap-2">
+          <ThemeToggle />
           <a
             href="/#projects"
-            className="group inline-flex items-center gap-2 rounded-full border border-line-2 bg-white px-4 py-2 text-[13px] font-semibold"
+            className="group inline-flex items-center gap-2 rounded-full border border-line-2 bg-card px-4 py-2 text-[13px] font-semibold"
           >
             <Icon name="arrow" className="size-3.5 rotate-180 transition-transform group-hover:-translate-x-0.5" />
             Back to portfolio
           </a>
+          </div>
         </nav>
       </header>
 
@@ -35,7 +39,7 @@ export default function DemoShell({ meta, children }) {
             <span className="rounded-full bg-brand-wash px-3 py-1 text-[11px] font-bold tracking-[0.12em] text-brand-text">
               LIVE DEMO
             </span>
-            <span className="rounded-full border border-line bg-white px-3 py-1 text-[11px] font-semibold text-ink-3">
+            <span className="rounded-full border border-line bg-card px-3 py-1 text-[11px] font-semibold text-ink-3">
               Synthetic sample data · runs in your browser
             </span>
           </div>
@@ -95,7 +99,7 @@ export default function DemoShell({ meta, children }) {
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <a
             href={`mailto:${profile.email}`}
-            className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3.5 text-[13.5px] font-semibold text-white"
+            className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3.5 text-[13.5px] font-semibold text-page"
           >
             Discuss a project like this
             <Icon name="arrowUpRight" className="size-4" />

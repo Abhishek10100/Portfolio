@@ -5,7 +5,7 @@
  */
 import {
   profile, about, heroStats, whatIDo, projects, process, techStack,
-  experience, research, education, demoLab,
+  experience, research, education, demoLab, beyond,
 } from '../data/site'
 import { buildIndex, search, tokenize } from '../demos/lib/search'
 
@@ -54,6 +54,11 @@ export const TOUR = [
     title: 'Live demos',
     text: `${demoLab.subtitle} Try them: ${list(demoLab.items.map((d) => d.name))}.`,
     actions: demoLab.items.slice(0, 3).map((d) => ({ label: d.name, href: d.href })),
+  },
+  {
+    target: 'beyond',
+    title: 'Beyond the code',
+    text: `${beyond.subtitle} ${list(beyond.items.map((i) => i.title))}: the personality behind the work.`,
   },
   {
     target: 'contact',
@@ -149,6 +154,11 @@ function buildKB() {
     ],
   })
   add({
+    id: 'beyond', title: 'Beyond the code', target: 'beyond',
+    alias: 'hobbies hobby interests personality outside work free time bike motorcycle avenger running runner trek trekking photography macro anime one piece fun',
+    text: beyond.items.map((i) => `${i.title}: ${i.body}`).join('\n'),
+  })
+  add({
     id: 'resume', title: 'Resume', target: 'home',
     alias: 'cv resume download pdf',
     text: 'The resume is a 2-page PDF with the full experience, skills, publication and certifications.',
@@ -207,6 +217,15 @@ const INTENTS = [
       text: `That isn't something this portfolio shows, and I'd rather not guess. Abhishek can answer it directly.`,
       actions: [{ label: 'Email Abhishek', href: `mailto:${profile.email}` }],
     }),
+  },
+  {
+    re: /\b(hobbi(es|y)|interests?|free time|outside (of )?work|personality|bike|motorcycle|avenger|runn(er|ing)|trek\w*|photograph\w*|anime|one piece|what is he like|fun fact)\b/i,
+    run: () => ({ ...answerFrom(KB.find((e) => e.id === 'beyond')) }),
+  },
+  {
+    re: /\b(langgraph|langchain|chromadb)\b/i,
+    when: (q) => !/\b(project|built|experience)\b/i.test(q),
+    run: (q) => skillsReply(q.replace(/tell me about|what about/i, 'does he know')),
   },
   {
     re: /\b(algoanalytics|algo analytics|current(ly)?|right now|these days|mit-?wpu)\b/i,
