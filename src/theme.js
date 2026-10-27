@@ -3,18 +3,10 @@ import { useEffect, useState } from 'react'
 /**
  * Theme lives on <html class="dark">. A tiny inline script in every HTML entry
  * applies the stored (or system) choice before first paint, so there is no
- * flash. A stored choice wins; with none stored we follow the system setting.
+ * flash. Light is the default; dark only applies once the visitor chooses it.
  */
 const KEY = 'theme'
 const COLORS = { light: '#f6f6fb', dark: '#090912' }
-
-const read = () => {
-  try {
-    return localStorage.getItem(KEY)
-  } catch {
-    return null
-  }
-}
 
 export const currentTheme = () =>
   document.documentElement.classList.contains('dark') ? 'dark' : 'light'
@@ -37,16 +29,9 @@ export function useTheme() {
 
   useEffect(() => {
     const sync = () => set(currentTheme())
-    // Follow the OS only while the visitor hasn't chosen explicitly.
-    const mq = window.matchMedia('(prefers-color-scheme: dark)')
-    const onSystem = (e) => {
-      if (!read()) setTheme(e.matches ? 'dark' : 'light', { persist: false })
-    }
     window.addEventListener('themechange', sync)
-    mq.addEventListener('change', onSystem)
     return () => {
       window.removeEventListener('themechange', sync)
-      mq.removeEventListener('change', onSystem)
     }
   }, [])
 

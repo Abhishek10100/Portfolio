@@ -6,11 +6,10 @@ import { motion, useInView, useReducedMotion, animate } from 'framer-motion'
 export const EASE = [0.22, 0.8, 0.28, 1]
 
 const revealVariants = {
-  hidden: { opacity: 0, y: 24, scale: 0.98 },
+  hidden: { opacity: 0, y: 18 },
   show: {
     opacity: 1,
     y: 0,
-    scale: 1,
     transition: { duration: 0.65, ease: EASE },
   },
 }
@@ -120,6 +119,19 @@ export function Counter({ value, suffix = '', duration = 1.4 }) {
       {suffix}
     </span>
   )
+}
+
+/**
+ * Ambient (looping) motion should only run while its element is on screen:
+ * off-screen loops keep the main thread busy and make scrolling janky on
+ * slower devices. Returns [ref, on]; `on` is false when off-screen or when the
+ * visitor prefers reduced motion. Attach `ref` to the animated element.
+ */
+export function useAmbient(margin = '160px') {
+  const reduced = useReducedMotion()
+  const ref = useRef(null)
+  const visible = useInView(ref, { margin })
+  return [ref, visible && !reduced]
 }
 
 /** Small violet-dot eyebrow used above every section heading. */

@@ -85,7 +85,7 @@ export default function Nav() {
             logo lines up with the hero copy. */}
         <nav
           aria-label="Primary"
-          className={`-mx-2 flex items-center justify-between gap-4 rounded-2xl border border-line bg-card/85 px-3 py-3 backdrop-blur-xl transition-shadow duration-300 md:-mx-5 md:px-5 lg:grid lg:grid-cols-[1fr_auto_1fr] ${
+          className={`-mx-2 flex items-center justify-between gap-4 rounded-2xl border border-line bg-card/95 px-3 py-3 transition-shadow duration-300 md:-mx-5 md:px-5 lg:grid lg:grid-cols-[1fr_auto_1fr] ${
             scrolled
               ? 'shadow-[0_12px_34px_-14px_rgba(20,20,43,0.24)]'
               : 'shadow-card'
@@ -183,7 +183,7 @@ export default function Nav() {
               transition={{ duration: 0.28, ease: EASE }}
               className="-mx-2 overflow-hidden pb-3 md:-mx-5 lg:hidden"
             >
-              <ul className="mt-2 grid gap-1 rounded-2xl border border-line bg-card/95 p-2 shadow-card backdrop-blur-xl">
+              <ul className="mt-2 grid gap-1 rounded-2xl border border-line bg-card/95 p-2 shadow-card">
                 {navLinks.map((link) => (
                   <li key={link.href}>
                     <a

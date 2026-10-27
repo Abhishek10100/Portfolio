@@ -5,7 +5,7 @@ import {
   useSpring,
 } from 'framer-motion'
 import { profile, heroStats, trustedTech, trustedQuote } from '../data/site'
-import { Counter, Icon, ScriptNote, EASE } from './ui'
+import { Counter, Icon, ScriptNote, EASE, useAmbient } from './ui'
 import BrandMark from './BrandMark'
 
 /* The render sits on a near-white studio wall, so its edges are feathered into
@@ -42,6 +42,7 @@ const heroMaskStyle = {
 
 export default function Hero({ ready }) {
   const reduced = useReducedMotion()
+  const [artRef, artOn] = useAmbient()
 
   // Entrance is sequenced after the preloader: text first, then visual.
   const seq = (delay) =>
@@ -162,7 +163,7 @@ export default function Hero({ ready }) {
 
             {/* ---------------- stats ---------------- */}
             <motion.dl
-              className="mt-6 grid grid-cols-2 gap-y-5 rounded-2xl border border-line bg-card/80 px-5 py-5 shadow-card backdrop-blur-md sm:grid-cols-4"
+              className="mt-6 grid grid-cols-2 gap-y-5 rounded-2xl border border-line bg-card/80 px-5 py-5 shadow-card sm:grid-cols-4"
               {...seq(0.44)}
             >
               {heroStats.map((s, i) => (
@@ -200,9 +201,10 @@ export default function Hero({ ready }) {
         >
           <motion.div
             className="size-full origin-[75%_80%]"
+            ref={artRef}
             style={{ x: artX, y: artY }}
-            animate={reduced ? {} : { scale: [1, 1.012, 1] }}
-            transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
+            animate={artOn ? { scale: [1, 1.012, 1] } : { scale: 1 }}
+            transition={artOn ? { duration: 9, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.3 }}
           >
             <img
               src="/images/hero.webp"
@@ -233,7 +235,7 @@ export default function Hero({ ready }) {
       {/* ---------------- trusted technologies ---------------- */}
       <div className="shell relative">
         <motion.div
-          className="mb-4 mt-10 rounded-2xl border border-line bg-card/80 px-5 py-5 shadow-card backdrop-blur-md md:px-7"
+          className="mb-4 mt-10 rounded-2xl border border-line bg-card/80 px-5 py-5 shadow-card md:px-7"
           {...seq(0.56)}
         >
           <p className="text-[11px] font-semibold tracking-[0.16em] text-brand-text">

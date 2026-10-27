@@ -8,6 +8,7 @@ import {
   RevealItem,
   SectionLabel,
   ScriptNote,
+  useAmbient,
 } from './ui'
 
 const tones = {
@@ -70,6 +71,7 @@ function NoteArrow({ reduced }) {
 }
 
 function Portrait({ reduced }) {
+  const [floatRef, floatOn] = useAmbient()
   return (
     <motion.div
       className="pointer-events-auto relative mx-auto w-[74%] max-w-[17rem] lg:mx-0 lg:w-full lg:max-w-none"
@@ -88,8 +90,9 @@ function Portrait({ reduced }) {
       }
     >
       <motion.div
-        animate={reduced ? undefined : { y: [0, -5, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+        ref={floatRef}
+        animate={floatOn ? { y: [0, -5, 0] } : { y: 0 }}
+        transition={floatOn ? { duration: 7, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.3 }}
       >
         <img
           src="/images/character-cutout.webp"
@@ -122,6 +125,7 @@ function Portrait({ reduced }) {
 
 export default function About() {
   const reduced = useReducedMotion()
+  const [glowRef, glowOn] = useAmbient()
 
   return (
     <section id="about" className="scroll-mt-24 py-16 md:py-24">
@@ -167,9 +171,10 @@ export default function About() {
             <motion.div
               aria-hidden="true"
               className="pointer-events-none absolute left-1/2 top-[2%] aspect-square w-[120%] -translate-x-1/2 rounded-full lg:top-[-2%]"
+              ref={glowRef}
               style={glowBg}
-              animate={reduced ? undefined : { opacity: [0.8, 1, 0.8] }}
-              transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+              animate={glowOn ? { opacity: [0.8, 1, 0.8] } : { opacity: 1 }}
+              transition={glowOn ? { duration: 8, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.3 }}
             />
 
             <Portrait reduced={reduced} />

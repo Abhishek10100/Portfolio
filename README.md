@@ -62,7 +62,7 @@ output to `dist/`, and `npm run preview` serves that build locally.
 │   └── components/
 │       ├── ui.jsx              # Reveal/RevealGroup/RevealItem, Counter, SectionLabel, ScriptNote, Icon
 │       ├── BrandMark.jsx       # renders a logo from data/brands.js (per-instance SVG ids)
-│       ├── Logo.jsx            # the AT monogram (LogoMark) used in nav, footer, preloader, demos
+│       ├── Logo.jsx            # the avatar logo mark (LogoMark) used in nav, footer, preloader, guide, demos
 │   ├── guide/                  # the portfolio guide chatbot
 │   │   ├── engine.js           # tour steps + answers, all built from data/site.js (no LLM, no API)
 │   │   └── GuideWidget.jsx     # floating button, chat panel, scroll-and-spotlight tour
@@ -86,7 +86,7 @@ output to `dist/`, and `npm run preview` serves that build locally.
 │       └── Contact.jsx         # contact panel + footer
 ├── scripts/                    # Node scripts that generate committed assets
 │   ├── build-brands.mjs        # simple-icons / devicon -> src/data/brands.js
-│   ├── make-icons.mjs          # AT monogram -> public/favicon.svg, touch icon, PWA icons, manifest
+│   ├── make-icons.mjs          # docs/source-assets/avatar.png -> logo avatar, favicon, touch/PWA icons, manifest
 │   ├── make-hero.mjs           # docs/source-assets/hero.png -> public/images/hero.webp
 │   └── make-cutout.mjs         # docs/source-assets/character.png -> public/images/character-cutout.webp
 ├── public/                     # copied to the deploy root verbatim

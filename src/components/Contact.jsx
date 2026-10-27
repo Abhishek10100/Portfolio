@@ -9,6 +9,7 @@ import {
   RevealItem,
   SectionLabel,
   ScriptNote,
+  useAmbient,
 } from './ui'
 
 const channels = [
@@ -31,6 +32,8 @@ const viewport = { once: true, margin: '-60px' }
 
 export function Contact() {
   const reduced = useReducedMotion()
+  const [discRef, discOn] = useAmbient()
+  const [bustRef, bustOn] = useAmbient()
 
   return (
     <section id="contact" className="scroll-mt-24 py-12 md:py-16">
@@ -72,7 +75,7 @@ export function Contact() {
               ))}
             </RevealGroup>
 
-            <p className="mt-6 text-[13px] text-ink-2/80">
+            <p className="mt-6 text-[13px] text-ink-2">
               <a
                 href={`tel:${profile.phone}`}
                 className="inline-block py-3 underline-offset-2 transition-colors hover:text-ink hover:underline"
@@ -91,9 +94,10 @@ export function Contact() {
             <motion.div
               aria-hidden="true"
               className="pointer-events-none absolute left-1/2 top-[4%] aspect-square w-[min(24rem,96%)] -translate-x-1/2 rounded-full border border-card/70 shadow-[inset_0_0_70px_rgba(96,121,251,0.12)] lg:left-auto lg:right-[2%] lg:top-1/2 lg:h-[132%] lg:w-auto lg:translate-x-0 lg:-translate-y-[46%]"
+              ref={discRef}
               style={discBg}
-              animate={reduced ? undefined : { scale: [1, 1.025, 1] }}
-              transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
+              animate={discOn ? { scale: [1, 1.025, 1] } : { scale: 1 }}
+              transition={discOn ? { duration: 9, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.3 }}
             />
 
             <div className="relative mx-auto w-[min(78%,19rem)] lg:mx-0 lg:h-full lg:w-full lg:max-w-none">
@@ -127,9 +131,10 @@ export function Contact() {
                   loading="lazy"
                   decoding="async"
                   className="block w-full select-none drop-shadow-[0_16px_24px_rgba(46,45,174,0.16)] lg:h-full lg:w-auto"
+                  ref={bustRef}
                   style={{ originY: 1 }}
-                  animate={reduced ? undefined : { scaleY: [1, 1.012, 1] }}
-                  transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut' }}
+                  animate={bustOn ? { scaleY: [1, 1.012, 1] } : { scaleY: 1 }}
+                  transition={bustOn ? { duration: 6.5, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.3 }}
                 />
               </motion.div>
             </div>

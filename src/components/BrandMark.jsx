@@ -51,8 +51,8 @@ export default function BrandMark({ name, className = 'size-6' }) {
 
   return (
     <span
-      className={`grid place-items-center rounded-md text-[0.62em] font-extrabold leading-none tracking-tight ${className}`}
-      style={{ backgroundColor: `${brand.hex}1f`, color: brand.hex }}
+      className={`grid place-items-center rounded-md text-[0.7em] font-extrabold leading-none tracking-tight ${className}`}
+      style={{ backgroundColor: `${brand.hex}26`, color: `color-mix(in srgb, ${brand.hex} 62%, var(--text))` }}
       role="img"
       aria-label={name}
     >
