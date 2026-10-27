@@ -247,7 +247,7 @@ function StackPanel() {
                 tabIndex={active ? 0 : -1}
                 onClick={() => select(g)}
                 onKeyDown={(e) => onKeyDown(e, i)}
-                className={`relative shrink-0 rounded-full px-4 py-2 text-[12.5px] font-semibold transition-colors focus-visible:outline-offset-2 ${
+                className={`relative min-h-10 shrink-0 rounded-full px-4 py-2 text-[12.5px] font-semibold transition-colors focus-visible:outline-offset-2 ${
                   active
                     ? 'text-white'
                     : 'bg-brand-wash/70 text-ink-2 hover:bg-brand-wash hover:text-ink'
@@ -344,7 +344,7 @@ function StackPanel() {
 
 export default function Process() {
   return (
-    <section className="py-16 md:py-20">
+    <section id="process" className="scroll-mt-24 py-16 md:py-20">
       <div className="shell grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
         <ProcessRail />
         <StackPanel />

@@ -149,9 +149,20 @@ export default function Hero({ ready }) {
               </a>
             </motion.div>
 
+            <motion.p
+              className="mt-5 inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3.5 py-1.5 text-[12.5px] font-semibold text-emerald-800"
+              {...seq(0.4)}
+            >
+              <span className="relative flex size-2">
+                {!reduced && <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500/70" />}
+                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+              </span>
+              Open to remote roles across India
+            </motion.p>
+
             {/* ---------------- stats ---------------- */}
             <motion.dl
-              className="mt-9 grid grid-cols-2 gap-y-5 rounded-2xl border border-line bg-white/80 px-5 py-5 shadow-card backdrop-blur-md sm:grid-cols-4"
+              className="mt-6 grid grid-cols-2 gap-y-5 rounded-2xl border border-line bg-white/80 px-5 py-5 shadow-card backdrop-blur-md sm:grid-cols-4"
               {...seq(0.44)}
             >
               {heroStats.map((s, i) => (

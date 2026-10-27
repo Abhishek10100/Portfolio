@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 import { navLinks, profile } from '../data/site'
 import { Icon, EASE } from './ui'
+import { LogoMark } from './Logo'
 
 /**
  * Highlights the last nav section whose top has passed the reading line.
@@ -89,10 +90,12 @@ export default function Nav() {
               : 'shadow-card'
           }`}
         >
-          <a href="#home" className="flex items-center gap-3 justify-self-start">
-            <span className="text-[30px] font-extrabold leading-none tracking-[-0.07em] text-ink">
-              {profile.initials}
-            </span>
+          <a
+            href="#home"
+            aria-label={`${profile.name}, back to top`}
+            className="flex items-center gap-3 justify-self-start"
+          >
+            <LogoMark className="size-10 shrink-0 drop-shadow-[0_6px_14px_rgba(79,107,245,0.35)]" />
             <span className="hidden leading-tight sm:block">
               <span className="block text-[14.5px] font-bold text-ink">
                 {profile.name}

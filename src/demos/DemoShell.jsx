@@ -1,5 +1,7 @@
 import { profile } from '../data/site'
 import { Icon } from '../components/ui'
+import { LogoMark } from '../components/Logo'
+import GuideWidget from '../guide/GuideWidget'
 
 /** Page chrome shared by every demo: header, intro, the demo itself, and an honest note on what is real. */
 export default function DemoShell({ meta, children }) {
@@ -10,11 +12,12 @@ export default function DemoShell({ meta, children }) {
           aria-label="Demo"
           className="flex items-center justify-between rounded-2xl border border-line bg-white/85 px-4 py-3 shadow-card backdrop-blur-xl md:px-5"
         >
-          <a href="/" className="flex items-center gap-3">
-            <span className="text-[26px] font-extrabold leading-none tracking-[-0.07em]">
-              {profile.initials}
+          <a href="/" aria-label={`${profile.name}, portfolio home`} className="flex items-center gap-3">
+            <LogoMark className="size-10 shrink-0 drop-shadow-[0_6px_14px_rgba(79,107,245,0.35)]" />
+            <span className="hidden leading-tight sm:block">
+              <span className="block text-[14.5px] font-bold text-ink">{profile.name}</span>
+              <span className="block text-[11.5px] text-ink-3">{profile.role}</span>
             </span>
-            <span className="hidden text-[13.5px] font-bold sm:block">{profile.name}</span>
           </a>
           <a
             href="/#projects"
@@ -102,6 +105,7 @@ export default function DemoShell({ meta, children }) {
           </a>
         </div>
       </main>
+      <GuideWidget ready />
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { contact, profile, navLinks } from '../data/site'
+import { LogoMark } from './Logo'
 import {
   EASE,
   Icon,
@@ -74,7 +75,7 @@ export function Contact() {
             <p className="mt-6 text-[13px] text-ink-2/80">
               <a
                 href={`tel:${profile.phone}`}
-                className="underline-offset-2 transition-colors hover:text-ink hover:underline"
+                className="inline-block py-3 underline-offset-2 transition-colors hover:text-ink hover:underline"
               >
                 {profile.phone}
               </a>
@@ -147,12 +148,7 @@ export function Footer() {
           href="#home"
           className="flex items-center gap-3 justify-self-center md:justify-self-start"
         >
-          <span
-            aria-hidden="true"
-            className="text-[2.1rem] font-extrabold leading-none tracking-[-0.07em] text-ink"
-          >
-            {profile.initials}
-          </span>
+          <LogoMark className="size-11 shrink-0 drop-shadow-[0_6px_14px_rgba(79,107,245,0.35)]" />
           <span className="leading-tight">
             <span className="block text-[14px] font-bold text-ink">
               {profile.name}
@@ -167,7 +163,7 @@ export function Footer() {
               <li key={l.href}>
                 <a
                   href={l.href}
-                  className="text-[13px] font-medium text-ink-2 transition-colors hover:text-ink"
+                  className="inline-block py-2.5 text-[13px] font-medium text-ink-2 transition-colors hover:text-ink"
                 >
                   {l.label}
                 </a>

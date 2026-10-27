@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import Preloader from './components/Preloader'
 import Nav from './components/Nav'
+import GuideWidget from './guide/GuideWidget'
 import Hero from './components/Hero'
 import About from './components/About'
 import Projects from './components/Projects'
@@ -46,6 +47,7 @@ export default function App() {
       </main>
 
       <Footer />
+      <GuideWidget ready={ready} />
     </>
   )
 }

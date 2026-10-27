@@ -514,7 +514,7 @@ function Education() {
   const listId = 'education-certifications'
 
   return (
-    <section className={`${card} @container`}>
+    <section id="education" className={`${card} @container scroll-mt-24`}>
       <Reveal>
         <SectionLabel tone="brand">{education.eyebrow}</SectionLabel>
         <h2 className={heading}>{education.title}</h2>

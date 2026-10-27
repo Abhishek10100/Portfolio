@@ -57,7 +57,7 @@ function ProjectCard({ item }) {
           {item.demo ? (
             <a
               href={item.demo.href}
-              className="group/cta inline-flex items-center gap-2 text-[13px] font-semibold text-brand-text"
+              className="group/cta inline-flex min-h-11 items-center gap-2 text-[13px] font-semibold text-brand-text"
             >
               {item.demo.label}
               <span className="sr-only">: {item.title}</span>

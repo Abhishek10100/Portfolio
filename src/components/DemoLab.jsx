@@ -69,7 +69,7 @@ export default function DemoLab() {
             onClick={() => setShowEarlier((v) => !v)}
             aria-expanded={showEarlier}
             aria-controls="earlier-work"
-            className="inline-flex items-center gap-2 text-[13.5px] font-semibold text-ink-2 hover:text-ink"
+            className="inline-flex min-h-11 items-center gap-2 text-[13.5px] font-semibold text-ink-2 hover:text-ink"
           >
             {earlier.label}
             <Icon

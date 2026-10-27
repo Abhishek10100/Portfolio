@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { EASE } from './ui'
+import { LogoMark } from './Logo'
 
 /**
  * Brief branded hold while fonts and the hero image settle.
@@ -84,12 +85,12 @@ export default function Preloader({ onDone }) {
               ))}
 
             <motion.div
-              className="relative grid size-16 place-items-center rounded-2xl bg-ink text-lg font-extrabold tracking-tight text-page"
+              className="relative"
               initial={{ opacity: 0, scale: 0.86 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, ease: EASE }}
             >
-              AT
+              <LogoMark className="size-16 drop-shadow-[0_10px_24px_rgba(79,107,245,0.4)]" />
             </motion.div>
           </div>
 
