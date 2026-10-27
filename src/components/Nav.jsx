@@ -53,16 +53,11 @@ function useActiveSection() {
 export default function Nav() {
   const active = useActiveSection()
   const [scrolled, setScrolled] = useState(false)
-  const [hidden, setHidden] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const { scrollY } = useScroll()
 
-  // Condense on scroll down, reveal fully on scroll up.
-  useMotionValueEvent(scrollY, 'change', (y) => {
-    const prev = scrollY.getPrevious() ?? 0
-    setScrolled(y > 24)
-    setHidden(y > prev && y > 320 && !menuOpen)
-  })
+  // The bar stays pinned; it only deepens its shadow once the page scrolls.
+  useMotionValueEvent(scrollY, 'change', (y) => setScrolled(y > 24))
 
   useEffect(() => {
     if (!menuOpen) return
@@ -75,10 +70,8 @@ export default function Nav() {
     <motion.header
       className="fixed inset-x-0 top-0 z-50"
       initial={{ opacity: 0, y: -14 }}
-      animate={{ opacity: 1, y: hidden ? -100 : 0 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, ease: EASE }}
-      // Tabbing into a bar that has slid away would leave focus on nothing visible.
-      onFocusCapture={() => setHidden(false)}
     >
       <div className="shell pt-3 md:pt-4">
         {/* The bar is wider than the page content by its own padding, so the
